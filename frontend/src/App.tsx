@@ -6,13 +6,13 @@ import { Faq } from './components/Faq';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
 import { Intro } from './components/Intro';
-import { PortVideo } from './components/PortVideo';
 import { Process } from './components/Process';
 import { Services } from './components/Services';
 import { useReveal } from './hooks/useReveal';
+import type { CalculatorQuote } from './types';
 
 export function App() {
-  const [contactOpen, setContactOpen] = useState(false);
+  const [contactQuote, setContactQuote] = useState<CalculatorQuote | null>(null);
   useReveal();
 
   useEffect(() => {
@@ -45,22 +45,19 @@ export function App() {
     return () => document.removeEventListener('click', handleAnchorClick);
   }, []);
 
-  const openContact = () => setContactOpen(true);
-
   return (
     <>
-      <Hero onContact={openContact} />
+      <Hero />
       <main>
         <Intro />
-        <Services onContact={openContact} />
+        <Services />
+        <Calculator onContact={setContactQuote} />
         <Process />
-        <PortVideo />
-        <Calculator onContact={openContact} />
-        <CoverageMap onContact={openContact} />
+        <CoverageMap />
         <Faq />
       </main>
-      <Footer onContact={openContact} />
-      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
+      <Footer />
+      <ContactModal quote={contactQuote} onClose={() => setContactQuote(null)} />
     </>
   );
 }

@@ -1,32 +1,85 @@
-import { ArrowUpRight } from 'lucide-react';
-import { Header } from './Header';
-import { Button } from './ui/Button';
+import { useEffect, useRef } from "react";
+import { Header } from "./Header";
+import { ButtonLink } from "./ui/Button";
 
-type Props = {
-  onContact: () => void;
-};
+export function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
 
-export function Hero({ onContact }: Props) {
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+
+    const updateParallax = () => {
+      frame = 0;
+
+      if (reducedMotion.matches) {
+        hero.style.setProperty("--hero-parallax-y", "0px");
+        return;
+      }
+
+      const progress = Math.min(
+        Math.max(window.scrollY / hero.offsetHeight, 0),
+        1,
+      );
+      const travel = Math.min(hero.offsetHeight * 0.18, 180);
+      hero.style.setProperty(
+        "--hero-parallax-y",
+        `${Math.round(progress * travel)}px`,
+      );
+    };
+
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateParallax);
+    };
+
+    updateParallax();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    reducedMotion.addEventListener("change", requestUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      reducedMotion.removeEventListener("change", requestUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <section
+      ref={heroRef}
       id="top"
-      className="relative h-screen min-h-[620px] overflow-hidden bg-[linear-gradient(120deg,#e9f4ee_0%,#cde6da_42%,#7e9a8e_68%,#384841_100%)]"
+      className="hero relative h-screen min-h-[620px] overflow-hidden bg-[#b8ccc3]"
     >
+      <div className="hero-parallax-media" aria-hidden="true">
+        <img
+          className="hero-parallax-image"
+          src="/images/customs-terminal-hero.webp"
+          alt=""
+          fetchPriority="high"
+          draggable="false"
+        />
+      </div>
+      <div className="hero-photo-scrim absolute inset-0" aria-hidden="true" />
       <div className="page-wrap relative z-10 flex h-full items-center">
-        <Header onContact={onContact} />
-        <div className="max-w-[670px]">
-          <h1 className="text-[42px] leading-[0.98] font-extrabold tracking-[-0.055em] sm:text-6xl lg:text-[68px]">
-            Вантаж у русі,
+        <Header />
+        <div className="max-w-[940px]">
+          <h1 className="text-[42px] leading-[0.98] font-extrabold tracking-[-0.055em] sm:text-6xl lg:text-[64px]">
+            Митне оформлення
             <br />
-            доставка вчасно
+            вантажів з Китаю та Європи
           </h1>
-          <p className="text-portway-ink-2 mt-7 max-w-[540px] text-base leading-7 sm:text-lg">
-            Від вивантаження контейнера до доставки за адресою — беремо на себе митні документи,
-            сплату платежів і транспорт, щоб ваша команда займалася продажами.
+          <p className="text-portway-ink-2 mt-7 max-w-[620px] text-base leading-7 sm:text-lg">
+            Як посередник між експедиторами та лінійними агентами координуємо
+            повний цикл — від порту й митного оформлення до вивантаження на
+            складі клієнта.
           </p>
-          <Button onClick={onContact} className="mt-9">
-            Зв'язатися з агентом <ArrowUpRight size={17} strokeWidth={2.4} />
-          </Button>
+          <ButtonLink href="#calc" className="mt-9">
+            Розрахувати митні платежі
+          </ButtonLink>
         </div>
       </div>
     </section>

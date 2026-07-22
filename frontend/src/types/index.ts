@@ -19,3 +19,11 @@ export type QuoteResult = {
   vat: number;
   total: number;
 };
+
+export type CalculatorQuote = {
+  category: string;
+  customsValue: number;
+  currency: string;
+  dutyRate: number;
+  total: number;
+};

@@ -1,26 +1,31 @@
-import { useEffect, useMemo, useState } from 'react';
-import { calculateQuote } from '../api/client';
-import { currencies, productCategories } from '../data/content';
-import type { QuoteResult } from '../types';
-import { CustomSelect } from './ui/CustomSelect';
-import { Button } from './ui/Button';
-import { PricePicker } from './ui/PricePicker';
+import { useEffect, useMemo, useState } from "react";
+import { calculateQuote } from "../api/client";
+import { currencies, productCategories } from "../data/content";
+import type { CalculatorQuote, QuoteResult } from "../types";
+import { CustomSelect } from "./ui/CustomSelect";
+import { Button } from "./ui/Button";
+import { PricePicker } from "./ui/PricePicker";
 
 type Props = {
-  onContact: () => void;
+  onContact: (quote: CalculatorQuote) => void;
 };
 
 const initialResult: QuoteResult = {
-  customsValueUah: 41500,
+  customsValueUah: 43000,
   duty: 0,
-  vatBase: 41500,
-  vat: 8300,
-  total: 8300,
+  vatBase: 43000,
+  vat: 8600,
+  total: 8600,
 };
 
-const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-UA')} ₴`;
+const formatMoney = (value: number) =>
+  `${Math.round(value).toLocaleString("uk-UA")} ₴`;
 
-function calculateLocally(customsValue: number, currencyRate: number, dutyRate: number) {
+function calculateLocally(
+  customsValue: number,
+  currencyRate: number,
+  dutyRate: number,
+) {
   const customsValueUah = customsValue * currencyRate;
   const duty = customsValueUah * (dutyRate / 100);
   const vatBase = customsValueUah + duty;
@@ -30,11 +35,18 @@ function calculateLocally(customsValue: number, currencyRate: number, dutyRate: 
 
 export function Calculator({ onContact }: Props) {
   const [customsValue, setCustomsValue] = useState(1000);
-  const [currencyRate, setCurrencyRate] = useState(41.5);
+  const [currencyRate, setCurrencyRate] = useState(43);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const dutyRate = productCategories[categoryIndex].duty;
-  const [remoteResult, setRemoteResult] = useState<{ key: string; value: QuoteResult }>({
-    key: '1000:41.5:0',
+  const category = productCategories[categoryIndex];
+  const currency =
+    currencies.find((item) => item.rate === currencyRate)?.label.split(" · ")[0] ??
+    "UAH";
+  const [remoteResult, setRemoteResult] = useState<{
+    key: string;
+    value: QuoteResult;
+  }>({
+    key: "1000:43:0",
     value: initialResult,
   });
 
@@ -43,7 +55,8 @@ export function Calculator({ onContact }: Props) {
     [customsValue, currencyRate, dutyRate],
   );
   const calculationKey = `${customsValue}:${currencyRate}:${dutyRate}`;
-  const result = remoteResult.key === calculationKey ? remoteResult.value : localResult;
+  const result =
+    remoteResult.key === calculationKey ? remoteResult.value : localResult;
 
   useEffect(() => {
     const requestKey = `${customsValue}:${currencyRate}:${dutyRate}`;
@@ -63,11 +76,13 @@ export function Calculator({ onContact }: Props) {
           className="grid overflow-hidden rounded-3xl bg-[#eff2f0] shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
           data-reveal
         >
-          <div className="p-7 md:p-11">
-            <span className="section-tag">Орієнтовно</span>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight">Калькулятор митних платежів</h2>
+          <div className="bg-[#e8efeb] p-7 md:p-11">
+            <span className="section-tag">Попередній розрахунок</span>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight">
+              Калькулятор митних платежів
+            </h2>
             <p className="text-portway-ink-3 mt-2 text-sm">
-              Оцініть мито та ПДВ ще до відправки вантажу.
+              Оцініть можливий розмір мита та ПДВ до оформлення вантажу.
             </p>
             <div className="mt-7">
               <label className="field-label" htmlFor="category">
@@ -112,16 +127,17 @@ export function Calculator({ onContact }: Props) {
               </div>
             </div>
             <p className="text-portway-ink-3/80 mt-4 text-xs leading-5">
-              Розрахунок орієнтовний і не є підставою для сплати платежів. Точну суму та код УКТЗЕД
-              визначить брокер після консультації.
+              Розрахунок попередній і не є підставою для сплати. Ставка мита
+              залежить від коду УКТЗЕД і характеристик товару; точну суму
+              визначає брокер після перевірки документів.
             </p>
           </div>
-          <div className="bg-portway-primary border-portway-mint/25 flex flex-col justify-center border-t p-7 text-white md:p-11 lg:border-t-0 lg:border-l">
+          <div className="bg-portway-primary flex flex-col justify-center border-t border-white/10 p-7 text-white md:p-11 lg:border-t-0">
             {[
-              ['Митна вартість, ₴', formatMoney(result.customsValueUah)],
+              ["Митна вартість, ₴", formatMoney(result.customsValueUah)],
               [`Мито (${dutyRate}%)`, formatMoney(result.duty)],
-              ['База ПДВ', formatMoney(result.vatBase)],
-              ['ПДВ (20%)', formatMoney(result.vat)],
+              ["База ПДВ", formatMoney(result.vatBase)],
+              ["ПДВ (20%)", formatMoney(result.vat)],
             ].map(([label, value]) => (
               <div
                 key={label}
@@ -137,8 +153,20 @@ export function Calculator({ onContact }: Props) {
                 {formatMoney(result.total)}
               </strong>
             </div>
-            <Button variant="mint" className="mt-7 self-start" onClick={onContact}>
-              Отримати точний розрахунок
+            <Button
+              variant="mint"
+              className="mt-7 self-start"
+              onClick={() =>
+                onContact({
+                  category: category.label,
+                  customsValue,
+                  currency,
+                  dutyRate,
+                  total: result.total,
+                })
+              }
+            >
+              Запросити точний розрахунок
             </Button>
           </div>
         </div>

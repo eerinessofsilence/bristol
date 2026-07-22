@@ -1,23 +1,68 @@
-import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  PropsWithChildren,
+} from 'react';
+import { ArrowRight } from 'lucide-react';
 
-type Props = PropsWithChildren<
-  ButtonHTMLAttributes<HTMLButtonElement> & {
-    variant?: 'dark' | 'mint' | 'outline';
-    size?: 'default' | 'compact';
-  }
+type SharedProps = {
+  variant?: 'dark' | 'mint' | 'outline';
+  size?: 'default' | 'compact';
+};
+
+type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement> & SharedProps>;
+
+type LinkProps = PropsWithChildren<
+  AnchorHTMLAttributes<HTMLAnchorElement> & SharedProps
 >;
 
 const variants = {
-  dark: 'border-portway-primary bg-portway-primary text-white hover:bg-portway-primary-hover hover:shadow-[0_4px_0_rgba(112,145,134,0.55)]',
-  mint: 'border-portway-mint bg-portway-mint text-[#08221a] hover:bg-portway-mint-deep hover:shadow-[0_4px_0_rgba(22,34,30,0.35)]',
+  dark: 'border-portway-primary bg-portway-primary text-white',
+  mint: 'border-portway-mint bg-portway-mint text-[#08221a]',
   outline:
-    'border-portway-line bg-white text-portway-ink hover:border-portway-mint-muted hover:shadow-[0_4px_0_rgba(127,159,148,0.35)]',
+    'border-portway-line bg-white text-portway-ink hover:border-portway-mint-muted',
 };
 
 const sizes = {
-  default: 'px-6 py-3.5',
-  compact: 'px-5 py-2.5',
+  default: 'min-h-14 gap-8 py-2.5 pr-2.5 pl-6',
+  compact: 'min-h-11 gap-4 py-1.5 pr-1.5 pl-4',
 };
+
+const iconVariants = {
+  dark: 'bg-white text-portway-primary',
+  mint: 'bg-portway-primary text-white',
+  outline: 'bg-portway-primary text-white',
+};
+
+const iconSizes = {
+  default: 'size-9',
+  compact: 'size-8',
+};
+
+function getClassName(
+  className: string,
+  variant: NonNullable<SharedProps['variant']>,
+  size: NonNullable<SharedProps['size']>,
+) {
+  return `action-pill relative inline-flex cursor-pointer items-center justify-between rounded-full border-[1.5px] text-sm font-semibold whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-60 ${sizes[size]} ${variants[variant]} ${className}`;
+}
+
+function ArrowIcon({
+  variant,
+  size,
+}: {
+  variant: NonNullable<SharedProps['variant']>;
+  size: NonNullable<SharedProps['size']>;
+}) {
+  return (
+    <span
+      className={`action-pill-icon action-pill-icon-surface grid shrink-0 place-items-center rounded-full ${iconSizes[size]} ${iconVariants[variant]}`}
+      aria-hidden="true"
+    >
+      <ArrowRight size={size === 'compact' ? 15 : 18} strokeWidth={2.6} />
+    </span>
+  );
+}
 
 export function Button({
   children,
@@ -28,12 +73,26 @@ export function Button({
 }: Props) {
   return (
     <button
-      className={`relative inline-flex cursor-pointer items-center justify-center rounded-xl border-[1.5px] text-sm font-semibold whitespace-nowrap transition-[transform,box-shadow,border-radius,letter-spacing,background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:rounded-[15px] hover:tracking-[0.01em] active:translate-y-0 active:scale-[0.98] active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 ${sizes[size]} ${variants[variant]} ${className}`}
+      className={getClassName(className, variant, size)}
       {...props}
     >
-      <span className="relative z-10 inline-flex items-center justify-center gap-2.5">
-        {children}
-      </span>
+      <span className="relative z-10">{children}</span>
+      <ArrowIcon variant={variant} size={size} />
     </button>
+  );
+}
+
+export function ButtonLink({
+  children,
+  className = '',
+  variant = 'dark',
+  size = 'default',
+  ...props
+}: LinkProps) {
+  return (
+    <a className={getClassName(className, variant, size)} {...props}>
+      <span className="relative z-10">{children}</span>
+      <ArrowIcon variant={variant} size={size} />
+    </a>
   );
 }

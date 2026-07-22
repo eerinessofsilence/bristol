@@ -1,46 +1,54 @@
-import { X } from 'lucide-react';
-import { type FormEvent, useEffect, useRef, useState } from 'react';
-import { createLead } from '../api/client';
-import { Button } from './ui/Button';
+import { X } from "lucide-react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
+import { createLead } from "../api/client";
+import type { CalculatorQuote } from "../types";
+import { Button } from "./ui/Button";
 
 type Props = {
-  open: boolean;
+  quote: CalculatorQuote | null;
   onClose: () => void;
 };
 
-const initialForm = { firstName: '', lastName: '', phone: '', email: '' };
+const initialForm = { firstName: "", lastName: "", phone: "", email: "" };
 
-export function ContactModal({ open, onClose }: Props) {
+const formatMoney = (value: number) =>
+  `${Math.round(value).toLocaleString("uk-UA")} ₴`;
+
+export function ContactModal({ quote, onClose }: Props) {
   const [form, setForm] = useState(initialForm);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
-    if (open) window.setTimeout(() => firstInputRef.current?.focus(), 50);
+    document.body.style.overflow = quote ? "hidden" : "";
+    if (quote) window.setTimeout(() => firstInputRef.current?.focus(), 50);
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === "Escape") onClose();
     };
-    document.addEventListener('keydown', closeOnEscape);
+    document.addEventListener("keydown", closeOnEscape);
     return () => {
-      document.body.style.overflow = '';
-      document.removeEventListener('keydown', closeOnEscape);
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", closeOnEscape);
     };
-  }, [open, onClose]);
+  }, [quote, onClose]);
 
-  if (!open) return null;
+  if (!quote) return null;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitting(true);
-    setStatus('');
+    setStatus("");
     try {
-      await createLead({ ...form, source: 'website_callback' });
+      await createLead({ ...form, source: "calculator_quote" });
       setStatus(`Дякуємо, ${form.firstName}! Зателефонуємо найближчим часом.`);
       setForm(initialForm);
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Сталася помилка. Спробуйте ще раз.');
+      setStatus(
+        error instanceof Error
+          ? error.message
+          : "Сталася помилка. Спробуйте ще раз.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -58,20 +66,38 @@ export function ContactModal({ open, onClose }: Props) {
         aria-labelledby="contact-title"
         className="relative my-auto w-full max-w-[520px] rounded-[22px] bg-white p-8 shadow-2xl md:px-10 md:py-11"
       >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Закрити"
-          className="bg-portway-soft hover:bg-portway-line absolute top-4 right-4 grid size-9 cursor-pointer place-items-center rounded-full transition"
-        >
-          <X size={18} strokeWidth={2.4} />
-        </button>
-        <h2 id="contact-title" className="pr-8 text-2xl font-bold tracking-tight">
-          Передзвонимо протягом 15 хвилин
-        </h2>
+        <div className="relative flex min-h-9 items-center justify-center">
+          <h2
+            id="contact-title"
+            className="px-12 text-center text-2xl font-bold tracking-tight"
+          >
+            Уточнимо розрахунок
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Закрити"
+            className="bg-portway-soft hover:bg-portway-line absolute top-1/2 right-0 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full transition"
+          >
+            <X size={18} strokeWidth={2.4} />
+          </button>
+        </div>
         <p className="text-portway-ink-3 mt-3 text-sm leading-6">
-          Залиште контакти — брокер зв'яжеться з вами і відповість на всі питання.
+          Ви вже зробили попередній розрахунок. Залиште контакти — менеджер
+          перевірить документи та код УКТЗЕД і уточнить суму платежів.
         </p>
+        <div className="bg-portway-soft mt-5 rounded-2xl p-4">
+          <p className="text-portway-ink-3 text-xs font-semibold tracking-wide uppercase">
+            Ваш розрахунок
+          </p>
+          <p className="mt-2 text-sm font-semibold">{quote.category}</p>
+          <div className="text-portway-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+            <span>
+              Митна вартість: {quote.customsValue.toLocaleString("uk-UA")} {quote.currency}
+            </span>
+            <span>Платежі: {formatMoney(quote.total)}</span>
+          </div>
+        </div>
         <form className="mt-8" onSubmit={handleSubmit}>
           <div className="grid gap-5 sm:grid-cols-2">
             <div>
@@ -84,7 +110,9 @@ export function ContactModal({ open, onClose }: Props) {
                 className="field-control"
                 required
                 value={form.firstName}
-                onChange={(event) => setForm({ ...form, firstName: event.target.value })}
+                onChange={(event) =>
+                  setForm({ ...form, firstName: event.target.value })
+                }
                 placeholder="Ваше ім'я"
               />
             </div>
@@ -97,7 +125,9 @@ export function ContactModal({ open, onClose }: Props) {
                 className="field-control"
                 required
                 value={form.lastName}
-                onChange={(event) => setForm({ ...form, lastName: event.target.value })}
+                onChange={(event) =>
+                  setForm({ ...form, lastName: event.target.value })
+                }
                 placeholder="Ваше прізвище"
               />
             </div>
@@ -113,30 +143,40 @@ export function ContactModal({ open, onClose }: Props) {
               required
               minLength={7}
               value={form.phone}
-              onChange={(event) => setForm({ ...form, phone: event.target.value })}
+              onChange={(event) =>
+                setForm({ ...form, phone: event.target.value })
+              }
               placeholder="+38 (0__) ___-__-__"
             />
           </div>
           <div className="mt-5">
             <label htmlFor="email" className="field-label">
-              Email <span className="text-portway-ink-3 font-normal">(необов'язково)</span>
+              Email{" "}
+              <span className="text-portway-ink-3 font-normal">
+                (необов'язково)
+              </span>
             </label>
             <input
               id="email"
               className="field-control"
               type="email"
               value={form.email}
-              onChange={(event) => setForm({ ...form, email: event.target.value })}
+              onChange={(event) =>
+                setForm({ ...form, email: event.target.value })
+              }
               placeholder="you@example.com"
             />
           </div>
           <Button type="submit" disabled={submitting} className="mt-6 w-full">
-            {submitting ? 'Надсилаємо…' : 'Замовити дзвінок'}
+            {submitting ? "Надсилаємо…" : "Уточнити розрахунок"}
           </Button>
           <p className="text-portway-ink-3 mt-4 text-center text-xs leading-5 text-balance">
             Натискаючи кнопку, ви погоджуєтесь на обробку персональних даних.
           </p>
-          <p aria-live="polite" className="text-portway-mint-deep mt-3 min-h-5 text-sm">
+          <p
+            aria-live="polite"
+            className={`text-portway-mint-deep text-sm ${status ? "mt-3" : "sr-only"}`}
+          >
             {status}
           </p>
         </form>

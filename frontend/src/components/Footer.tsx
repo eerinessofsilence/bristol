@@ -1,18 +1,15 @@
-type Props = {
-  onContact: () => void;
-};
-
-export function Footer({ onContact }: Props) {
+export function Footer() {
   return (
     <footer className="bg-portway-primary overflow-hidden pt-20 text-white">
       <div className="page-wrap">
         <div className="grid gap-14 pb-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-20">
           <div className="flex min-w-0 flex-col justify-between gap-16">
             <h2 className="from-portway-mint-muted to-portway-mint-soft max-w-2xl bg-linear-to-r via-[#b8cbc4] bg-clip-text text-[clamp(1.3rem,1.8vw,1.5rem)] leading-[1.25] font-bold tracking-tight text-balance text-transparent">
-              Не дозволяйте митниці гальмувати ваш бізнес. Отримайте гарантований план оформлення.
+              Розкажіть про вантаж з Китаю чи Європи — підготуємо план митного
+              оформлення та маршрут до складу клієнта.
             </h2>
             <div className="text-[clamp(64px,12vw,165px)] leading-[0.82] font-extrabold tracking-[-0.055em] select-none">
-              Portway
+              Bristol
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8 lg:pt-1">
@@ -22,13 +19,13 @@ export function Footer({ onContact }: Props) {
               </h3>
               <nav className="mt-4 space-y-2.5 text-sm text-white/75">
                 <a className="block hover:text-white" href="#services">
-                  Брокеридж
+                  Координація перевезення
                 </a>
                 <a className="block hover:text-white" href="#services">
-                  Портова обробка
+                  Гданськ і Констанца
                 </a>
                 <a className="block hover:text-white" href="#services">
-                  Доставка
+                  Доставка до складу
                 </a>
                 <a className="block hover:text-white" href="#calc">
                   Калькулятор
@@ -44,30 +41,29 @@ export function Footer({ onContact }: Props) {
                   Як працюємо
                 </a>
                 <a className="block hover:text-white" href="#operate">
-                  Географія
+                  Підготовка
                 </a>
                 <a className="block hover:text-white" href="#faq">
                   Питання
                 </a>
-                <button
-                  type="button"
-                  className="cursor-pointer hover:text-white"
-                  onClick={onContact}
+                <a
+                  className="block hover:text-white"
+                  href="#calc"
                 >
-                  Контакти
-                </button>
+                  Розрахувати платежі
+                </a>
               </nav>
             </div>
           </div>
         </div>
         <div className="mt-7 flex flex-wrap justify-between gap-4 py-7 text-xs text-white/40">
-          <span>© 2026 Portway. Усі права захищено.</span>
+          <span>© 2026 Bristol. Усі права захищено.</span>
           <nav className="flex gap-5" aria-label="Юридична інформація">
             <a href="/privacy" className="transition hover:text-white/80">
-              Privacy
+              Конфіденційність
             </a>
             <a href="/terms" className="transition hover:text-white/80">
-              Terms
+              Умови використання
             </a>
           </nav>
         </div>
