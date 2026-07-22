@@ -15,7 +15,8 @@ type Props = {
 };
 
 type MenuPosition = {
-  top: number;
+  top?: number;
+  bottom?: number;
   left: number;
   width: number;
   maxHeight: number;
@@ -28,6 +29,7 @@ export function CustomSelect({ id, options, value, onChange }: Props) {
   const menuRef = useRef<HTMLDivElement>(null);
   const [menuPosition, setMenuPosition] = useState<MenuPosition>({
     top: 0,
+    bottom: undefined,
     left: 0,
     width: 0,
     maxHeight: 320,
@@ -53,17 +55,17 @@ export function CustomSelect({ id, options, value, onChange }: Props) {
       if (!trigger) return;
 
       const viewportGap = 12;
-      const menuGap = 8;
+      const menuGap = 6;
       const estimatedHeight = Math.min(options.length * 48 + 12, 320);
       const spaceBelow = window.innerHeight - trigger.bottom - viewportGap;
       const spaceAbove = trigger.top - viewportGap;
       const opensUp = spaceBelow < estimatedHeight && spaceAbove > spaceBelow;
       const availableHeight = opensUp ? spaceAbove - menuGap : spaceBelow - menuGap;
       const maxHeight = Math.max(120, Math.min(320, availableHeight));
-      const renderedHeight = Math.min(estimatedHeight, maxHeight);
 
       setMenuPosition({
-        top: opensUp ? trigger.top - renderedHeight - menuGap : trigger.bottom + menuGap,
+        top: opensUp ? undefined : trigger.bottom + menuGap,
+        bottom: opensUp ? window.innerHeight - trigger.top + menuGap : undefined,
         left: trigger.left,
         width: trigger.width,
         maxHeight,
@@ -122,12 +124,13 @@ export function CustomSelect({ id, options, value, onChange }: Props) {
             role="listbox"
             aria-label={selected.label}
             style={{
-              top: menuPosition.top,
+              top: menuPosition.top ?? 'auto',
+              bottom: menuPosition.bottom ?? 'auto',
               left: menuPosition.left,
               width: menuPosition.width,
               maxHeight: menuPosition.maxHeight,
             }}
-            className={`fixed z-[2000] overflow-y-auto rounded-2xl border border-white/80 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(234,243,238,0.94))] p-1.5 shadow-[0_18px_45px_rgba(22,34,30,0.16)] backdrop-blur-xl ${menuPosition.opensUp ? 'origin-bottom animate-[select-menu-up_180ms_ease-out]' : 'origin-top animate-[select-menu-down_180ms_ease-out]'}`}
+            className={`fixed z-[2000] overflow-y-auto rounded-2xl border border-white/80 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(234,243,238,0.94))] p-1.5 shadow-[0_10px_24px_rgba(22,34,30,0.12)] backdrop-blur-xl ${menuPosition.opensUp ? 'origin-bottom animate-[select-menu-up_180ms_ease-out]' : 'origin-top animate-[select-menu-down_180ms_ease-out]'}`}
           >
             {options.map((option) => {
               const isSelected = option.value === value;

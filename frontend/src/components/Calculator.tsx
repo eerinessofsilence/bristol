@@ -57,10 +57,10 @@ export function Calculator({ onContact }: Props) {
   }, [customsValue, currencyRate, dutyRate]);
 
   return (
-    <section id="calc" className="scroll-mt-10 pb-20 md:pb-24">
+    <section id="calc" className="bg-portway-soft scroll-mt-10 py-20 md:py-24">
       <div className="page-wrap">
         <div
-          className="bg-portway-soft grid overflow-hidden rounded-3xl shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
+          className="grid overflow-hidden rounded-3xl bg-[#eff2f0] shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
           data-reveal
         >
           <div className="p-7 md:p-11">

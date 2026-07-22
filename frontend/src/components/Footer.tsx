@@ -7,7 +7,7 @@ export function Footer({ onContact }: Props) {
     <footer className="bg-portway-primary overflow-hidden pt-20 text-white">
       <div className="page-wrap">
         <div className="grid gap-12 pb-14 lg:grid-cols-[1.3fr_1fr]">
-          <h2 className="max-w-lg text-3xl leading-tight font-bold tracking-tight">
+          <h2 className="text-portway-mint-muted max-w-lg text-3xl leading-tight font-bold tracking-tight">
             Не дозволяйте митниці гальмувати ваш бізнес. Отримайте гарантований план оформлення.
           </h2>
           <div className="grid grid-cols-2 gap-8">

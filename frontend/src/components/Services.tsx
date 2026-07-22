@@ -13,7 +13,7 @@ export function Services({ onContact }: Props) {
           <div className="mx-auto max-w-2xl text-center" data-reveal>
             <span className="section-tag">Повний цикл</span>
             <h2 className="section-title mt-4">Що ми робимо</h2>
-            <p className="text-portway-ink-3 mt-4">
+            <p className="text-portway-ink-2 mt-4">
               Митне оформлення та експедирування для імпортерів, яким потрібні швидкість,
               відповідність закону й зрозуміла ціна.
             </p>
@@ -22,7 +22,7 @@ export function Services({ onContact }: Props) {
             {services.map(({ icon: Icon, title, description }) => (
               <article key={title} className="text-center">
                 <div className="bg-portway-primary mx-auto mb-6 grid size-[74px] place-items-center rounded-full text-white">
-                  <Icon size={29} strokeWidth={2.4} />
+                  <Icon size={34} strokeWidth={2.4} />
                 </div>
                 <h3 className="text-lg font-bold tracking-tight">{title}</h3>
                 <p className="text-portway-ink-3 mx-auto mt-3 max-w-sm text-sm leading-6">
@@ -43,15 +43,16 @@ export function Services({ onContact }: Props) {
             <div className="mt-auto pt-7">
               <h3 className="text-xl font-bold">Довіра в бізнесі</h3>
               <p className="mt-3 text-sm leading-6 text-white/65">
-                Ліцензовані митні брокери в кожному великому порту, який ми обслуговуємо.
+                Ліцензовані митні брокери супроводжують оформлення у ключових портах і відповідають
+                за документи на кожному етапі.
               </p>
               <button
                 type="button"
                 onClick={onContact}
-                className="group text-portway-ink hover:bg-portway-mint-soft mt-6 flex w-full cursor-pointer items-center justify-between rounded-full bg-white px-5 py-3 text-sm font-semibold transition-[transform,background-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.01] hover:shadow-[0_8px_24px_rgba(22,34,30,0.12)] active:scale-[0.985] active:shadow-none"
+                className="action-pill text-portway-ink mt-6 flex w-full cursor-pointer items-center justify-between rounded-full bg-white px-5 py-3 text-sm font-semibold"
               >
-                Обговорити поставку
-                <span className="bg-portway-primary group-hover:bg-portway-mint group-hover:text-portway-primary grid size-7 place-items-center rounded-full text-white transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5">
+                <span>Обговорити поставку</span>
+                <span className="action-pill-icon action-pill-icon-surface bg-portway-primary grid size-7 place-items-center rounded-full text-white">
                   <ArrowRight size={14} strokeWidth={2.6} />
                 </span>
               </button>
@@ -65,7 +66,7 @@ export function Services({ onContact }: Props) {
                 Пропонуємо сплату мита від нашого імені для перевірених клієнтів.
               </p>
             </div>
-            <div className="border-portway-mint/30 flex flex-1 flex-col justify-center border-t pt-5">
+            <div className="border-portway-mint/30 flex flex-1 flex-col items-end justify-center border-t pt-5 text-right">
               <strong className="text-5xl leading-none font-extrabold tracking-tight">95%</strong>
               <p className="mt-2 font-semibold">своєчасних оформлень</p>
               <p className="text-portway-ink-3 mt-2 text-sm leading-5">
@@ -77,18 +78,22 @@ export function Services({ onContact }: Props) {
             <div className="grid size-16 place-items-center rounded-2xl bg-white/10">
               <ShieldCheck size={30} strokeWidth={2.4} />
             </div>
-            <h3 className="mt-auto text-xl leading-7 font-bold">
-              Прозорі тарифи — жодних несподіваних доплат без вашої згоди.
-            </h3>
-            <a
-              href="#calc"
-              className="group text-portway-ink hover:bg-portway-mint-soft mt-6 flex items-center justify-between rounded-full bg-white px-5 py-3 text-sm font-semibold transition-[transform,background-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.01] hover:shadow-[0_8px_24px_rgba(22,34,30,0.12)] active:scale-[0.985] active:shadow-none"
-            >
-              Перевірити тарифи
-              <span className="bg-portway-primary group-hover:bg-portway-mint group-hover:text-portway-primary grid size-7 place-items-center rounded-full text-white transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5">
-                <ArrowRight size={14} strokeWidth={2.6} />
-              </span>
-            </a>
+            <div className="mt-auto pt-7">
+              <h3 className="text-xl font-bold">Прозорі тарифи</h3>
+              <p className="mt-3 text-sm leading-6 text-white/65">
+                Фіксуємо вартість робіт до початку оформлення та погоджуємо будь-які додаткові
+                витрати заздалегідь.
+              </p>
+              <a
+                href="#calc"
+                className="action-pill text-portway-ink mt-6 flex items-center justify-between rounded-full bg-white px-5 py-3 text-sm font-semibold"
+              >
+                <span>Перевірити тарифи</span>
+                <span className="action-pill-icon action-pill-icon-surface bg-portway-primary grid size-7 place-items-center rounded-full text-white">
+                  <ArrowRight size={14} strokeWidth={2.6} />
+                </span>
+              </a>
+            </div>
           </article>
         </div>
       </section>

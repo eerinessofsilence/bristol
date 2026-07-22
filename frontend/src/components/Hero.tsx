@@ -12,9 +12,9 @@ export function Hero({ onContact }: Props) {
       id="top"
       className="relative h-screen min-h-[620px] overflow-hidden bg-[linear-gradient(120deg,#e9f4ee_0%,#cde6da_42%,#7e9a8e_68%,#384841_100%)]"
     >
-      <div className="page-wrap relative z-10">
+      <div className="page-wrap relative z-10 flex h-full items-center">
         <Header onContact={onContact} />
-        <div className="max-w-[670px] py-20 md:py-24">
+        <div className="max-w-[670px]">
           <h1 className="text-[42px] leading-[0.98] font-extrabold tracking-[-0.055em] sm:text-6xl lg:text-[68px]">
             Вантаж у русі,
             <br />

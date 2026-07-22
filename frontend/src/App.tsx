@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Calculator } from './components/Calculator';
 import { ContactModal } from './components/ContactModal';
 import { CoverageMap } from './components/CoverageMap';
@@ -15,6 +15,36 @@ import { useReveal } from './hooks/useReveal';
 export function App() {
   const [contactOpen, setContactOpen] = useState(false);
   useReveal();
+
+  useEffect(() => {
+    const handleAnchorClick = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[href^="#"]');
+      const hash = link?.getAttribute('href');
+      if (!hash || hash === '#') return;
+
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (!target) return;
+
+      event.preventDefault();
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+      window.history.pushState(null, '', hash);
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+    return () => document.removeEventListener('click', handleAnchorClick);
+  }, []);
 
   const openContact = () => setContactOpen(true);
 

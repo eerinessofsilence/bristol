@@ -2,7 +2,7 @@ export function Intro() {
   return (
     <section className="py-20 md:py-24">
       <div className="page-wrap grid items-start gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
-        <div className="lg:sticky lg:top-24" data-reveal>
+        <div className="lg:sticky lg:top-36" data-reveal>
           <h2 className="section-title max-w-xl">Оформлення й доставка — один партнер.</h2>
           <p className="text-portway-ink-2 mt-7 max-w-xl leading-7">
             Portway — приватна компанія з митного брокериджу та транспортного експедирування. Ми

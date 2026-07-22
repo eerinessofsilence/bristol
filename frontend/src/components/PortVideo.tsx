@@ -9,7 +9,7 @@ export function PortVideo() {
             Розвантаження, огляд контейнерів і робота терміналу — коротке відео з порту.
           </p>
         </div>
-        <div className="relative mt-10 overflow-hidden rounded-[18px] bg-black" data-reveal>
+        <div className="port-video-shell relative mt-10 overflow-hidden bg-black" data-reveal>
           <video
             autoPlay
             muted
@@ -18,7 +18,7 @@ export function PortVideo() {
             controls={false}
             disablePictureInPicture
             preload="auto"
-            className="pointer-events-none aspect-video w-full object-cover"
+            className="pointer-events-none block aspect-video w-full object-cover"
           >
             <source
               src="https://cdn.pixabay.com/video/2024/06/13/216619_large.mp4"
