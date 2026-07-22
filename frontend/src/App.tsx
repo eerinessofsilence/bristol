@@ -3,7 +3,6 @@ import { Calculator } from './components/Calculator';
 import { ContactModal } from './components/ContactModal';
 import { CoverageMap } from './components/CoverageMap';
 import { Faq } from './components/Faq';
-import { FloatingContactButton } from './components/FloatingContactButton';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
 import { Intro } from './components/Intro';
@@ -61,7 +60,6 @@ export function App() {
         <Faq />
       </main>
       <Footer onContact={openContact} />
-      <FloatingContactButton onClick={openContact} />
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   );
