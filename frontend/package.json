@@ -13,16 +13,14 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
-    "leaflet": "latest",
     "lucide-react": "latest",
+    "maplibre-gl": "^5.24.0",
     "react": "latest",
-    "react-dom": "latest",
-    "react-leaflet": "latest"
+    "react-dom": "latest"
   },
   "devDependencies": {
     "@eslint/js": "latest",
     "@tailwindcss/vite": "latest",
-    "@types/leaflet": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",

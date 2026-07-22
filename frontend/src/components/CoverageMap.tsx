@@ -1,5 +1,5 @@
-import { CircleMarker, MapContainer, Popup, TileLayer } from 'react-leaflet';
 import { MapPin } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 import { Button } from './ui/Button';
 
 type Props = {
@@ -7,15 +7,75 @@ type Props = {
 };
 
 const cities = [
-  { name: 'Одеса', position: [46.482, 30.723] as [number, number] },
-  { name: 'Чорноморськ', position: [46.3, 30.65] as [number, number] },
-  { name: 'Київ', position: [50.45, 30.52] as [number, number] },
-  { name: 'Львів', position: [49.84, 24.03] as [number, number] },
+  { name: 'Одеса', coordinates: [30.723, 46.482] as [number, number] },
+  { name: 'Чорноморськ', coordinates: [30.65, 46.3] as [number, number] },
+  { name: 'Київ', coordinates: [30.52, 50.45] as [number, number] },
+  { name: 'Львів', coordinates: [24.03, 49.84] as [number, number] },
 ];
 
+const mapTilerApiKey = import.meta.env.VITE_MAPTILER_API_KEY?.trim();
+
 export function CoverageMap({ onContact }: Props) {
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!mapContainerRef.current || !mapTilerApiKey) return;
+
+    let map: import('maplibre-gl').Map | undefined;
+    let cancelled = false;
+
+    const initializeMap = async () => {
+      const { default: maplibregl } = await import('maplibre-gl');
+      if (cancelled || !mapContainerRef.current) return;
+
+      map = new maplibregl.Map({
+        container: mapContainerRef.current,
+        style: `https://api.maptiler.com/maps/dataviz-v4-light/style.json?key=${mapTilerApiKey}`,
+        center: [31.6, 48.9],
+        zoom: 5,
+        minZoom: 3.5,
+        maxZoom: 15,
+        scrollZoom: true,
+        dragRotate: false,
+        pitchWithRotate: false,
+        attributionControl: false,
+      });
+
+      map.addControl(
+        new maplibregl.NavigationControl({ showCompass: false, visualizePitch: false }),
+        'top-left',
+      );
+      map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+
+      cities.forEach((city) => {
+        const marker = document.createElement('button');
+        marker.type = 'button';
+        marker.className = 'portway-map-marker';
+        marker.setAttribute('aria-label', city.name);
+
+        new maplibregl.Marker({ element: marker, anchor: 'center' })
+          .setLngLat(city.coordinates)
+          .setPopup(
+            new maplibregl.Popup({
+              offset: 18,
+              closeButton: false,
+              className: 'portway-map-popup',
+            }).setText(city.name),
+          )
+          .addTo(map!);
+      });
+    };
+
+    void initializeMap();
+
+    return () => {
+      cancelled = true;
+      map?.remove();
+    };
+  }, []);
+
   return (
-    <section id="operate" className="scroll-mt-10 pb-20 md:pb-24">
+    <section id="operate" className="scroll-mt-10 py-20 md:py-24">
       <div
         className="page-wrap grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14"
         data-reveal
@@ -38,31 +98,18 @@ export function CoverageMap({ onContact }: Props) {
             Перевірити покриття портів
           </Button>
         </div>
-        <div className="border-portway-line h-[420px] overflow-hidden rounded-[18px] border">
-          <MapContainer
-            center={[48.9, 31.6]}
-            zoom={5}
-            scrollWheelZoom
-            touchZoom
-            wheelDebounceTime={30}
-            wheelPxPerZoomLevel={80}
-            className="h-full w-full"
-          >
-            <TileLayer
-              attribution="&copy; OpenStreetMap &copy; CARTO"
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        <div className="border-portway-line bg-portway-mint-soft relative h-[420px] overflow-hidden rounded-[18px] border">
+          {mapTilerApiKey ? (
+            <div
+              ref={mapContainerRef}
+              className="h-full w-full"
+              aria-label="Карта покриття Portway"
             />
-            {cities.map((city) => (
-              <CircleMarker
-                key={city.name}
-                center={city.position}
-                radius={9}
-                pathOptions={{ color: '#ffffff', weight: 3, fillColor: '#2e9a75', fillOpacity: 1 }}
-              >
-                <Popup>{city.name}</Popup>
-              </CircleMarker>
-            ))}
-          </MapContainer>
+          ) : (
+            <div className="text-portway-ink-2 flex h-full items-center justify-center px-8 text-center text-sm leading-6">
+              Додайте VITE_MAPTILER_API_KEY у frontend/.env.local, щоб показати карту.
+            </div>
+          )}
         </div>
       </div>
     </section>
