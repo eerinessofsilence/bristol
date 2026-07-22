@@ -6,11 +6,16 @@ export function Footer({ onContact }: Props) {
   return (
     <footer className="bg-portway-primary overflow-hidden pt-20 text-white">
       <div className="page-wrap">
-        <div className="grid gap-12 pb-14 lg:grid-cols-[1.3fr_1fr]">
-          <h2 className="text-portway-mint-muted max-w-lg text-3xl leading-tight font-bold tracking-tight">
-            Не дозволяйте митниці гальмувати ваш бізнес. Отримайте гарантований план оформлення.
-          </h2>
-          <div className="grid grid-cols-2 gap-8">
+        <div className="grid gap-14 pb-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-20">
+          <div className="flex min-w-0 flex-col justify-between gap-16">
+            <h2 className="from-portway-mint-muted to-portway-mint-soft max-w-2xl bg-linear-to-r via-[#b8cbc4] bg-clip-text text-[clamp(1.3rem,1.8vw,1.5rem)] leading-[1.25] font-bold tracking-tight text-balance text-transparent">
+              Не дозволяйте митниці гальмувати ваш бізнес. Отримайте гарантований план оформлення.
+            </h2>
+            <div className="text-[clamp(64px,12vw,165px)] leading-[0.82] font-extrabold tracking-[-0.055em] select-none">
+              Portway
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-8 lg:pt-1">
             <div>
               <h3 className="text-xs font-semibold tracking-wider text-white/45 uppercase">
                 Послуги
@@ -54,9 +59,6 @@ export function Footer({ onContact }: Props) {
               </nav>
             </div>
           </div>
-        </div>
-        <div className="text-[clamp(64px,15vw,190px)] leading-[0.82] font-extrabold tracking-[-0.055em] select-none">
-          Portway
         </div>
         <div className="mt-7 flex flex-wrap justify-between gap-4 py-7 text-xs text-white/40">
           <span>© 2026 Portway. Усі права захищено.</span>

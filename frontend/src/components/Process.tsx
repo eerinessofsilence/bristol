@@ -26,7 +26,7 @@ export function Process() {
           {steps.map((step, index) => (
             <li key={step.title} className="flex gap-5 border-b border-white/10 py-5 first:pt-0">
               <span
-                className={`mt-1 grid size-9 shrink-0 place-items-center rounded-full border-2 ${index === 0 ? 'border-portway-mint bg-portway-mint text-[#08221a]' : 'border-white/35 text-white/45'}`}
+                className={`mt-1 grid size-9 shrink-0 place-items-center rounded-full border-[3px] ${index === 0 ? 'border-portway-mint-muted bg-portway-mint text-[#08221a]' : 'border-white/35 text-white/45'}`}
               >
                 <Check size={17} strokeWidth={2.8} />
               </span>

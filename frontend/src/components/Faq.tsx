@@ -7,7 +7,7 @@ export function Faq() {
 
   return (
     <section id="faq" className="bg-portway-soft scroll-mt-10 py-20 md:py-24">
-      <div className="page-wrap grid items-start gap-10 lg:grid-cols-[1.28fr_0.72fr] lg:gap-16">
+      <div className="page-wrap grid items-start gap-10 lg:grid-cols-[1.28fr_0.72fr] lg:gap-20">
         <div className="lg:sticky lg:top-36 lg:order-2" data-reveal>
           <span className="section-tag">Питання</span>
           <h2 className="section-title mt-4">Часті запитання</h2>
@@ -45,7 +45,9 @@ export function Faq() {
                   className={`grid transition-[grid-template-rows] duration-300 ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-portway-ink-2 px-6 pb-5 text-sm leading-6">{item.answer}</p>
+                    <p className="text-portway-ink-2 pr-6 pb-5 pl-8 text-sm leading-6 text-balance">
+                      {item.answer}
+                    </p>
                   </div>
                 </div>
               </article>
