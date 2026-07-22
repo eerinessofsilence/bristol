@@ -1,6 +1,6 @@
-# Portway
+# Bristol
 
-Полноценная версия лендинга Portway: React/Vite/TailwindCSS на фронтенде, FastAPI на бэкенде и PostgreSQL для хранения заявок.
+Полноценная версия лендинга Bristol: React/Vite/TailwindCSS на фронтенде, FastAPI на бэкенде и PostgreSQL для хранения заявок.
 
 ## Структура
 
@@ -55,4 +55,3 @@ npm run dev
 cd frontend && npm run build && npm run lint && npm run format:check
 cd backend && pytest
 ```
-

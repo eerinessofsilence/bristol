@@ -7,7 +7,7 @@ from app.core.config import settings
 app = FastAPI(
     title=settings.app_name,
     version="1.0.0",
-    description="API для заявок і розрахунків Portway.",
+    description="API для заявок і розрахунків Bristol.",
 )
 
 app.add_middleware(
@@ -24,4 +24,3 @@ app.include_router(api_router)
 @app.get("/", include_in_schema=False)
 def root() -> dict[str, str]:
     return {"service": settings.app_name, "docs": "/docs"}
-

@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = "Portway API"
+    app_name: str = "Bristol API"
     app_env: str = "development"
     database_url: str = "postgresql+psycopg://portway:portway@localhost:5432/portway"
     cors_origins: str = "http://localhost:5173"
@@ -22,4 +22,3 @@ def get_settings() -> Settings:
 
 
 settings = get_settings()
-
