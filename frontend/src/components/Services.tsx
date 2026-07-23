@@ -1,27 +1,21 @@
-import { Calculator, Handshake } from "lucide-react";
-import { services } from "../data/content";
-import { ButtonLink } from "./ui/Button";
+import { Calculator, Handshake } from 'lucide-react';
+import { services } from '../data/content';
+import { ButtonLink } from './ui/Button';
 
 export function Services() {
   return (
     <>
-      <section
-        id="services"
-        className="bg-portway-soft scroll-mt-10 py-20 md:py-24"
-      >
+      <section id="services" className="bg-portway-soft scroll-mt-10 py-20 md:py-24">
         <div className="page-wrap">
           <div className="mx-auto max-w-2xl text-center" data-reveal>
             <span className="section-tag">Повний цикл</span>
             <h2 className="section-title mt-4">Що ми робимо</h2>
-            <p className="text-portway-ink-2 mt-4">
-              Спеціалізуємося на митному оформленні вантажів з Китаю та Європи й
-              супроводжуємо їх до складу клієнта.
+            <p className="text-portway-ink-2 mt-4 text-balance">
+              Спеціалізуємося на митному оформленні вантажів з Китаю та Європи й супроводжуємо їх до
+              складу клієнта.
             </p>
           </div>
-          <div
-            className="mt-14 grid gap-11 md:grid-cols-3 md:gap-8"
-            data-reveal
-          >
+          <div className="mt-14 grid gap-11 md:grid-cols-3 md:gap-8" data-reveal>
             {services.map(({ icon: Icon, title, description }) => (
               <article key={title} className="text-center">
                 <div className="bg-portway-primary mx-auto mb-6 grid size-[74px] place-items-center rounded-full text-white">
@@ -46,14 +40,10 @@ export function Services() {
             <div className="mt-auto pt-7">
               <h3 className="text-xl font-bold">Відповідальний супровід</h3>
               <p className="mt-3 text-sm leading-6 text-white/65">
-                Один менеджер координує експедиторів, лінійних агентів, портові
-                служби, брокера та перевізника.
+                Один менеджер координує експедиторів, лінійних агентів, портові служби, брокера та
+                перевізника.
               </p>
-              <ButtonLink
-                href="#calc"
-                variant="outline"
-                className="mt-6 w-full"
-              >
+              <ButtonLink href="#calc" variant="outline" className="mt-6 w-full">
                 Перейти до розрахунку
               </ButtonLink>
             </div>
@@ -65,8 +55,8 @@ export function Services() {
               </strong>
               <p className="mt-2 font-semibold">за послуги Bristol</p>
               <p className="text-portway-ink-3 mt-2 text-sm leading-5">
-                Розрахунок проводиться після митного випуску вантажу. Після
-                оформлення передаємо митну декларацію.
+                Розрахунок проводиться після митного випуску вантажу. Після оформлення передаємо
+                митну декларацію.
               </p>
             </div>
             <span
@@ -79,8 +69,7 @@ export function Services() {
               </strong>
               <p className="mt-2 font-semibold">доставка до адреси</p>
               <p className="text-portway-ink-3 mt-2 text-sm leading-5">
-                Організовуємо перевезення до вашого складу або безпосередньо до
-                клієнта.
+                Організовуємо перевезення до вашого складу або безпосередньо до клієнта.
               </p>
             </div>
           </article>
@@ -91,14 +80,10 @@ export function Services() {
             <div className="mt-auto pt-7">
               <h3 className="text-xl font-bold">Оцініть митні платежі</h3>
               <p className="mt-3 text-sm leading-6 text-white/65">
-                Вкажіть категорію товару, митну вартість і валюту — калькулятор
-                орієнтовно розрахує мито, ПДВ та загальну суму платежів.
+                Вкажіть категорію товару, митну вартість і валюту — калькулятор орієнтовно розрахує
+                мито, ПДВ та загальну суму платежів.
               </p>
-              <ButtonLink
-                href="#calc"
-                variant="outline"
-                className="mt-6 w-full"
-              >
+              <ButtonLink href="#calc" variant="outline" className="mt-6 w-full">
                 Розрахувати платежі
               </ButtonLink>
             </div>

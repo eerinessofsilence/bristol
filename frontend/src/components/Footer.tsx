@@ -3,12 +3,11 @@ export function Footer() {
     <footer className="bg-portway-primary overflow-hidden pt-20 text-white">
       <div className="page-wrap">
         <div className="grid gap-14 pb-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-20">
-          <div className="flex min-w-0 flex-col justify-between gap-16">
-            <h2 className="from-portway-mint-muted to-portway-mint-soft max-w-2xl bg-linear-to-r via-[#b8cbc4] bg-clip-text text-[clamp(1.3rem,1.8vw,1.5rem)] leading-[1.25] font-bold tracking-tight text-balance text-transparent">
-              Розкажіть про вантаж з Китаю чи Європи — підготуємо план митного
-              оформлення та маршрут до складу клієнта.
+          <div className="footer-brand-lockup flex min-w-0 flex-col justify-between gap-16">
+            <h2 className="from-portway-mint-muted to-portway-mint-soft w-full bg-linear-to-r via-[#b8cbc4] bg-clip-text text-[clamp(1.05rem,1.35vw,1.2rem)] leading-[1.35] font-semibold tracking-tight text-balance text-transparent opacity-60">
+              Розкажіть про вантаж — підготуємо план оформлення та маршрут до вашого складу.
             </h2>
-            <div className="text-[clamp(64px,12vw,165px)] leading-[0.82] font-extrabold tracking-[-0.055em] select-none">
+            <div className="footer-brand-word leading-[0.82] font-extrabold tracking-[-0.055em] select-none">
               Bristol
             </div>
           </div>
@@ -46,10 +45,10 @@ export function Footer() {
                 <a className="block hover:text-white" href="#faq">
                   Питання
                 </a>
-                <a
-                  className="block hover:text-white"
-                  href="#calc"
-                >
+                <a className="block hover:text-white" href="#testimonials">
+                  Відгуки
+                </a>
+                <a className="block hover:text-white" href="#calc">
                   Розрахувати платежі
                 </a>
               </nav>

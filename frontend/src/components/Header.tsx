@@ -1,12 +1,12 @@
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import { ButtonLink } from "./ui/Button";
+import { Menu, X } from 'lucide-react';
+import { useState } from 'react';
+import { ButtonLink } from './ui/Button';
 
 const links = [
-  ["Послуги", "#services"],
-  ["Як працюємо", "#how"],
-  ["Підготовка", "#operate"],
-  ["Питання", "#faq"],
+  ['Послуги', '#services'],
+  ['Як працюємо', '#how'],
+  ['Підготовка', '#operate'],
+  ['Питання', '#faq'],
 ];
 
 export function Header() {
@@ -22,7 +22,7 @@ export function Header() {
       </a>
       <nav
         aria-label="Головна навігація"
-        className={`absolute top-20 right-0 left-0 flex origin-top flex-col gap-4 rounded-2xl bg-white p-6 shadow-xl transition-[opacity,transform,visibility] duration-300 ease-out md:visible md:static md:flex md:translate-y-0 md:scale-100 md:flex-row md:gap-8 md:bg-transparent md:p-0 md:opacity-100 md:shadow-none ${open ? "visible translate-y-0 scale-100 opacity-100" : "pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0 md:pointer-events-auto"}`}
+        className={`absolute top-20 right-0 left-0 flex origin-top flex-col gap-4 rounded-2xl bg-white p-6 shadow-xl transition-[opacity,transform,visibility] duration-300 ease-out md:visible md:static md:flex md:translate-y-0 md:scale-100 md:flex-row md:gap-8 md:bg-transparent md:p-0 md:opacity-100 md:shadow-none ${open ? 'visible translate-y-0 scale-100 opacity-100' : 'pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0 md:pointer-events-auto'}`}
       >
         {links.map(([label, href]) => (
           <a
@@ -39,23 +39,19 @@ export function Header() {
         <ButtonLink
           href="#calc"
           size="compact"
-          className="header-contact-button max-md:hidden hover:translate-y-0 md:inline-flex"
-          style={{ borderRadius: "9999px", boxShadow: "none" }}
+          className="header-contact-button hover:translate-y-0 max-md:hidden md:inline-flex"
+          style={{ borderRadius: '9999px', boxShadow: 'none' }}
         >
           Розрахувати
         </ButtonLink>
         <button
           type="button"
-          aria-label={open ? "Закрити меню" : "Відкрити меню"}
+          aria-label={open ? 'Закрити меню' : 'Відкрити меню'}
           aria-expanded={open}
           className="grid size-11 place-items-center rounded-full bg-white/60 md:hidden"
           onClick={() => setOpen((value) => !value)}
         >
-          {open ? (
-            <X size={22} strokeWidth={2.4} />
-          ) : (
-            <Menu size={22} strokeWidth={2.4} />
-          )}
+          {open ? <X size={22} strokeWidth={2.4} /> : <Menu size={22} strokeWidth={2.4} />}
         </button>
       </div>
     </header>

@@ -31,12 +31,12 @@ export function CoverageMap() {
       className="scroll-mt-10 bg-white py-20 md:py-24"
     >
       <div className="page-wrap" data-reveal>
-        <div>
+        <div className="text-center">
           <span className="section-tag">Підготовка до оформлення</span>
-          <h2 className="section-title mt-5 max-w-2xl">
+          <h2 className="section-title mx-auto mt-5 max-w-2xl">
             Що потрібно для початку роботи
           </h2>
-          <p className="text-portway-ink-2 mt-5 max-w-2xl leading-7">
+          <p className="text-portway-ink-2 mx-auto mt-5 max-w-2xl leading-7">
             Ще до оформлення збираємо вихідні дані про товар і поставку,
             перевіряємо комплектність документів та передаємо брокеру все
             необхідне для точного розрахунку й визначення порядку оформлення.
