@@ -8,6 +8,7 @@ import { Hero } from './components/Hero';
 import { Intro } from './components/Intro';
 import { Process } from './components/Process';
 import { Services } from './components/Services';
+import { Testimonials } from './components/Testimonials';
 import { useReveal } from './hooks/useReveal';
 import type { CalculatorQuote } from './types';
 
@@ -55,6 +56,7 @@ export function App() {
         <Process />
         <CoverageMap />
         <Faq />
+        <Testimonials />
       </main>
       <Footer />
       <ContactModal quote={contactQuote} onClose={() => setContactQuote(null)} />
