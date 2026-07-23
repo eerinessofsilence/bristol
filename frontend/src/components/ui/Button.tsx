@@ -1,26 +1,20 @@
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  PropsWithChildren,
-} from 'react';
-import { ArrowRight } from 'lucide-react';
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, PropsWithChildren } from 'react';
+import { ArrowRight, type LucideIcon } from 'lucide-react';
 
 type SharedProps = {
+  icon?: LucideIcon;
   variant?: 'dark' | 'mint' | 'outline';
   size?: 'default' | 'compact';
 };
 
 type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement> & SharedProps>;
 
-type LinkProps = PropsWithChildren<
-  AnchorHTMLAttributes<HTMLAnchorElement> & SharedProps
->;
+type LinkProps = PropsWithChildren<AnchorHTMLAttributes<HTMLAnchorElement> & SharedProps>;
 
 const variants = {
   dark: 'border-portway-primary bg-portway-primary text-white',
   mint: 'border-portway-mint bg-portway-mint text-[#08221a]',
-  outline:
-    'border-portway-line bg-white text-portway-ink hover:border-portway-mint-muted',
+  outline: 'border-portway-line bg-white text-portway-ink hover:border-portway-mint-muted',
 };
 
 const sizes = {
@@ -47,10 +41,12 @@ function getClassName(
   return `action-pill relative inline-flex cursor-pointer items-center justify-between rounded-full border-[1.5px] text-sm font-semibold whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-60 ${sizes[size]} ${variants[variant]} ${className}`;
 }
 
-function ArrowIcon({
+function ActionIcon({
+  icon: Icon,
   variant,
   size,
 }: {
+  icon: LucideIcon;
   variant: NonNullable<SharedProps['variant']>;
   size: NonNullable<SharedProps['size']>;
 }) {
@@ -59,7 +55,7 @@ function ArrowIcon({
       className={`action-pill-icon action-pill-icon-surface grid shrink-0 place-items-center rounded-full ${iconSizes[size]} ${iconVariants[variant]}`}
       aria-hidden="true"
     >
-      <ArrowRight size={size === 'compact' ? 15 : 18} strokeWidth={2.6} />
+      <Icon size={size === 'compact' ? 15 : 18} strokeWidth={2.6} />
     </span>
   );
 }
@@ -67,17 +63,15 @@ function ArrowIcon({
 export function Button({
   children,
   className = '',
+  icon = ArrowRight,
   variant = 'dark',
   size = 'default',
   ...props
 }: Props) {
   return (
-    <button
-      className={getClassName(className, variant, size)}
-      {...props}
-    >
+    <button className={getClassName(className, variant, size)} {...props}>
       <span className="relative z-10">{children}</span>
-      <ArrowIcon variant={variant} size={size} />
+      <ActionIcon icon={icon} variant={variant} size={size} />
     </button>
   );
 }
@@ -85,6 +79,7 @@ export function Button({
 export function ButtonLink({
   children,
   className = '',
+  icon = ArrowRight,
   variant = 'dark',
   size = 'default',
   ...props
@@ -92,7 +87,7 @@ export function ButtonLink({
   return (
     <a className={getClassName(className, variant, size)} {...props}>
       <span className="relative z-10">{children}</span>
-      <ArrowIcon variant={variant} size={size} />
+      <ActionIcon icon={icon} variant={variant} size={size} />
     </a>
   );
 }

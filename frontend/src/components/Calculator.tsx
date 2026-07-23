@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
-import { calculateQuote } from "../api/client";
-import { currencies, productCategories } from "../data/content";
-import type { CalculatorQuote, QuoteResult } from "../types";
-import { CustomSelect } from "./ui/CustomSelect";
-import { Button } from "./ui/Button";
-import { PricePicker } from "./ui/PricePicker";
+import { MessageCircle } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { calculateQuote } from '../api/client';
+import { currencies, productCategories } from '../data/content';
+import type { CalculatorQuote, QuoteResult } from '../types';
+import { CustomSelect } from './ui/CustomSelect';
+import { Button } from './ui/Button';
+import { PricePicker } from './ui/PricePicker';
 
 type Props = {
   onContact: (quote: CalculatorQuote) => void;
@@ -18,14 +19,9 @@ const initialResult: QuoteResult = {
   total: 8600,
 };
 
-const formatMoney = (value: number) =>
-  `${Math.round(value).toLocaleString("uk-UA")} ₴`;
+const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-UA')} ₴`;
 
-function calculateLocally(
-  customsValue: number,
-  currencyRate: number,
-  dutyRate: number,
-) {
+function calculateLocally(customsValue: number, currencyRate: number, dutyRate: number) {
   const customsValueUah = customsValue * currencyRate;
   const duty = customsValueUah * (dutyRate / 100);
   const vatBase = customsValueUah + duty;
@@ -40,13 +36,12 @@ export function Calculator({ onContact }: Props) {
   const dutyRate = productCategories[categoryIndex].duty;
   const category = productCategories[categoryIndex];
   const currency =
-    currencies.find((item) => item.rate === currencyRate)?.label.split(" · ")[0] ??
-    "UAH";
+    currencies.find((item) => item.rate === currencyRate)?.label.split(' · ')[0] ?? 'UAH';
   const [remoteResult, setRemoteResult] = useState<{
     key: string;
     value: QuoteResult;
   }>({
-    key: "1000:43:0",
+    key: '1000:43:0',
     value: initialResult,
   });
 
@@ -55,8 +50,7 @@ export function Calculator({ onContact }: Props) {
     [customsValue, currencyRate, dutyRate],
   );
   const calculationKey = `${customsValue}:${currencyRate}:${dutyRate}`;
-  const result =
-    remoteResult.key === calculationKey ? remoteResult.value : localResult;
+  const result = remoteResult.key === calculationKey ? remoteResult.value : localResult;
 
   useEffect(() => {
     const requestKey = `${customsValue}:${currencyRate}:${dutyRate}`;
@@ -78,9 +72,7 @@ export function Calculator({ onContact }: Props) {
         >
           <div className="bg-[#e8efeb] p-7 md:p-11">
             <span className="section-tag">Попередній розрахунок</span>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight">
-              Калькулятор митних платежів
-            </h2>
+            <h2 className="mt-4 text-3xl font-bold tracking-tight">Калькулятор митних платежів</h2>
             <p className="text-portway-ink-3 mt-2 text-sm">
               Оцініть можливий розмір мита та ПДВ до оформлення вантажу.
             </p>
@@ -127,17 +119,16 @@ export function Calculator({ onContact }: Props) {
               </div>
             </div>
             <p className="text-portway-ink-3/80 mt-4 text-xs leading-5">
-              Розрахунок попередній і не є підставою для сплати. Ставка мита
-              залежить від коду УКТЗЕД і характеристик товару; точну суму
-              визначає брокер після перевірки документів.
+              Розрахунок попередній і не є підставою для сплати. Ставка мита залежить від коду
+              УКТЗЕД і характеристик товару; точну суму визначає брокер після перевірки документів.
             </p>
           </div>
           <div className="bg-portway-primary flex flex-col justify-center border-t border-white/10 p-7 text-white md:p-11 lg:border-t-0">
             {[
-              ["Митна вартість, ₴", formatMoney(result.customsValueUah)],
+              ['Митна вартість, ₴', formatMoney(result.customsValueUah)],
               [`Мито (${dutyRate}%)`, formatMoney(result.duty)],
-              ["База ПДВ", formatMoney(result.vatBase)],
-              ["ПДВ (20%)", formatMoney(result.vat)],
+              ['База ПДВ', formatMoney(result.vatBase)],
+              ['ПДВ (20%)', formatMoney(result.vat)],
             ].map(([label, value]) => (
               <div
                 key={label}
@@ -154,6 +145,7 @@ export function Calculator({ onContact }: Props) {
               </strong>
             </div>
             <Button
+              icon={MessageCircle}
               variant="mint"
               className="mt-7 self-start"
               onClick={() =>
