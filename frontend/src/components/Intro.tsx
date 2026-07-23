@@ -28,8 +28,8 @@ export function Intro() {
           data-reveal
         >
           <img
-            src="/images/port-terminal-wide.jpg"
-            alt="Контейнерне судно біля терміналу морського порту"
+            src="/images/logistics-coordination.webp"
+            alt="Логістичний координатор планує маршрут контейнерного вантажу"
             className="h-full w-full object-cover"
             loading="lazy"
           />
