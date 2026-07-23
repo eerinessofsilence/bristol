@@ -1,11 +1,7 @@
 import {
-  Boxes,
   Handshake,
-  MonitorSmartphone,
-  PackageCheck,
   ShieldCheck,
   Ship,
-  ShoppingCart,
   Truck,
 } from 'lucide-react';
 
@@ -95,7 +91,7 @@ export const faqs = [
 
 export const testimonials = [
   {
-    icon: MonitorSmartphone,
+    avatar: '/images/testimonials/olena.webp',
     quote:
       'Ще до прибуття контейнера ми знали план дій, строки й повну послідовність оформлення. Bristol координував усіх учасників, а ми отримували статуси без нагадувань.',
     author: 'Олена К.',
@@ -104,7 +100,7 @@ export const testimonials = [
     outcomes: ['План до прибуття', 'Статуси без нагадувань'],
   },
   {
-    icon: ShoppingCart,
+    avatar: '/images/testimonials/andrii.webp',
     quote:
       'Команда швидко перебудувала маршрут через європейський порт і взяла на себе комунікацію з агентами. Вантаж приїхав на склад без простоїв між етапами.',
     author: 'Андрій М.',
@@ -113,7 +109,7 @@ export const testimonials = [
     outcomes: ['Маршрут через ЄС', 'Без простоїв між етапами'],
   },
   {
-    icon: PackageCheck,
+    avatar: '/images/testimonials/iryna.webp',
     quote:
       'Для регулярних поставок нам налаштували зрозумілий процес: один менеджер, одна форма документів і чіткий план на кожну наступну партію.',
     author: 'Ірина С.',
@@ -122,7 +118,7 @@ export const testimonials = [
     outcomes: ['Регулярні поставки', 'Один менеджер'],
   },
   {
-    icon: Boxes,
+    avatar: '/images/testimonials/dmytro.webp',
     quote:
       'Найцінніше — Bristol одразу говорить, де є ризик і що потрібно виправити. Рішення приймаємо до прибуття вантажу, а не коли контейнер уже стоїть у порту.',
     author: 'Дмитро Л.',

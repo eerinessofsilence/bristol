@@ -24,7 +24,6 @@ export function Testimonials() {
         <div className="mt-12 grid gap-5 lg:grid-cols-12" data-reveal>
           {testimonials.map((testimonial, index) => {
             const isDark = index === 0;
-            const IndustryIcon = testimonial.icon;
 
             return (
               <blockquote
@@ -63,12 +62,11 @@ export function Testimonials() {
                 </ul>
 
                 <footer className="mt-auto flex items-center gap-2.5 pt-8">
-                  <span
-                    className={`grid size-10 shrink-0 place-items-center rounded-xl ${isDark ? 'bg-portway-mint text-portway-primary' : 'bg-portway-primary text-white'}`}
-                    aria-hidden="true"
-                  >
-                    <IndustryIcon size={18} strokeWidth={2} />
-                  </span>
+                  <img
+                    src={testimonial.avatar}
+                    alt=""
+                    className={`size-10 shrink-0 rounded-full object-cover ${isDark ? 'ring-2 ring-portway-mint/70' : 'ring-2 ring-portway-primary/10'}`}
+                  />
                   <span className="min-w-0">
                     <cite className="block text-sm font-bold not-italic">{testimonial.author}</cite>
                     <span
