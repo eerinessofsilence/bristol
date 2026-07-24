@@ -2,12 +2,7 @@ import { Calculator, Handshake } from 'lucide-react';
 import { services } from '../data/content';
 import { ButtonLink } from './ui/Button';
 
-const serviceMarkers = [
-  'УКТ ЗЕД · ДЕКЛАРАЦІЯ',
-  'КООРДИНАЦІЯ',
-  'ПОРТИ ЄС',
-  'ДОСТАВКА',
-] as const;
+const serviceMarkers = ['УКТ ЗЕД · ДЕКЛАРАЦІЯ', 'КООРДИНАЦІЯ', 'ПОРТИ ЄС', 'ДОСТАВКА'] as const;
 
 export function Services() {
   return (
@@ -77,7 +72,7 @@ export function Services() {
       </section>
 
       <section className="py-20 md:py-24">
-        <div className="page-wrap grid gap-5 lg:grid-cols-3" data-reveal>
+        <div className="page-wrap grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-reveal>
           <article className="bg-portway-primary flex min-h-64 flex-col rounded-[18px] p-7 text-white">
             <div className="grid size-16 place-items-center rounded-2xl bg-white/10">
               <Handshake size={30} strokeWidth={2.4} />
@@ -93,7 +88,7 @@ export function Services() {
               </ButtonLink>
             </div>
           </article>
-          <article className="bg-portway-mint-soft flex min-h-64 flex-col rounded-[18px] p-6">
+          <article className="bg-portway-mint-soft flex min-h-64 flex-col rounded-[18px] p-6 md:order-first md:col-span-2 lg:order-none lg:col-span-1">
             <div className="flex flex-1 flex-col justify-center pb-5">
               <strong className="text-3xl leading-none font-extrabold tracking-tight">
                 Без передоплати

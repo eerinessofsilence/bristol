@@ -29,7 +29,7 @@ export function Header() {
             key={href}
             href={href}
             onClick={() => setOpen(false)}
-            className="text-portway-primary hover:text-portway-primary-hover after:bg-portway-ink-2/70 relative w-fit translate-y-0 transform-gpu self-start py-1 text-lg font-bold tracking-[0.06em] uppercase transition-[color,transform] duration-400 ease-in-out will-change-transform after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:transition-[width] after:duration-400 after:ease-in-out hover:-translate-y-[1.5px] hover:after:w-[125%] md:self-auto md:text-sm md:font-semibold md:tracking-normal md:normal-case"
+            className="text-portway-primary hover:text-portway-primary-hover after:bg-portway-mint-muted relative w-fit translate-y-0 transform-gpu self-start py-1 text-lg font-bold tracking-[0.06em] uppercase transition-[color,transform] duration-400 ease-in-out will-change-transform after:absolute after:bottom-0 after:left-1/2 after:h-0.5 after:w-0 after:-translate-x-1/2 after:rounded-full after:transition-[width] after:duration-400 after:ease-in-out hover:-translate-y-[1.5px] hover:after:w-[72%] md:self-auto md:text-sm md:font-semibold md:tracking-normal md:normal-case"
           >
             {label}
           </a>
