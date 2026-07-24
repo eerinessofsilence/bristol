@@ -1,12 +1,19 @@
-import type { ExchangeRateResult, LeadPayload, QuoteRequest, QuoteResult } from '../types';
+import type {
+  ExchangeRateResult,
+  LeadPayload,
+  ProductCodeSuggestion,
+  QuoteRequest,
+  QuoteResult,
+} from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL ?? '';
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
+  const isFormData = options?.body instanceof FormData;
   const response = await fetch(`${API_URL}${path}`, {
     ...options,
     headers: {
-      'Content-Type': 'application/json',
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       ...options?.headers,
     },
   });
@@ -56,4 +63,15 @@ export function getUsdExchangeRate() {
 
 export function getEurExchangeRate() {
   return request<ExchangeRateResult>('/api/v1/exchange-rates/eur');
+}
+
+export function suggestProductCodes(images: File[], description: string) {
+  const body = new FormData();
+  images.forEach((image) => body.append('images', image));
+  body.append('description', description);
+
+  return request<ProductCodeSuggestion>('/api/v1/product-codes/suggest', {
+    method: 'POST',
+    body,
+  });
 }

@@ -1,9 +1,10 @@
-import { MessageCircle, RefreshCw } from 'lucide-react';
+import { Camera, MessageCircle, RefreshCw } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { calculateQuote, getUsdExchangeRate } from '../api/client';
 import type { CalculatorQuote, ExchangeRateResult, QuoteResult } from '../types';
 import { Button } from './ui/Button';
 import { PricePicker } from './ui/PricePicker';
+import { ProductCodeFinderModal } from './ProductCodeFinderModal';
 
 type Props = {
   onContact: (quote: CalculatorQuote) => void;
@@ -41,6 +42,7 @@ export function Calculator({ onContact }: Props) {
   const [exchangeRate, setExchangeRate] = useState<ExchangeRateResult | null>(null);
   const [rateStatus, setRateStatus] = useState<RateStatus>('loading');
   const [rateRequestId, setRateRequestId] = useState(0);
+  const [isCodeFinderOpen, setIsCodeFinderOpen] = useState(false);
   const [remoteResult, setRemoteResult] = useState<{ key: string; value: QuoteResult } | null>(
     null,
   );
@@ -103,7 +105,10 @@ export function Calculator({ onContact }: Props) {
   }, [exchangeRate, hasValidCode, productCode, weightKg]);
 
   return (
-    <section id="calc" className="customs-surface bg-portway-soft scroll-mt-10 py-14 md:py-24">
+    <section
+      id="calc"
+      className="customs-surface bg-cleargatecustoms-soft scroll-mt-10 py-14 md:py-24"
+    >
       <div className="page-wrap">
         <div
           className="customs-document-shell grid overflow-hidden rounded-3xl bg-[#eff2f0] shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
@@ -121,7 +126,7 @@ export function Calculator({ onContact }: Props) {
             <h2 className="mt-4 text-[1.85rem] leading-[1.05] font-bold tracking-tight sm:text-3xl">
               Калькулятор митних платежів
             </h2>
-            <p className="text-portway-ink-3 mt-2 text-sm">
+            <p className="text-cleargatecustoms-ink-3 mt-2 text-sm">
               Вкажіть код УКТ ЗЕД і вагу вантажу — візьмемо критичну ціну з довідника ризиків.
             </p>
             <div className="mt-6 sm:mt-7">
@@ -131,21 +136,36 @@ export function Calculator({ onContact }: Props) {
                 </span>
                 Код УКТ ЗЕД
               </label>
-              <input
-                id="productCode"
-                value={productCode}
-                inputMode="numeric"
-                autoComplete="off"
-                maxLength={10}
-                className="field-control font-mono tracking-[0.08em]"
-                placeholder="Наприклад, 0201203000"
-                onChange={(event) =>
-                  setProductCode(event.target.value.replace(/\D/g, '').slice(0, 10))
-                }
-              />
+              <div className="flex items-stretch gap-3">
+                <input
+                  id="productCode"
+                  value={productCode}
+                  inputMode="numeric"
+                  autoComplete="off"
+                  maxLength={10}
+                  className="field-control min-w-0 flex-1 font-mono tracking-[0.08em]"
+                  placeholder="Наприклад, 0201203000"
+                  onChange={(event) =>
+                    setProductCode(event.target.value.replace(/\D/g, '').slice(0, 10))
+                  }
+                />
+                <Button
+                  type="button"
+                  icon={Camera}
+                  variant="outline"
+                  size="compact"
+                  className="shrink-0 self-stretch"
+                  onClick={() => setIsCodeFinderOpen(true)}
+                >
+                  <span className="sm:hidden">За фото</span>
+                  <span className="hidden sm:inline">Визначити за фото</span>
+                </Button>
+              </div>
               <p
                 className={`mt-2 text-xs leading-5 ${
-                  productCode.length > 0 && !hasValidCode ? 'text-[#9a3412]' : 'text-portway-ink-3'
+                  productCode.length > 0 && !hasValidCode
+                    ? 'text-[#9a3412]'
+                    : 'text-cleargatecustoms-ink-3'
                 }`}
               >
                 {productCode.length > 0 && !hasValidCode
@@ -165,7 +185,7 @@ export function Calculator({ onContact }: Props) {
             <div className="mt-2">
               <div className="min-h-5 text-xs leading-5" aria-live="polite">
                 {rateStatus === 'loading' && (
-                  <p className="text-portway-ink-3 flex items-center gap-2" role="status">
+                  <p className="text-cleargatecustoms-ink-3 flex items-center gap-2" role="status">
                     <RefreshCw className="animate-spin" size={13} aria-hidden="true" />
                     Отримуємо актуальний курс НБУ…
                   </p>
@@ -193,7 +213,7 @@ export function Calculator({ onContact }: Props) {
                 )}
               </div>
             </div>
-            <p className="text-portway-ink-3/80 mt-5 text-xs leading-5">
+            <p className="text-cleargatecustoms-ink-3/80 mt-5 text-xs leading-5">
               Для кодів із кількісною одиницею виміру потрібен окремий розрахунок. Пошлина у цьому
               попередньому розрахунку становить 0%; ПДВ — 20%.
             </p>
@@ -204,7 +224,7 @@ export function Calculator({ onContact }: Props) {
             )}
           </div>
           <div
-            className="bg-portway-primary relative flex flex-col justify-center overflow-hidden border-t border-white/10 p-5 text-white sm:p-7 md:p-11 lg:border-t-0"
+            className="bg-cleargatecustoms-primary relative flex flex-col justify-center overflow-hidden border-t border-white/10 p-5 text-white sm:p-7 md:p-11 lg:border-t-0"
             aria-busy={hasValidCode && exchangeRate !== null && result === null && !quoteError}
           >
             <div className="relative z-10 mb-4 flex flex-col items-start gap-1 border-b border-white/10 pb-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-3">
@@ -234,7 +254,7 @@ export function Calculator({ onContact }: Props) {
             ))}
             <div className="mt-2 flex flex-col gap-1 pt-5 sm:flex-row sm:items-baseline sm:justify-between">
               <span className="font-semibold">Разом платежів</span>
-              <strong className="text-portway-mint font-mono text-[1.7rem] font-semibold tracking-tight tabular-nums sm:text-3xl">
+              <strong className="text-cleargatecustoms-mint font-mono text-[1.7rem] font-semibold tracking-tight tabular-nums sm:text-3xl">
                 {formatMoney(result?.total)}
               </strong>
             </div>
@@ -259,6 +279,11 @@ export function Calculator({ onContact }: Props) {
           </div>
         </div>
       </div>
+      <ProductCodeFinderModal
+        isOpen={isCodeFinderOpen}
+        onClose={() => setIsCodeFinderOpen(false)}
+        onSelect={setProductCode}
+      />
     </section>
   );
 }

@@ -1,6 +1,6 @@
-# Bristol
+# ClearGateCustoms
 
-Полноценная версия лендинга Bristol: React/Vite/TailwindCSS на фронтенде, FastAPI на бэкенде и PostgreSQL для хранения заявок.
+Полноценная версия лендинга ClearGateCustoms: React/Vite/TailwindCSS на фронтенде, FastAPI на бэкенде и PostgreSQL для хранения заявок.
 
 ## Структура
 
@@ -40,6 +40,15 @@ alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
+Для AI-подбора кода УКТ ЗЕД добавьте новый серверный ключ в `backend/.env`:
+
+```dotenv
+OPENAI_API_KEY=your_new_key
+OPENAI_MODEL=gpt-5.6
+```
+
+Не добавляйте ключ во frontend и не коммитьте файл `.env`.
+
 Frontend:
 
 ```bash
@@ -47,6 +56,12 @@ cd frontend
 npm install
 cp .env.example .env
 npm run dev
+```
+
+При запуске через Docker передайте ключ через окружение:
+
+```bash
+OPENAI_API_KEY=your_new_key docker compose up --build
 ```
 
 ## Проверки

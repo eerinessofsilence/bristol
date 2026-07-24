@@ -4,9 +4,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    app_name: str = "Bristol API"
+    app_name: str = "ClearGateCustoms API"
     app_env: str = "development"
-    database_url: str = "postgresql+psycopg://portway:portway@localhost:5432/portway"
+    database_url: str = "postgresql+psycopg://cleargatecustoms:cleargatecustoms@localhost:5432/cleargatecustoms"
     cors_origins: str = "http://localhost:5173"
     nbu_exchange_rate_url: str = (
         "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"
@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     )
     nbu_timeout_seconds: float = 5.0
     nbu_cache_ttl_hours: int = 12
+    openai_api_key: str = ""
+    openai_model: str = "gpt-5.6"
+    openai_timeout_seconds: float = 45.0
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

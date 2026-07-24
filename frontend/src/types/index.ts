@@ -39,3 +39,19 @@ export type CalculatorQuote = {
   customsValueUsd: number;
   total: number;
 };
+
+export type ProductCodeCandidate = {
+  code: string;
+  titleUk: string;
+  reasonUk: string;
+  confidence: 'high' | 'medium' | 'low';
+  calculatorSupported: boolean;
+};
+
+export type ProductCodeSuggestion = {
+  identifiedProduct: string;
+  candidates: ProductCodeCandidate[];
+  needsMoreInfo: boolean;
+  missingDetails: string[];
+  disclaimer: string;
+};

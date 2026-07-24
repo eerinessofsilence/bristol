@@ -1,4 +1,5 @@
 from datetime import date, datetime, timedelta, timezone
+from types import SimpleNamespace
 
 import httpx
 import pytest
@@ -9,7 +10,8 @@ from sqlalchemy.pool import StaticPool
 
 from app.db.session import Base, get_db
 from app.main import app
-from app.services import exchange_rates
+from app.schemas.product_code import ProductCodeAIResult
+from app.services import exchange_rates, product_codes
 
 engine = create_engine(
     "sqlite://",
@@ -78,6 +80,76 @@ def test_quote_rejects_product_code_with_non_weight_unit() -> None:
         json={"product_code": "8512301090", "weight_kg": 100, "currency_rate": 41.5},
     )
     assert response.status_code == 422
+
+
+def test_product_code_suggestion_from_image(monkeypatch) -> None:
+    class FakeResponses:
+        async def parse(self, **kwargs):
+            assert kwargs["model"] == "gpt-5.6"
+            assert kwargs["store"] is False
+            assert kwargs["input"][0]["content"][0]["text"].endswith("Шкіряна сумка")
+            assert kwargs["input"][0]["content"][1]["image_url"].startswith(
+                "data:image/jpeg;base64,"
+            )
+            return SimpleNamespace(
+                output_parsed=ProductCodeAIResult(
+                    identified_product="Шкіряна сумка",
+                    candidates=[
+                        {
+                            "code": "4202210000",
+                            "title_uk": "Сумка з лицьовою поверхнею з натуральної шкіри",
+                            "reason_uk": "На фото видно ручну сумку зі шкіряною поверхнею.",
+                            "confidence": "medium",
+                        }
+                    ],
+                    needs_more_info=True,
+                    missing_details=["Підтвердьте матеріал зовнішньої поверхні"],
+                )
+            )
+
+    class FakeOpenAI:
+        def __init__(self, **kwargs):
+            assert kwargs["api_key"] == "test-key"
+            self.responses = FakeResponses()
+
+    monkeypatch.setattr(product_codes.settings, "openai_api_key", "test-key")
+    monkeypatch.setattr(product_codes, "AsyncOpenAI", FakeOpenAI)
+
+    response = client.post(
+        "/api/v1/product-codes/suggest",
+        files={"images": ("bag.jpg", b"fake-image", "image/jpeg")},
+        data={"description": "Шкіряна сумка"},
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "identifiedProduct": "Шкіряна сумка",
+        "candidates": [
+            {
+                "code": "4202210000",
+                "titleUk": "Сумка з лицьовою поверхнею з натуральної шкіри",
+                "reasonUk": "На фото видно ручну сумку зі шкіряною поверхнею.",
+                "confidence": "medium",
+                "calculatorSupported": True,
+            }
+        ],
+        "needsMoreInfo": True,
+        "missingDetails": ["Підтвердьте матеріал зовнішньої поверхні"],
+        "disclaimer": (
+            "Результат є попередньою AI-підказкою. Остаточний код залежить від складу, "
+            "призначення та технічної документації товару і має бути перевірений фахівцем."
+        ),
+    }
+
+
+def test_product_code_suggestion_rejects_non_image() -> None:
+    response = client.post(
+        "/api/v1/product-codes/suggest",
+        files={"images": ("notes.txt", b"not-an-image", "text/plain")},
+    )
+
+    assert response.status_code == 415
+    assert response.json() == {"detail": "Підтримуються JPG, PNG, WEBP та GIF"}
 
 
 def test_lead_creation() -> None:

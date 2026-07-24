@@ -1,5 +1,5 @@
 {
-  "name": "bristol-frontend",
+  "name": "cleargatecustoms-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -17,6 +17,7 @@
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "thinking-orbs": "^0.1.1",
     "topojson-client": "^3.1.0"
   },
   "devDependencies": {

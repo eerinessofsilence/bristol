@@ -2,15 +2,15 @@ services:
   db:
     image: postgres:17-alpine
     environment:
-      POSTGRES_DB: portway
-      POSTGRES_USER: portway
-      POSTGRES_PASSWORD: portway
+      POSTGRES_DB: cleargatecustoms
+      POSTGRES_USER: cleargatecustoms
+      POSTGRES_PASSWORD: cleargatecustoms
     ports:
       - "5432:5432"
     volumes:
-      - portway_postgres_data:/var/lib/postgresql/data
+      - cleargatecustoms_postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U portway -d portway"]
+      test: ["CMD-SHELL", "pg_isready -U cleargatecustoms -d cleargatecustoms"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -18,8 +18,10 @@ services:
   backend:
     build: ./backend
     environment:
-      DATABASE_URL: postgresql+psycopg://portway:portway@db:5432/portway
+      DATABASE_URL: postgresql+psycopg://cleargatecustoms:cleargatecustoms@db:5432/cleargatecustoms
       CORS_ORIGINS: http://localhost:5173
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-5.6}
     ports:
       - "8000:8000"
     depends_on:
@@ -34,5 +36,4 @@ services:
       - backend
 
 volumes:
-  portway_postgres_data:
-
+  cleargatecustoms_postgres_data:
