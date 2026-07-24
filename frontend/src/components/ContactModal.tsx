@@ -16,6 +16,7 @@ const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-U
 export function ContactModal({ quote, onClose }: Props) {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('');
+  const [submissionSucceeded, setSubmissionSucceeded] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
 
@@ -38,9 +39,13 @@ export function ContactModal({ quote, onClose }: Props) {
     event.preventDefault();
     setSubmitting(true);
     setStatus('');
+    setSubmissionSucceeded(false);
     try {
       await createLead({ ...form, source: 'calculator_quote' });
-      setStatus(`Дякуємо, ${form.firstName}! Зателефонуємо найближчим часом.`);
+      setSubmissionSucceeded(true);
+      setStatus(
+        `Заявку прийнято до опрацювання. Дякуємо, ${form.firstName}! Зателефонуємо найближчим часом.`,
+      );
       setForm(initialForm);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Сталася помилка. Спробуйте ще раз.');
@@ -156,8 +161,15 @@ export function ContactModal({ quote, onClose }: Props) {
           </p>
           <p
             aria-live="polite"
-            className={`text-portway-mint-deep text-sm ${status ? 'mt-3' : 'sr-only'}`}
+            className={`rounded-lg border-l-2 px-3 py-2 text-sm ${
+              status
+                ? `mt-3 ${submissionSucceeded ? 'border-[#1d9e75] bg-[#e1f5ee] text-[#085041]' : 'border-[#d85a30] bg-[#faece7] text-[#712b13]'}`
+                : 'sr-only'
+            }`}
           >
+            {submissionSucceeded && (
+              <span className="technical-label mr-2 text-[#085041]/55">Status / accepted</span>
+            )}
             {status}
           </p>
         </form>

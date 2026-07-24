@@ -1,4 +1,4 @@
-import type { LeadPayload, QuoteRequest, QuoteResult } from '../types';
+import type { ExchangeRateResult, LeadPayload, QuoteRequest, QuoteResult } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL ?? '';
 
@@ -40,4 +40,8 @@ export function calculateQuote(payload: QuoteRequest) {
       duty_rate: payload.dutyRate,
     }),
   });
+}
+
+export function getUsdExchangeRate() {
+  return request<ExchangeRateResult>('/api/v1/exchange-rates/usd');
 }

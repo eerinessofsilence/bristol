@@ -1,3 +1,4 @@
+import { BadgeCheck } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { Header } from './Header';
 import { ButtonLink } from './ui/Button';
@@ -58,9 +59,24 @@ export function Hero() {
         />
       </div>
       <div className="hero-photo-scrim absolute inset-0" aria-hidden="true" />
+      <div className="hero-customs-pattern" aria-hidden="true" />
       <div className="page-wrap relative z-10 flex h-full items-center">
         <Header />
         <div className="max-w-[940px]">
+          <div className="hero-customs-badge mb-6">
+            <span
+              className="grid size-9 shrink-0 place-items-center rounded-lg bg-[#085041] text-[#9fe1cb]"
+              aria-hidden="true"
+            >
+              <BadgeCheck size={19} strokeWidth={2.4} />
+            </span>
+            <span>
+              <span className="technical-label block text-[#085041]/55">Підтверджена послуга</span>
+              <span className="block text-xs font-bold text-[#085041] sm:text-sm">
+                Митне оформлення власними фахівцями
+              </span>
+            </span>
+          </div>
           <h1 className="text-[42px] leading-[0.98] font-extrabold tracking-[-0.055em] sm:text-6xl lg:text-[64px]">
             Митне оформлення
             <br />

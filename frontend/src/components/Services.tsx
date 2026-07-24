@@ -2,39 +2,74 @@ import { Calculator, Handshake } from 'lucide-react';
 import { services } from '../data/content';
 import { ButtonLink } from './ui/Button';
 
+const serviceMarkers = [
+  'УКТ ЗЕД · ДЕКЛАРАЦІЯ',
+  'КООРДИНАЦІЯ',
+  'ПОРТИ ЄС',
+  'ДОСТАВКА',
+] as const;
+
 export function Services() {
   return (
     <>
-      <section id="services" className="bg-portway-soft scroll-mt-10 py-20 md:py-24">
+      <section
+        id="services"
+        className="customs-surface bg-portway-soft scroll-mt-10 py-20 md:py-24"
+      >
         <div className="page-wrap">
           <div className="mx-auto max-w-2xl text-center" data-reveal>
-            <span className="section-tag">Повний цикл</span>
+            <span className="section-tag">
+              <span className="section-index">01 /</span>&nbsp; Послуги
+            </span>
             <h2 className="section-title mt-4">Що ми робимо</h2>
             <p className="text-portway-ink-2 mt-4 text-balance">
               Спеціалізуємося на митному оформленні вантажів з Китаю та Європи й супроводжуємо їх до
               складу клієнта.
             </p>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
-            {services.map(({ icon: Icon, title, description, primary }) => (
+          <div className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+            {services.map(({ icon: Icon, title, description, primary }, index) => (
               <article
                 key={title}
-                className={`rounded-xl bg-white p-5 ${primary ? 'border-2 border-[#1d9e75]' : 'border border-[#d3d1c7]/70'}`}
+                className={`customs-service-card rounded-xl bg-white p-5 ${
+                  primary
+                    ? 'border-2 border-[#1d9e75] sm:col-span-2 sm:p-7 lg:col-span-3'
+                    : 'border border-[#d3d1c7]/70'
+                }`}
               >
-                <div className="flex items-start justify-between gap-3">
+                {primary && (
+                  <span className="absolute -top-3 right-4 rounded-full border border-[#1d9e75]/20 bg-[#9fe1cb] px-3 py-1.5 text-[10px] font-bold tracking-wide text-[#085041] uppercase shadow-[0_6px_16px_rgba(29,158,117,0.16)]">
+                    Основна послуга
+                  </span>
+                )}
+                <p className="technical-label mb-4 text-[#085041]/55">
+                  {String(index + 1).padStart(2, '0')} / {serviceMarkers[index]}
+                </p>
+                <div
+                  className={
+                    primary
+                      ? 'sm:grid sm:grid-cols-[auto_minmax(0,1fr)] sm:items-start sm:gap-6'
+                      : ''
+                  }
+                >
                   <div
                     className={`grid size-10 place-items-center rounded-[10px] ${primary ? 'bg-[#e1f5ee] text-[#085041]' : 'bg-[#faece7] text-[#712b13]'}`}
                   >
                     <Icon size={20} strokeWidth={2.2} />
                   </div>
-                  {primary && (
-                    <span className="rounded-full bg-[#9fe1cb] px-2 py-1 text-[10px] font-bold tracking-wide text-[#085041] uppercase">
-                      Основна послуга
-                    </span>
-                  )}
+                  <div>
+                    <h3
+                      className={`text-base font-bold tracking-tight ${primary ? 'mt-5 sm:mt-0 sm:text-xl' : 'mt-5'}`}
+                    >
+                      {title}
+                    </h3>
+                    <p
+                      className={`text-portway-ink-3 mt-2 text-sm leading-6 ${primary ? 'max-w-3xl' : ''}`}
+                    >
+                      {description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="mt-5 text-base font-bold tracking-tight">{title}</h3>
-                <p className="text-portway-ink-3 mt-2 text-sm leading-6">{description}</p>
               </article>
             ))}
           </div>

@@ -1,10 +1,4 @@
-import {
-  ClipboardCheck,
-  Route,
-  ShieldCheck,
-  Ship,
-  Truck,
-} from 'lucide-react';
+import { ClipboardCheck, Route, ShieldCheck, Ship, Truck } from 'lucide-react';
 
 export const services = [
   {
@@ -23,7 +17,8 @@ export const services = [
   {
     icon: Ship,
     title: 'Гданськ і Констанца',
-    description: 'Координуємо прибуття, обробку й видачу вантажу напряму з портами Польщі та Румунії.',
+    description:
+      'Координуємо прибуття, обробку й видачу вантажу напряму з портами Польщі та Румунії.',
   },
   {
     icon: Truck,
@@ -153,9 +148,9 @@ export const productCategories = [
 ];
 
 export const currencies = [
-  { label: 'USD · курс 43 ₴', rate: 43 },
-  { label: 'EUR · курс 53 ₴', rate: 53 },
-  { label: 'UAH', rate: 1 },
+  { code: 'USD', label: 'USD', rate: null },
+  { code: 'EUR', label: 'EUR', rate: 53 },
+  { code: 'UAH', label: 'UAH', rate: 1 },
 ];
 
 export const trustIcon = ShieldCheck;

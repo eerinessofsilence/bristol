@@ -20,6 +20,14 @@ export type QuoteResult = {
   total: number;
 };
 
+export type ExchangeRateResult = {
+  currency: 'USD';
+  rate: number;
+  exchangeDate: string;
+  fetchedAt: string;
+  isStale: boolean;
+};
+
 export type CalculatorQuote = {
   category: string;
   customsValue: number;

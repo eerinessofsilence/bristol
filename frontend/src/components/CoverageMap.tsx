@@ -207,7 +207,9 @@ export function CoverageMap() {
     <section id="operate" className="scroll-mt-10 bg-white py-20 md:py-24">
       <div className="page-wrap">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
-          <span className="section-tag">Гданськ і Констанца</span>
+          <span className="section-tag">
+            <span className="section-index">04 /</span>&nbsp; Географія
+          </span>
           <h2 className="section-title mt-5">Маршрут вантажу до України</h2>
           <p className="text-portway-ink-2 mt-5 leading-7">
             Координуємо прибуття вантажу через порти Польщі та Румунії, виконуємо митне оформлення
@@ -216,13 +218,21 @@ export function CoverageMap() {
         </div>
 
         <figure
-          className="mt-12 overflow-hidden rounded-[24px] border border-[#d3d1c7]/70 bg-[#fbfbf9] p-3 shadow-[0_24px_64px_rgba(22,34,30,0.08)] sm:p-5 lg:p-7"
+          className="customs-map-frame mt-12 overflow-hidden rounded-[24px] border border-[#d3d1c7]/70 bg-[#fbfbf9] p-3 shadow-[0_24px_64px_rgba(22,34,30,0.08)] sm:p-5 lg:p-7"
           data-reveal
           aria-labelledby="routes-map-title"
         >
           <figcaption id="routes-map-title" className="sr-only">
             Мапа маршрутів від портів Гданська та Констанци до складу клієнта в Україні
           </figcaption>
+
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-[#085041]/10 px-2 pb-4">
+            <span className="technical-label text-[#085041]/50">Route control / MS-UA-04</span>
+            <span className="flex items-center gap-2 rounded-full border border-[#1d9e75]/20 bg-[#e1f5ee] px-3 py-1.5 text-[11px] font-semibold text-[#085041]">
+              <span className="size-1.5 rounded-full bg-[#1d9e75]" aria-hidden="true" />
+              Митний контроль в Україні
+            </span>
+          </div>
 
           {!countries && !loadError && <MapSkeleton />}
 
@@ -249,7 +259,7 @@ export function CoverageMap() {
           )}
 
           {map && (
-            <div className="relative">
+            <div className="relative overflow-hidden rounded-[18px] border border-[#d3d1c7]/45 bg-[#f4f4f1]">
               <svg
                 viewBox={
                   isCompactMap ? `190 45 560 460` : `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`
@@ -340,6 +350,23 @@ export function CoverageMap() {
                   return (
                     <g transform={`translate(${x} ${y})`}>
                       <circle
+                        r="20"
+                        fill="none"
+                        stroke="#1D9E75"
+                        strokeDasharray="3 4"
+                        strokeWidth="2"
+                        opacity="0.72"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                      <path
+                        d="M -24 0 H -16 M 16 0 H 24 M 0 -24 V -16 M 0 16 V 24"
+                        fill="none"
+                        stroke="#085041"
+                        strokeWidth="1.5"
+                        opacity="0.55"
+                        vectorEffect="non-scaling-stroke"
+                      />
+                      <circle
                         r="11"
                         fill="#085041"
                         stroke="#FFFFFF"
@@ -358,6 +385,21 @@ export function CoverageMap() {
                         strokeLinejoin="round"
                       >
                         {WAREHOUSE.name}
+                      </text>
+                      <text
+                        x={WAREHOUSE.labelOffset[0]}
+                        y={WAREHOUSE.labelOffset[1] + 18}
+                        fill="#085041"
+                        fontFamily="'IBM Plex Mono', monospace"
+                        fontSize="10"
+                        fontWeight="600"
+                        letterSpacing="1.2"
+                        paintOrder="stroke"
+                        stroke="#FBFBF9"
+                        strokeWidth="4"
+                        strokeLinejoin="round"
+                      >
+                        МИТНЕ ОФОРМЛЕННЯ
                       </text>
                     </g>
                   );
@@ -380,7 +422,7 @@ export function CoverageMap() {
               <span className="grid size-7 place-items-center rounded-full bg-[#e1f5ee] text-[#085041]">
                 <Warehouse size={14} strokeWidth={2.5} aria-hidden="true" />
               </span>
-              Склад клієнта
+              Склад клієнта / митне оформлення
             </div>
             <div className="flex items-center gap-2.5">
               <span

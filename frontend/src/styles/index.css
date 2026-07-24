@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Sora:wght@400;500;600;700;800&display=swap');
 @import 'tailwindcss';
 
 @theme {
   --font-sans: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
   --color-portway-soft: #f5f7f6;
   --color-portway-ink: #141c1a;
   --color-portway-ink-2: #3a4744;
@@ -92,6 +93,158 @@
         rgb(34 55 48 / 0.26) 100%
       ),
       linear-gradient(180deg, rgb(240 248 244 / 0.06), rgb(16 32 27 / 0.18));
+  }
+
+  .hero-customs-pattern {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgb(8 80 65 / 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(8 80 65 / 0.05) 1px, transparent 1px);
+    background-position: left 58%;
+    background-size: 32px 32px;
+    mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.75), transparent 67%);
+    pointer-events: none;
+  }
+
+  .hero-customs-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid rgb(8 80 65 / 0.16);
+    border-radius: 0.8rem;
+    background: rgb(243 240 232 / 0.78);
+    padding: 0.55rem 0.65rem;
+    box-shadow:
+      0 10px 28px rgb(22 34 30 / 0.09),
+      inset 0 1px 0 rgb(255 255 255 / 0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .technical-label,
+  .section-index,
+  .field-index {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .technical-label {
+    font-size: 0.67rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .section-index {
+    color: var(--color-portway-mint-deep);
+    letter-spacing: 0.04em;
+  }
+
+  .section-tag-dark .section-index {
+    color: #085041;
+  }
+
+  .customs-service-card {
+    position: relative;
+  }
+
+  .customs-service-card::after {
+    content: '';
+    position: absolute;
+    right: 0.65rem;
+    bottom: 0.65rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 1px solid rgb(8 80 65 / 0.25);
+    border-bottom: 1px solid rgb(8 80 65 / 0.25);
+  }
+
+  .customs-document-shell {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .customs-document-shell::before,
+  .customs-document-shell::after {
+    content: '';
+    position: absolute;
+    z-index: 4;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+  }
+
+  .customs-document-shell::before {
+    top: 0.8rem;
+    left: 0.8rem;
+    border-top: 1px solid rgb(8 80 65 / 0.35);
+    border-left: 1px solid rgb(8 80 65 / 0.35);
+  }
+
+  .customs-document-shell::after {
+    right: 0.8rem;
+    bottom: 0.8rem;
+    border-right: 1px solid rgb(159 225 203 / 0.45);
+    border-bottom: 1px solid rgb(159 225 203 / 0.45);
+  }
+
+  .customs-document-page {
+    background:
+      repeating-linear-gradient(
+        180deg,
+        transparent 0,
+        transparent 2rem,
+        rgb(8 80 65 / 0.035) 2rem,
+        rgb(8 80 65 / 0.035) calc(2rem + 1px)
+      ),
+      #f3f0e8;
+  }
+
+  .field-index {
+    display: inline-grid;
+    width: 1.5rem;
+    height: 1.15rem;
+    margin-right: 0.4rem;
+    place-items: center;
+    border-radius: 0.25rem;
+    background: rgb(8 80 65 / 0.08);
+    color: #085041;
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+
+  .customs-checkpoint-card {
+    background-image:
+      linear-gradient(90deg, rgb(159 225 203 / 0.05), transparent 42%),
+      repeating-linear-gradient(
+        90deg,
+        rgb(159 225 203 / 0.06) 0,
+        rgb(159 225 203 / 0.06) 1px,
+        transparent 1px,
+        transparent 1.25rem
+      );
+  }
+
+  .customs-checkpoint-corners {
+    position: absolute;
+    inset: 0.55rem;
+    border: 1px solid transparent;
+    background:
+      linear-gradient(#9fe1cb, #9fe1cb) left top / 0.8rem 1px no-repeat,
+      linear-gradient(#9fe1cb, #9fe1cb) left top / 1px 0.8rem no-repeat,
+      linear-gradient(#9fe1cb, #9fe1cb) right bottom / 0.8rem 1px no-repeat,
+      linear-gradient(#9fe1cb, #9fe1cb) right bottom / 1px 0.8rem no-repeat;
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  .customs-map-frame {
+    position: relative;
+    background-image:
+      linear-gradient(rgb(8 80 65 / 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(8 80 65 / 0.025) 1px, transparent 1px);
+    background-size: 30px 30px;
   }
 
   .header-contact-button,

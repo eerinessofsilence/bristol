@@ -1,8 +1,8 @@
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, RefreshCw } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { calculateQuote } from '../api/client';
+import { calculateQuote, getUsdExchangeRate } from '../api/client';
 import { currencies, productCategories } from '../data/content';
-import type { CalculatorQuote, QuoteResult } from '../types';
+import type { CalculatorQuote, ExchangeRateResult, QuoteResult } from '../types';
 import { CustomSelect } from './ui/CustomSelect';
 import { Button } from './ui/Button';
 import { PricePicker } from './ui/PricePicker';
@@ -11,15 +11,19 @@ type Props = {
   onContact: (quote: CalculatorQuote) => void;
 };
 
-const initialResult: QuoteResult = {
-  customsValueUah: 43000,
-  duty: 0,
-  vatBase: 43000,
-  vat: 8600,
-  total: 8600,
+const formatMoney = (value?: number) =>
+  value === undefined ? '—' : `${Math.round(value).toLocaleString('uk-UA')} ₴`;
+
+const formatRateDate = (value: string) => {
+  const [year, month, day] = value.split('-');
+  return `${day}.${month}.${year}`;
 };
 
-const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-UA')} ₴`;
+const formatRate = (value: number) =>
+  value.toLocaleString('uk-UA', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
 function calculateLocally(customsValue: number, currencyRate: number, dutyRate: number) {
   const customsValueUah = customsValue * currencyRate;
@@ -31,28 +35,56 @@ function calculateLocally(customsValue: number, currencyRate: number, dutyRate: 
 
 export function Calculator({ onContact }: Props) {
   const [customsValue, setCustomsValue] = useState(1000);
-  const [currencyRate, setCurrencyRate] = useState(43);
+  const [currencyIndex, setCurrencyIndex] = useState(0);
+  const [usdRate, setUsdRate] = useState<ExchangeRateResult | null>(null);
+  const [usdRateStatus, setUsdRateStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [rateRequestId, setRateRequestId] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const dutyRate = productCategories[categoryIndex].duty;
   const category = productCategories[categoryIndex];
-  const currency =
-    currencies.find((item) => item.rate === currencyRate)?.label.split(' · ')[0] ?? 'UAH';
+  const selectedCurrency = currencies[currencyIndex];
+  const currencyRate =
+    selectedCurrency.code === 'USD' ? (usdRate?.rate ?? null) : selectedCurrency.rate;
+  const currency = selectedCurrency.code;
   const [remoteResult, setRemoteResult] = useState<{
     key: string;
     value: QuoteResult;
-  }>({
-    key: '1000:43:0',
-    value: initialResult,
-  });
+  } | null>(null);
 
   const localResult = useMemo(
-    () => calculateLocally(customsValue, currencyRate, dutyRate),
+    () => (currencyRate === null ? null : calculateLocally(customsValue, currencyRate, dutyRate)),
     [customsValue, currencyRate, dutyRate],
   );
   const calculationKey = `${customsValue}:${currencyRate}:${dutyRate}`;
-  const result = remoteResult.key === calculationKey ? remoteResult.value : localResult;
+  const result = remoteResult?.key === calculationKey ? remoteResult.value : localResult;
+  const currencyOptions = currencies.map((item, index) => ({
+    label: item.label,
+    value: index,
+  }));
 
   useEffect(() => {
+    let isActive = true;
+
+    getUsdExchangeRate()
+      .then((value) => {
+        if (!isActive) return;
+        setUsdRate(value);
+        setUsdRateStatus('success');
+      })
+      .catch(() => {
+        if (!isActive) return;
+        setUsdRate(null);
+        setUsdRateStatus('error');
+      });
+
+    return () => {
+      isActive = false;
+    };
+  }, [rateRequestId]);
+
+  useEffect(() => {
+    if (currencyRate === null) return;
+
     const requestKey = `${customsValue}:${currencyRate}:${dutyRate}`;
     const timer = window.setTimeout(() => {
       calculateQuote({ customsValue, currencyRate, dutyRate })
@@ -64,20 +96,30 @@ export function Calculator({ onContact }: Props) {
   }, [customsValue, currencyRate, dutyRate]);
 
   return (
-    <section id="calc" className="bg-portway-soft scroll-mt-10 py-20 md:py-24">
+    <section id="calc" className="customs-surface bg-portway-soft scroll-mt-10 py-20 md:py-24">
       <div className="page-wrap">
         <div
-          className="grid overflow-hidden rounded-3xl bg-[#eff2f0] shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
+          className="customs-document-shell grid overflow-hidden rounded-3xl bg-[#eff2f0] shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
           data-reveal
         >
-          <div className="bg-[#e8efeb] p-7 md:p-11">
-            <span className="section-tag">Попередній розрахунок</span>
+          <div className="customs-document-page p-7 md:p-11">
+            <div className="mb-7 flex flex-wrap items-center justify-between gap-3 pb-4">
+              <span className="section-tag">
+                <span className="section-index">02 /</span>&nbsp; Розрахунок
+              </span>
+              <span className="technical-label hidden text-[#085041]/50 sm:inline">
+                MS-CALC / UA-2026
+              </span>
+            </div>
             <h2 className="mt-4 text-3xl font-bold tracking-tight">Калькулятор митних платежів</h2>
             <p className="text-portway-ink-3 mt-2 text-sm">
               Оцініть можливий розмір мита та ПДВ до оформлення вантажу.
             </p>
             <div className="mt-7">
               <label className="field-label" htmlFor="category">
+                <span className="field-index" aria-hidden="true">
+                  01
+                </span>
                 Категорія товару
               </label>
               <CustomSelect
@@ -93,6 +135,9 @@ export function Calculator({ onContact }: Props) {
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="field-label" htmlFor="customsValue">
+                  <span className="field-index" aria-hidden="true">
+                    02
+                  </span>
                   Митна вартість
                 </label>
                 <PricePicker
@@ -105,67 +150,122 @@ export function Calculator({ onContact }: Props) {
               </div>
               <div>
                 <label className="field-label" htmlFor="currency">
+                  <span className="field-index" aria-hidden="true">
+                    03
+                  </span>
                   Валюта
                 </label>
                 <CustomSelect
                   id="currency"
-                  options={currencies.map((currency) => ({
-                    label: currency.label,
-                    value: currency.rate,
-                  }))}
-                  value={currencyRate}
-                  onChange={setCurrencyRate}
+                  options={currencyOptions}
+                  value={currencyIndex}
+                  onChange={setCurrencyIndex}
                 />
+                {(selectedCurrency.code === 'USD' || selectedCurrency.code === 'EUR') && (
+                  <div className="mt-2 min-h-5 text-xs leading-5" aria-live="polite">
+                    {selectedCurrency.code === 'USD' && usdRateStatus === 'loading' && (
+                      <p className="text-portway-ink-3 flex items-center gap-2" role="status">
+                        <RefreshCw className="animate-spin" size={13} aria-hidden="true" />
+                        Отримуємо актуальний курс НБУ…
+                      </p>
+                    )}
+                    {selectedCurrency.code === 'USD' && usdRateStatus === 'error' && (
+                      <p className="text-[#9a3412]" role="alert">
+                        Курс НБУ тимчасово недоступний.{' '}
+                        <button
+                          type="button"
+                          className="cursor-pointer font-semibold underline underline-offset-2"
+                          onClick={() => {
+                            setUsdRateStatus('loading');
+                            setRateRequestId((current) => current + 1);
+                          }}
+                        >
+                          Спробувати ще раз
+                        </button>
+                      </p>
+                    )}
+                    {selectedCurrency.code === 'USD' &&
+                      usdRateStatus === 'success' &&
+                      usdRate?.isStale && (
+                      <p className="text-[#9a3412]" role="status">
+                        Курс тимчасово недоступний, показано курс на{' '}
+                        {formatRateDate(usdRate.exchangeDate)}
+                      </p>
+                      )}
+                    {selectedCurrency.code === 'USD' &&
+                      usdRateStatus === 'success' &&
+                      usdRate &&
+                      !usdRate.isStale && (
+                      <p className="technical-label text-[#085041]/60" role="status">
+                        Курс USD: {formatRate(usdRate.rate)} ₴ · НБУ на{' '}
+                        {formatRateDate(usdRate.exchangeDate)}
+                      </p>
+                      )}
+                    {selectedCurrency.code === 'EUR' && selectedCurrency.rate !== null && (
+                      <p className="technical-label text-[#085041]/60">
+                        Курс EUR: {formatRate(selectedCurrency.rate)} ₴
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
             <p className="text-portway-ink-3/80 mt-4 text-xs leading-5">
-              Розрахунок орієнтовний. Для точної суми зверніться до менеджера.
+              Розрахунок орієнтовний та має інформативний характер. Точна ставка мита залежить від
+              коду УКТ ЗЕД, походження товару та особливостей поставки. Для остаточного розрахунку
+              зверніться до менеджера.
             </p>
           </div>
-          <div className="bg-portway-primary flex flex-col justify-center border-t border-white/10 p-7 text-white md:p-11 lg:border-t-0">
+          <div
+            className="bg-portway-primary relative flex flex-col justify-center overflow-hidden border-t border-white/10 p-7 text-white md:p-11 lg:border-t-0"
+            aria-busy={result === null}
+          >
+            <div className="relative z-10 mb-5 flex items-center justify-between gap-4 border-b border-white/10 pb-4">
+              <span className="technical-label text-white/45">Розрахунковий лист</span>
+              <span className="technical-label text-[#9fe1cb]/70">Статус / попередній</span>
+            </div>
             {[
-              ['Митна вартість, ₴', formatMoney(result.customsValueUah)],
-              [`Мито (${dutyRate}%)`, formatMoney(result.duty)],
-              ['База ПДВ', formatMoney(result.vatBase)],
-              ['ПДВ (20%)', formatMoney(result.vat)],
+              ['Митна вартість, ₴', formatMoney(result?.customsValueUah)],
+              [`Мито (${dutyRate}%)`, formatMoney(result?.duty)],
+              ['База ПДВ', formatMoney(result?.vatBase)],
+              ['ПДВ (20%)', formatMoney(result?.vat)],
             ].map(([label, value]) => (
               <div
                 key={label}
                 className="flex items-baseline justify-between border-b border-white/10 py-3 text-sm"
               >
                 <span className="text-white/55">{label}</span>
-                <span>{value}</span>
+                <span className="font-mono text-xs font-medium tabular-nums sm:text-sm">
+                  {value}
+                </span>
               </div>
             ))}
             <div className="mt-2 flex items-baseline justify-between pt-5">
               <span className="font-semibold">Разом платежів</span>
-              <strong className="text-portway-mint text-3xl font-extrabold">
-                {formatMoney(result.total)}
+              <strong className="text-portway-mint font-mono text-3xl font-semibold tracking-tight tabular-nums">
+                {formatMoney(result?.total)}
               </strong>
             </div>
             <Button
               icon={MessageCircle}
               variant="mint"
               className="mt-7 self-start"
-              onClick={() =>
+              disabled={result === null}
+              onClick={() => {
+                if (result === null) return;
                 onContact({
                   category: category.label,
                   customsValue,
                   currency,
                   dutyRate,
                   total: result.total,
-                })
-              }
+                });
+              }}
             >
               Запросити точний розрахунок
             </Button>
           </div>
         </div>
-        <p className="text-portway-ink-3 mx-auto mt-5 max-w-3xl text-center text-xs leading-5">
-          Усі розрахунки мають інформативний характер і не є підставою для сплати. Точна ставка
-          мита залежить від коду УКТ ЗЕД, походження товару та особливостей поставки. Для
-          остаточного розрахунку, будь ласка, зверніться до нашого менеджера.
-        </p>
       </div>
     </section>
   );
