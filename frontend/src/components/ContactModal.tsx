@@ -12,8 +12,6 @@ type Props = {
 const initialForm = { firstName: '', lastName: '', phone: '', email: '' };
 
 const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-UA')} ₴`;
-const formatUsd = (value: number) =>
-  value.toLocaleString('uk-UA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export function ContactModal({ quote, onClose }: Props) {
   const [form, setForm] = useState(initialForm);
@@ -58,7 +56,7 @@ export function ContactModal({ quote, onClose }: Props) {
 
   return (
     <div
-      className="bg-cleargatecustoms-primary/55 fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto p-3 backdrop-blur-sm sm:items-center sm:p-5"
+      className="bg-primary/55 fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto p-3 backdrop-blur-sm sm:items-center sm:p-5"
       role="presentation"
       onMouseDown={(event) => event.target === event.currentTarget && onClose()}
     >
@@ -69,35 +67,33 @@ export function ContactModal({ quote, onClose }: Props) {
         className="relative my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-[520px] overflow-y-auto rounded-[22px] bg-white p-5 shadow-2xl sm:max-h-[calc(100dvh-2.5rem)] sm:p-8 md:px-10 md:py-11"
       >
         <div className="relative flex min-h-9 items-center justify-center">
-          <h2 id="contact-title" className="px-10 text-center text-xl font-bold tracking-tight sm:px-12 sm:text-2xl">
+          <h2
+            id="contact-title"
+            className="px-10 text-center text-xl font-bold tracking-tight sm:px-12 sm:text-2xl"
+          >
             Уточнимо розрахунок
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Закрити"
-            className="bg-cleargatecustoms-soft hover:bg-cleargatecustoms-line absolute top-1/2 right-0 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full transition"
+            className="bg-soft hover:bg-line absolute top-1/2 right-0 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full transition"
           >
             <X size={18} strokeWidth={2.4} />
           </button>
         </div>
-        <p className="text-cleargatecustoms-ink-3 mt-3 text-sm leading-6">
-          Ви вже зробили попередній розрахунок. Залиште контакти — менеджер перевірить документи та
-          код УКТЗЕД і уточнить суму платежів.
+        <p className="text-ink-3 mt-3 text-center text-sm leading-5 text-balance">
+          Залиште контакти — менеджер перевірить документи та код УКТЗЕД і уточнить суму платежів.
         </p>
-        <div className="bg-cleargatecustoms-soft mt-5 rounded-2xl p-4">
-          <p className="text-cleargatecustoms-ink-3 text-xs font-semibold tracking-wide uppercase">
-            Ваш розрахунок
-          </p>
-          <p className="mt-2 text-sm font-semibold">Код УКТ ЗЕД: {quote.productCode}</p>
-          <div className="text-cleargatecustoms-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+        <div className="bg-soft mt-5 rounded-2xl p-4">
+          <p className="text-ink-3 text-xs font-semibold tracking-wide uppercase">Ваш розрахунок</p>
+          <p className="mt-1 text-2xl font-bold tracking-tight">{formatMoney(quote.total)}</p>
+          <div className="text-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+            <span>Код УКТ ЗЕД: {quote.productCode}</span>
             <span>Вага: {quote.weightKg.toLocaleString('uk-UA')} кг</span>
-            <span>Критична ціна: {formatUsd(quote.criticalPriceUsdPerKg)} USD/кг</span>
-            <span>Вартість за довідником: {formatUsd(quote.customsValueUsd)} USD</span>
-            <span>Платежі: {formatMoney(quote.total)}</span>
           </div>
         </div>
-        <form className="mt-6 sm:mt-8" onSubmit={handleSubmit}>
+        <form className="mt-2 sm:mt-4" onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
             <div>
               <label htmlFor="firstName" className="field-label">
@@ -144,7 +140,7 @@ export function ContactModal({ quote, onClose }: Props) {
           </div>
           <div className="mt-4 sm:mt-5">
             <label htmlFor="email" className="field-label">
-              Email <span className="text-cleargatecustoms-ink-3 font-normal">(необов'язково)</span>
+              Email <span className="text-ink-3 font-normal">(необов'язково)</span>
             </label>
             <input
               id="email"
@@ -158,7 +154,7 @@ export function ContactModal({ quote, onClose }: Props) {
           <Button type="submit" icon={Send} disabled={submitting} className="mt-6 w-full">
             {submitting ? 'Надсилаємо…' : 'Уточнити розрахунок'}
           </Button>
-          <p className="text-cleargatecustoms-ink-3 mt-4 text-center text-xs leading-5 text-balance">
+          <p className="text-ink-3 mt-4 text-center text-xs leading-5 text-balance">
             Натискаючи кнопку, ви погоджуєтесь на обробку персональних даних.
           </p>
           <p
