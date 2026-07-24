@@ -1,4 +1,15 @@
-import { ClipboardCheck, Route, ShieldCheck, Ship, Truck } from 'lucide-react';
+import {
+  Anchor,
+  ClipboardCheck,
+  Cpu,
+  Eye,
+  HeartHandshake,
+  Route,
+  Scale,
+  ShieldCheck,
+  Warehouse,
+  Zap,
+} from 'lucide-react';
 
 export const services = [
   {
@@ -15,13 +26,13 @@ export const services = [
       'Як посередник організовуємо взаємодію між експедиторами та лінійними агентами на шляху вантажу.',
   },
   {
-    icon: Ship,
+    icon: Anchor,
     title: 'Гданськ і Констанца',
     description:
       'Координуємо прибуття, обробку й видачу вантажу напряму з портами Польщі та Румунії.',
   },
   {
-    icon: Truck,
+    icon: Warehouse,
     title: 'Від порту до складу',
     description: 'Організовуємо доставку вантажу до внутрішньої митниці й на склад клієнта.',
   },
@@ -154,3 +165,18 @@ export const currencies = [
 ];
 
 export const trustIcon = ShieldCheck;
+
+export const mission =
+  'Ми відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод, роблячи його простим, прозорим і передбачуваним.';
+
+export const values = [
+  { icon: Scale, label: 'Законність' },
+  { icon: ShieldCheck, label: 'Надійність' },
+  { icon: Eye, label: 'Прозорість' },
+  { icon: Cpu, label: 'Технології' },
+  { icon: ClipboardCheck, label: 'Відповідальність' },
+  { icon: Zap, label: 'Швидкість' },
+  { icon: HeartHandshake, label: 'Повага до кожного клієнта' },
+];
+
+export const partners = ['MAERSK', 'CMA CGM', 'EVERGREEN', 'COSCO', 'OOCL', 'MSC', 'ZIM'];

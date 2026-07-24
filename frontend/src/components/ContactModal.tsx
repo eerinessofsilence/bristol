@@ -5,6 +5,7 @@ import type { CalculatorQuote } from '../types';
 import { Button } from './ui/Button';
 
 type Props = {
+  isOpen: boolean;
   quote: CalculatorQuote | null;
   onClose: () => void;
 };
@@ -13,7 +14,7 @@ const initialForm = { firstName: '', lastName: '', phone: '', email: '' };
 
 const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-UA')} ₴`;
 
-export function ContactModal({ quote, onClose }: Props) {
+export function ContactModal({ isOpen, quote, onClose }: Props) {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('');
   const [submissionSucceeded, setSubmissionSucceeded] = useState(false);
@@ -21,8 +22,8 @@ export function ContactModal({ quote, onClose }: Props) {
   const firstInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    document.body.style.overflow = quote ? 'hidden' : '';
-    if (quote) window.setTimeout(() => firstInputRef.current?.focus(), 50);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (isOpen) window.setTimeout(() => firstInputRef.current?.focus(), 50);
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
     };
@@ -31,9 +32,9 @@ export function ContactModal({ quote, onClose }: Props) {
       document.body.style.overflow = '';
       document.removeEventListener('keydown', closeOnEscape);
     };
-  }, [quote, onClose]);
+  }, [isOpen, onClose]);
 
-  if (!quote) return null;
+  if (!isOpen) return null;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -41,7 +42,7 @@ export function ContactModal({ quote, onClose }: Props) {
     setStatus('');
     setSubmissionSucceeded(false);
     try {
-      await createLead({ ...form, source: 'calculator_quote' });
+      await createLead({ ...form, source: quote ? 'calculator_quote' : 'hero_consultation' });
       setSubmissionSucceeded(true);
       setStatus(
         `Заявку прийнято до опрацювання. Дякуємо, ${form.firstName}! Зателефонуємо найближчим часом.`,
@@ -71,7 +72,7 @@ export function ContactModal({ quote, onClose }: Props) {
             id="contact-title"
             className="px-10 text-center text-xl font-bold tracking-tight sm:px-12 sm:text-2xl"
           >
-            Уточнимо розрахунок
+            {quote ? 'Уточнимо розрахунок' : 'Отримати консультацію'}
           </h2>
           <button
             type="button"
@@ -83,17 +84,23 @@ export function ContactModal({ quote, onClose }: Props) {
           </button>
         </div>
         <p className="text-ink-3 mt-3 text-center text-sm leading-5 text-balance">
-          Залиште контакти — менеджер перевірить документи та код УКТЗЕД і уточнить суму платежів.
+          {quote
+            ? 'Залиште контакти — менеджер перевірить документи та код УКТЗЕД і уточнить суму платежів.'
+            : "Залиште контакти — менеджер зв'яжеться з вами і підбере оптимальне рішення для вашого вантажу."}
         </p>
-        <div className="bg-soft mt-5 rounded-2xl p-4">
-          <p className="text-ink-3 text-xs font-semibold tracking-wide uppercase">Ваш розрахунок</p>
-          <p className="mt-1 text-2xl font-bold tracking-tight">{formatMoney(quote.total)}</p>
-          <div className="text-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
-            <span>Код УКТ ЗЕД: {quote.productCode}</span>
-            <span>Вага: {quote.weightKg.toLocaleString('uk-UA')} кг</span>
+        {quote && (
+          <div className="bg-soft mt-5 rounded-2xl p-4">
+            <p className="text-ink-3 text-xs font-semibold tracking-wide uppercase">
+              Ваш розрахунок
+            </p>
+            <p className="mt-1 text-2xl font-bold tracking-tight">{formatMoney(quote.total)}</p>
+            <div className="text-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+              <span>Код УКТ ЗЕД: {quote.productCode}</span>
+              <span>Вага: {quote.weightKg.toLocaleString('uk-UA')} кг</span>
+            </div>
           </div>
-        </div>
-        <form className="mt-2 sm:mt-4" onSubmit={handleSubmit}>
+        )}
+        <form className={quote ? 'mt-2 sm:mt-4' : 'mt-5'} onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
             <div>
               <label htmlFor="firstName" className="field-label">
@@ -152,7 +159,7 @@ export function ContactModal({ quote, onClose }: Props) {
             />
           </div>
           <Button type="submit" icon={Send} disabled={submitting} className="mt-6 w-full">
-            {submitting ? 'Надсилаємо…' : 'Уточнити розрахунок'}
+            {submitting ? 'Надсилаємо…' : quote ? 'Уточнити розрахунок' : 'Замовити консультацію'}
           </Button>
           <p className="text-ink-3 mt-4 text-center text-xs leading-5 text-balance">
             Натискаючи кнопку, ви погоджуєтесь на обробку персональних даних.

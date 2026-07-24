@@ -6,6 +6,8 @@ import { Faq } from './components/Faq';
 import { Footer } from './components/Footer';
 import { Hero } from './components/Hero';
 import { Intro } from './components/Intro';
+import { MissionValues } from './components/MissionValues';
+import { Partners } from './components/Partners';
 import { Process } from './components/Process';
 import { Services } from './components/Services';
 import { Testimonials } from './components/Testimonials';
@@ -14,6 +16,7 @@ import type { CalculatorQuote } from './types';
 
 export function App() {
   const [contactQuote, setContactQuote] = useState<CalculatorQuote | null>(null);
+  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
   useReveal();
 
   useEffect(() => {
@@ -48,8 +51,9 @@ export function App() {
 
   return (
     <>
-      <Hero />
+      <Hero onRequestConsultation={() => setIsConsultationOpen(true)} />
       <main>
+        <MissionValues />
         <Intro />
         <Services />
         <Calculator onContact={setContactQuote} />
@@ -57,9 +61,17 @@ export function App() {
         <CoverageMap />
         <Faq />
         <Testimonials />
+        <Partners />
       </main>
       <Footer />
-      <ContactModal quote={contactQuote} onClose={() => setContactQuote(null)} />
+      <ContactModal
+        isOpen={contactQuote !== null || isConsultationOpen}
+        quote={contactQuote}
+        onClose={() => {
+          setContactQuote(null);
+          setIsConsultationOpen(false);
+        }}
+      />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { Calculator, Handshake } from 'lucide-react';
+import { Award, Calculator, Handshake, Zap } from 'lucide-react';
 import { services } from '../data/content';
 import { ButtonLink } from './ui/Button';
 
@@ -7,10 +7,7 @@ const serviceMarkers = ['УКТ ЗЕД · ДЕКЛАРАЦІЯ', 'КООРДИН
 export function Services() {
   return (
     <>
-      <section
-        id="services"
-        className="customs-surface bg-soft scroll-mt-10 py-20 md:py-24"
-      >
+      <section id="services" className="customs-surface bg-soft scroll-mt-10 py-20 md:py-24">
         <div className="page-wrap">
           <div className="mx-auto max-w-2xl text-center" data-reveal>
             <span className="section-tag">
@@ -104,16 +101,13 @@ export function Services() {
                 <strong className="text-3xl leading-none font-extrabold tracking-tight">
                   Без передоплати
                 </strong>
-                <p className="mt-2 font-semibold">за послуги Митних систем</p>
+                <p className="mt-2 font-semibold">за послуги ClearGateCustoms</p>
                 <p className="text-ink-3 mt-2 text-sm leading-5">
                   Розрахунок проводиться після митного випуску вантажу. Після оформлення передаємо
                   митну декларацію.
                 </p>
               </div>
-              <span
-                className="bg-ink-3/25 h-0.5 w-full shrink-0 rounded-full"
-                aria-hidden="true"
-              />
+              <span className="bg-ink-3/25 h-0.5 w-full shrink-0 rounded-full" aria-hidden="true" />
               <div className="flex flex-1 flex-col items-end justify-center pt-5 text-right">
                 <strong className="text-3xl leading-none font-extrabold tracking-tight">
                   Вся Україна
@@ -137,6 +131,35 @@ export function Services() {
                 <ButtonLink href="#calc" variant="outline" className="mt-6 w-full">
                   Розрахувати платежі
                 </ButtonLink>
+              </div>
+            </article>
+          </div>
+
+          <div className="mt-5 grid gap-5 sm:grid-cols-2" data-reveal>
+            <article className="border-line flex flex-col gap-4 rounded-[18px] border bg-white p-7">
+              <div className="grid size-14 place-items-center rounded-2xl bg-[#e1f5ee] text-[#085041]">
+                <Award size={26} strokeWidth={2.2} />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">Високий професіоналізм</h3>
+                <p className="text-ink-3 mt-3 text-sm leading-6">
+                  Наші фахівці мають багатий досвід роботи в митній сфері, що дозволяє впевнено та
+                  оперативно вирішувати будь-які проблеми і перешкоди, які виникають у процесі
+                  оформлення.
+                </p>
+              </div>
+            </article>
+            <article className="border-line flex flex-col gap-4 rounded-[18px] border bg-white p-7">
+              <div className="grid size-14 place-items-center rounded-2xl bg-[#faece7] text-[#712b13]">
+                <Zap size={26} strokeWidth={2.2} />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">Швидке реагування</h3>
+                <p className="text-ink-3 mt-3 text-sm leading-6">
+                  Гарантуємо оперативність — розуміємо, наскільки важлива швидкість для вашого
+                  бізнесу. Налагоджена комунікація з митними органами дозволяє мінімізувати
+                  затримки.
+                </p>
               </div>
             </article>
           </div>

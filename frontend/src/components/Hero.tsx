@@ -1,7 +1,7 @@
 import { BadgeCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
-import { ButtonLink } from './ui/Button';
+import { Button, ButtonLink } from './ui/Button';
 
 const heroSlides = [
   '/images/hero/shenzhen-china.jpg',
@@ -10,7 +10,18 @@ const heroSlides = [
   '/images/hero/shanghai-china.jpg',
 ];
 
-export function Hero() {
+const heroHighlights = [
+  'Розрахунок вартості онлайн',
+  'Особистий менеджер',
+  'Повний супровід',
+  'Імпорт • Експорт',
+];
+
+type Props = {
+  onRequestConsultation: () => void;
+};
+
+export function Hero({ onRequestConsultation }: Props) {
   const heroRef = useRef<HTMLElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -173,16 +184,29 @@ export function Hero() {
               </span>
             </span>
           </div>
-          <h1 className="max-w-[17ch] text-[clamp(2.35rem,10.8vw,3.5rem)] leading-[0.96] font-extrabold tracking-[-0.055em] sm:max-w-[18ch] sm:text-6xl lg:max-w-none lg:text-[64px]">
-            Митне оформлення вантажів, експертний супровід та сучасні AI-рішення.
+          <h1 className="max-w-[17ch] text-[clamp(2.05rem,9.2vw,3rem)] leading-[0.98] font-extrabold tracking-[-0.05em] sm:max-w-[18ch] sm:text-5xl lg:max-w-none lg:text-[52px]">
+            Митне оформлення вантажів, експертний супровід та сучасні AI-рішення
           </h1>
-          <p className="text-ink mt-6 max-w-[620px] text-pretty text-[15px] leading-6 sm:mt-7 sm:text-lg sm:leading-7">
-            Онлайн-розрахунок вартості, особистий менеджер і повний супровід імпорту та експорту —
-            готові оформити вантаж без зайвих турбот?
+          <p className="text-ink mt-6 max-w-[620px] text-[15px] leading-6 text-pretty sm:mt-7 sm:text-lg sm:leading-7">
+            Відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод. Митне оформлення
+            виконують власні фахівці ClearGateCustoms — просто, прозоро і передбачувано.
           </p>
-          <ButtonLink href="#calc" className="mt-7 sm:mt-9">
-            Розрахувати митні платежі
-          </ButtonLink>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {heroHighlights.map((label) => (
+              <span key={label} className="glass-tag">
+                {label}
+              </span>
+            ))}
+          </div>
+          <p className="text-ink-2 mt-8 text-sm font-semibold sm:text-base">
+            Готові оформити вантаж без зайвих турбот?
+          </p>
+          <div className="mt-4 flex flex-col gap-3 sm:mt-5 sm:flex-row sm:items-center">
+            <ButtonLink href="#calc">Розрахувати вартість</ButtonLink>
+            <Button type="button" variant="outline" onClick={onRequestConsultation}>
+              Отримати консультацію
+            </Button>
+          </div>
         </div>
       </div>
     </section>
