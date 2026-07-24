@@ -107,7 +107,7 @@ export function Calculator({ onContact }: Props) {
           data-reveal
         >
           <div className="customs-document-page p-5 sm:p-7 md:p-11">
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-3 pb-4 sm:mb-7">
+            <div className="mb-6 flex min-h-8 flex-wrap items-center justify-between gap-3 pb-4 sm:mb-7">
               <span className="section-tag">
                 <span className="section-index">03 /</span>&nbsp; Розрахунок
               </span>
@@ -219,7 +219,7 @@ export function Calculator({ onContact }: Props) {
             className="bg-primary relative flex flex-col overflow-hidden border-t border-white/10 p-5 text-white sm:p-7 md:p-11 lg:border-t-0"
             aria-busy={hasValidCode && exchangeRate !== null && result === null && !quoteError}
           >
-            <div className="relative z-10 mb-4 flex flex-col items-start gap-1 border-b border-white/10 pb-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-3">
+            <div className="relative z-10 mb-4 flex min-h-8 flex-col items-start gap-1 border-b border-white/10 pb-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-3">
               <span className="technical-label whitespace-nowrap text-white/45">
                 Попередній розрахунок
               </span>
