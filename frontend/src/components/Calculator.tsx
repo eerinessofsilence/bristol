@@ -1,6 +1,6 @@
 import { MessageCircle, RefreshCw } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { calculateQuote, getUsdExchangeRate } from '../api/client';
+import { calculateQuote, getEurExchangeRate, getUsdExchangeRate } from '../api/client';
 import { currencies, productCategories } from '../data/content';
 import type { CalculatorQuote, ExchangeRateResult, QuoteResult } from '../types';
 import { CustomSelect } from './ui/CustomSelect';
@@ -10,6 +10,9 @@ import { PricePicker } from './ui/PricePicker';
 type Props = {
   onContact: (quote: CalculatorQuote) => void;
 };
+
+type ForeignCurrency = 'USD' | 'EUR';
+type RateStatus = 'idle' | 'loading' | 'success' | 'error';
 
 const formatMoney = (value?: number) =>
   value === undefined ? '—' : `${Math.round(value).toLocaleString('uk-UA')} ₴`;
@@ -36,16 +39,24 @@ function calculateLocally(customsValue: number, currencyRate: number, dutyRate: 
 export function Calculator({ onContact }: Props) {
   const [customsValue, setCustomsValue] = useState(1000);
   const [currencyIndex, setCurrencyIndex] = useState(0);
-  const [usdRate, setUsdRate] = useState<ExchangeRateResult | null>(null);
-  const [usdRateStatus, setUsdRateStatus] = useState<'loading' | 'success' | 'error'>('loading');
+  const [exchangeRates, setExchangeRates] = useState<
+    Partial<Record<ForeignCurrency, ExchangeRateResult>>
+  >({});
+  const [rateStatuses, setRateStatuses] = useState<Record<ForeignCurrency, RateStatus>>({
+    USD: 'loading',
+    EUR: 'loading',
+  });
   const [rateRequestId, setRateRequestId] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const dutyRate = productCategories[categoryIndex].duty;
   const category = productCategories[categoryIndex];
   const selectedCurrency = currencies[currencyIndex];
-  const currencyRate =
-    selectedCurrency.code === 'USD' ? (usdRate?.rate ?? null) : selectedCurrency.rate;
   const currency = selectedCurrency.code;
+  const foreignCurrency: ForeignCurrency | null =
+    currency === 'UAH' ? null : (currency as ForeignCurrency);
+  const exchangeRate = foreignCurrency ? (exchangeRates[foreignCurrency] ?? null) : null;
+  const rateStatus = foreignCurrency ? rateStatuses[foreignCurrency] : 'success';
+  const currencyRate = foreignCurrency ? (exchangeRate?.rate ?? null) : selectedCurrency.rate;
   const [remoteResult, setRemoteResult] = useState<{
     key: string;
     value: QuoteResult;
@@ -63,24 +74,27 @@ export function Calculator({ onContact }: Props) {
   }));
 
   useEffect(() => {
-    let isActive = true;
+    if (foreignCurrency === null) return;
 
-    getUsdExchangeRate()
+    let isActive = true;
+    const getExchangeRate = foreignCurrency === 'USD' ? getUsdExchangeRate : getEurExchangeRate;
+
+    getExchangeRate()
       .then((value) => {
         if (!isActive) return;
-        setUsdRate(value);
-        setUsdRateStatus('success');
+        setExchangeRates((current) => ({ ...current, [foreignCurrency]: value }));
+        setRateStatuses((current) => ({ ...current, [foreignCurrency]: 'success' }));
       })
       .catch(() => {
         if (!isActive) return;
-        setUsdRate(null);
-        setUsdRateStatus('error');
+        setExchangeRates((current) => ({ ...current, [foreignCurrency]: undefined }));
+        setRateStatuses((current) => ({ ...current, [foreignCurrency]: 'error' }));
       });
 
     return () => {
       isActive = false;
     };
-  }, [rateRequestId]);
+  }, [foreignCurrency, rateRequestId]);
 
   useEffect(() => {
     if (currencyRate === null) return;
@@ -161,22 +175,25 @@ export function Calculator({ onContact }: Props) {
                   value={currencyIndex}
                   onChange={setCurrencyIndex}
                 />
-                {(selectedCurrency.code === 'USD' || selectedCurrency.code === 'EUR') && (
+                {foreignCurrency && (
                   <div className="mt-2 min-h-5 text-xs leading-5" aria-live="polite">
-                    {selectedCurrency.code === 'USD' && usdRateStatus === 'loading' && (
+                    {rateStatus === 'loading' && (
                       <p className="text-portway-ink-3 flex items-center gap-2" role="status">
                         <RefreshCw className="animate-spin" size={13} aria-hidden="true" />
                         Отримуємо актуальний курс НБУ…
                       </p>
                     )}
-                    {selectedCurrency.code === 'USD' && usdRateStatus === 'error' && (
+                    {rateStatus === 'error' && (
                       <p className="text-[#9a3412]" role="alert">
                         Курс НБУ тимчасово недоступний.{' '}
                         <button
                           type="button"
                           className="cursor-pointer font-semibold underline underline-offset-2"
                           onClick={() => {
-                            setUsdRateStatus('loading');
+                            setRateStatuses((current) => ({
+                              ...current,
+                              [foreignCurrency]: 'loading',
+                            }));
                             setRateRequestId((current) => current + 1);
                           }}
                         >
@@ -184,26 +201,20 @@ export function Calculator({ onContact }: Props) {
                         </button>
                       </p>
                     )}
-                    {selectedCurrency.code === 'USD' &&
-                      usdRateStatus === 'success' &&
-                      usdRate?.isStale && (
+                    {rateStatus === 'success' && exchangeRate?.isStale && (
                       <p className="text-[#9a3412]" role="status">
                         Курс тимчасово недоступний, показано курс на{' '}
-                        {formatRateDate(usdRate.exchangeDate)}
+                        {formatRateDate(exchangeRate.exchangeDate)}
                       </p>
-                      )}
-                    {selectedCurrency.code === 'USD' &&
-                      usdRateStatus === 'success' &&
-                      usdRate &&
-                      !usdRate.isStale && (
-                      <p className="technical-label text-[#085041]/60" role="status">
-                        Курс USD: {formatRate(usdRate.rate)} ₴ · НБУ на{' '}
-                        {formatRateDate(usdRate.exchangeDate)}
-                      </p>
-                      )}
-                    {selectedCurrency.code === 'EUR' && selectedCurrency.rate !== null && (
-                      <p className="technical-label text-[#085041]/60">
-                        Курс EUR: {formatRate(selectedCurrency.rate)} ₴
+                    )}
+                    {rateStatus === 'success' && exchangeRate && !exchangeRate.isStale && (
+                      <p
+                        className="technical-label w-full text-center text-[#085041]/60"
+                        role="status"
+                      >
+                        Курс {foreignCurrency}: {formatRate(exchangeRate.rate)} ₴
+                        <br />
+                        НБУ на {formatRateDate(exchangeRate.exchangeDate)}
                       </p>
                     )}
                   </div>

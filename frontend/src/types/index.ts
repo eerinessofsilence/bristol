@@ -21,7 +21,7 @@ export type QuoteResult = {
 };
 
 export type ExchangeRateResult = {
-  currency: 'USD';
+  currency: 'USD' | 'EUR';
   rate: number;
   exchangeDate: string;
   fetchedAt: string;

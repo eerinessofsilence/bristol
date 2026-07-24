@@ -149,7 +149,7 @@ export const productCategories = [
 
 export const currencies = [
   { code: 'USD', label: 'USD', rate: null },
-  { code: 'EUR', label: 'EUR', rate: 53 },
+  { code: 'EUR', label: 'EUR', rate: null },
   { code: 'UAH', label: 'UAH', rate: 1 },
 ];
 

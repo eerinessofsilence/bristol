@@ -45,3 +45,7 @@ export function calculateQuote(payload: QuoteRequest) {
 export function getUsdExchangeRate() {
   return request<ExchangeRateResult>('/api/v1/exchange-rates/usd');
 }
+
+export function getEurExchangeRate() {
+  return request<ExchangeRateResult>('/api/v1/exchange-rates/eur');
+}
