@@ -15,7 +15,7 @@ export function Faq() {
           </span>
           <h2 className="section-title mt-4">Часті запитання</h2>
           <p className="text-ink-2 mt-5 max-w-sm leading-7">
-            Коротко про роль Митних систем, роботу з портами, митне оформлення та доставку до
+            Коротко про роль ClearGateCustoms, роботу з портами, митне оформлення та доставку до
             складу клієнта.
           </p>
           <ButtonLink href="#calc" className="mt-7 lg:-translate-y-3">

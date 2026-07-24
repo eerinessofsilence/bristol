@@ -18,7 +18,7 @@ const routeSteps = [
   {
     icon: ClipboardCheck,
     title: 'Митне оформлення',
-    description: 'Виконують фахівці Митних систем',
+    description: 'Виконують фахівці ClearGateCustoms',
     role: 'Виконуємо самі',
     tone: 'teal',
   },
@@ -109,7 +109,7 @@ export function Process() {
                           className="font-mono text-3xl leading-none font-semibold tracking-[0.06em] opacity-70 sm:text-[34px]"
                           aria-hidden="true"
                         >
-                        {String(index + 1).padStart(2, '0')}
+                          {String(index + 1).padStart(2, '0')}
                         </span>
                         <span
                           className={`rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase ${colors.role}`}
@@ -159,7 +159,7 @@ export function Process() {
                 aria-hidden="true"
               />
               <span>
-                <strong className="font-semibold text-white/90">Виконує “ClearGateCustoms”</strong>
+                <strong className="font-semibold text-white/90">Виконує ClearGateCustoms</strong>
                 <br />
                 митне оформлення
               </span>
@@ -170,7 +170,7 @@ export function Process() {
                 aria-hidden="true"
               />
               <span>
-                <strong className="font-semibold text-white/90">Координує “ClearGateCustoms”</strong>
+                <strong className="font-semibold text-white/90">Координує ClearGateCustoms</strong>
                 <br />
                 логістика
               </span>

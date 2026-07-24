@@ -97,10 +97,7 @@ export function Calculator({ onContact }: Props) {
   }, [exchangeRate, hasValidCode, productCode, weightKg]);
 
   return (
-    <section
-      id="calc"
-      className="customs-surface bg-soft scroll-mt-10 py-14 md:py-24"
-    >
+    <section id="calc" className="customs-surface bg-soft scroll-mt-10 py-14 md:py-24">
       <div className="page-wrap">
         <div
           className="customs-document-shell grid overflow-hidden rounded-3xl bg-[#eff2f0] shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
@@ -112,7 +109,7 @@ export function Calculator({ onContact }: Props) {
                 <span className="section-index">03 /</span>&nbsp; Розрахунок
               </span>
               <span className="technical-label hidden text-[#085041]/50 sm:inline">
-                MS-CALC / UA-2026
+                CGC-CALC / UA-2026
               </span>
             </div>
             <h2 className="mt-4 text-[1.85rem] leading-[1.05] font-bold tracking-tight sm:text-3xl">
@@ -155,9 +152,7 @@ export function Calculator({ onContact }: Props) {
               </div>
               <p
                 className={`mt-2 text-xs leading-5 ${
-                  productCode.length > 0 && !hasValidCode
-                    ? 'text-[#9a3412]'
-                    : 'text-ink-3'
+                  productCode.length > 0 && !hasValidCode ? 'text-[#9a3412]' : 'text-ink-3'
                 }`}
               >
                 {productCode.length > 0 && !hasValidCode
@@ -236,8 +231,8 @@ export function Calculator({ onContact }: Props) {
                 {formatMoney(result?.total)}
               </strong>
               <p className="mt-4 max-w-sm text-sm leading-6 text-white/55">
-                Підсумок включає мито та ПДВ. Точна сума залежить від документів і характеристик
-                товару.
+                Підсумок включає мито та ПДВ. Розрахунок орієнтовний — для точної суми зверніться до
+                менеджера.
               </p>
             </div>
             <Button
@@ -260,6 +255,11 @@ export function Calculator({ onContact }: Props) {
             </Button>
           </div>
         </div>
+        <p className="text-ink-3 mx-auto mt-6 max-w-2xl text-center text-xs leading-5 text-balance">
+          Усі розрахунки мають інформативний характер і не є підставою для сплати. Точна ставка мита
+          залежить від коду УКТ ЗЕД, походження товару та особливостей поставки. Для остаточного
+          розрахунку, будь ласка, зверніться до нашого менеджера.
+        </p>
       </div>
       <ProductCodeFinderModal
         isOpen={isCodeFinderOpen}
