@@ -12,9 +12,9 @@ type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement> & SharedP
 type LinkProps = PropsWithChildren<AnchorHTMLAttributes<HTMLAnchorElement> & SharedProps>;
 
 const variants = {
-  dark: 'border-portway-primary bg-portway-primary text-white',
-  mint: 'border-portway-mint bg-portway-mint text-[#08221a]',
-  outline: 'border-portway-line bg-white text-portway-ink hover:border-portway-mint-muted',
+  dark: 'border-cleargatecustoms-primary bg-cleargatecustoms-primary text-white',
+  mint: 'border-cleargatecustoms-mint bg-cleargatecustoms-mint text-[#08221a]',
+  outline: 'border-cleargatecustoms-line bg-white text-cleargatecustoms-ink hover:border-cleargatecustoms-mint-muted',
 };
 
 const sizes = {
@@ -23,9 +23,9 @@ const sizes = {
 };
 
 const iconVariants = {
-  dark: 'bg-white text-portway-primary',
-  mint: 'bg-portway-primary text-white',
-  outline: 'bg-portway-primary text-white',
+  dark: 'bg-white text-cleargatecustoms-primary',
+  mint: 'bg-cleargatecustoms-primary text-white',
+  outline: 'bg-cleargatecustoms-primary text-white',
 };
 
 const iconSizes = {

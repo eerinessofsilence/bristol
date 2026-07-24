@@ -7,7 +7,7 @@ from app.core.config import settings
 app = FastAPI(
     title=settings.app_name,
     version="1.0.0",
-    description="API для заявок і розрахунків Bristol.",
+    description="API для заявок і розрахунків ClearGateCustoms.",
 )
 
 app.add_middleware(

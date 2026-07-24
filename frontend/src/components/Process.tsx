@@ -61,7 +61,7 @@ const toneClasses = {
 
 export function Process() {
   return (
-    <section id="how" className="bg-portway-primary scroll-mt-10 py-20 text-white md:py-24">
+    <section id="how" className="bg-cleargatecustoms-primary scroll-mt-10 py-20 text-white md:py-24">
       <div className="page-wrap grid items-stretch gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div className="flex min-h-0 flex-col" data-reveal>
           <span className="section-tag section-tag-dark self-start">

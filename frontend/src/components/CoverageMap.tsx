@@ -211,7 +211,7 @@ export function CoverageMap() {
             <span className="section-index">04 /</span>&nbsp; Географія
           </span>
           <h2 className="section-title mt-5">Маршрут вантажу до України</h2>
-          <p className="text-portway-ink-2 mt-5 leading-7">
+          <p className="text-cleargatecustoms-ink-2 mt-5 leading-7">
             Координуємо прибуття вантажу через порти Польщі та Румунії, виконуємо митне оформлення
             в Україні й організовуємо доставку до складу клієнта.
           </p>

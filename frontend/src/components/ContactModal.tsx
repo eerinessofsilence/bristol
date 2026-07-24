@@ -58,7 +58,7 @@ export function ContactModal({ quote, onClose }: Props) {
 
   return (
     <div
-      className="bg-portway-primary/55 fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto p-3 backdrop-blur-sm sm:items-center sm:p-5"
+      className="bg-cleargatecustoms-primary/55 fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto p-3 backdrop-blur-sm sm:items-center sm:p-5"
       role="presentation"
       onMouseDown={(event) => event.target === event.currentTarget && onClose()}
     >
@@ -76,21 +76,21 @@ export function ContactModal({ quote, onClose }: Props) {
             type="button"
             onClick={onClose}
             aria-label="Закрити"
-            className="bg-portway-soft hover:bg-portway-line absolute top-1/2 right-0 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full transition"
+            className="bg-cleargatecustoms-soft hover:bg-cleargatecustoms-line absolute top-1/2 right-0 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full transition"
           >
             <X size={18} strokeWidth={2.4} />
           </button>
         </div>
-        <p className="text-portway-ink-3 mt-3 text-sm leading-6">
+        <p className="text-cleargatecustoms-ink-3 mt-3 text-sm leading-6">
           Ви вже зробили попередній розрахунок. Залиште контакти — менеджер перевірить документи та
           код УКТЗЕД і уточнить суму платежів.
         </p>
-        <div className="bg-portway-soft mt-5 rounded-2xl p-4">
-          <p className="text-portway-ink-3 text-xs font-semibold tracking-wide uppercase">
+        <div className="bg-cleargatecustoms-soft mt-5 rounded-2xl p-4">
+          <p className="text-cleargatecustoms-ink-3 text-xs font-semibold tracking-wide uppercase">
             Ваш розрахунок
           </p>
           <p className="mt-2 text-sm font-semibold">Код УКТ ЗЕД: {quote.productCode}</p>
-          <div className="text-portway-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+          <div className="text-cleargatecustoms-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
             <span>Вага: {quote.weightKg.toLocaleString('uk-UA')} кг</span>
             <span>Критична ціна: {formatUsd(quote.criticalPriceUsdPerKg)} USD/кг</span>
             <span>Вартість за довідником: {formatUsd(quote.customsValueUsd)} USD</span>
@@ -144,7 +144,7 @@ export function ContactModal({ quote, onClose }: Props) {
           </div>
           <div className="mt-4 sm:mt-5">
             <label htmlFor="email" className="field-label">
-              Email <span className="text-portway-ink-3 font-normal">(необов'язково)</span>
+              Email <span className="text-cleargatecustoms-ink-3 font-normal">(необов'язково)</span>
             </label>
             <input
               id="email"
@@ -158,7 +158,7 @@ export function ContactModal({ quote, onClose }: Props) {
           <Button type="submit" icon={Send} disabled={submitting} className="mt-6 w-full">
             {submitting ? 'Надсилаємо…' : 'Уточнити розрахунок'}
           </Button>
-          <p className="text-portway-ink-3 mt-4 text-center text-xs leading-5 text-balance">
+          <p className="text-cleargatecustoms-ink-3 mt-4 text-center text-xs leading-5 text-balance">
             Натискаючи кнопку, ви погоджуєтесь на обробку персональних даних.
           </p>
           <p

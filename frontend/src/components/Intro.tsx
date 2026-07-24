@@ -6,10 +6,10 @@ export function Intro() {
           <h2 className="section-title max-w-xl">
             Відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод.
           </h2>
-          <p className="text-portway-ink-2 mt-7 max-w-xl leading-7">
+          <p className="text-cleargatecustoms-ink-2 mt-7 max-w-xl leading-7">
             ClearGateCustoms робить митне оформлення простим, прозорим і передбачуваним.
           </p>
-          <p className="text-portway-ink-2 mt-4 max-w-xl leading-7">
+          <p className="text-cleargatecustoms-ink-2 mt-4 max-w-xl leading-7">
             Наші цінності — законність, надійність, прозорість, технологічність, відповідальність
             і швидкість, з повагою до кожного клієнта.
           </p>

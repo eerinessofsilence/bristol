@@ -9,7 +9,7 @@ export function Services() {
     <>
       <section
         id="services"
-        className="customs-surface bg-portway-soft scroll-mt-10 py-20 md:py-24"
+        className="customs-surface bg-cleargatecustoms-soft scroll-mt-10 py-20 md:py-24"
       >
         <div className="page-wrap">
           <div className="mx-auto max-w-2xl text-center" data-reveal>
@@ -17,7 +17,7 @@ export function Services() {
               <span className="section-index">01 /</span>&nbsp; Послуги
             </span>
             <h2 className="section-title mt-4">Що ми робимо</h2>
-            <p className="text-portway-ink-2 mt-4 text-balance">
+            <p className="text-cleargatecustoms-ink-2 mt-4 text-balance">
               Спеціалізуємося на митному оформленні вантажів з Китаю та Європи й супроводжуємо їх до
               складу клієнта.
             </p>
@@ -59,7 +59,7 @@ export function Services() {
                       {title}
                     </h3>
                     <p
-                      className={`text-portway-ink-3 mt-2 text-sm leading-6 ${primary ? 'max-w-3xl' : ''}`}
+                      className={`text-cleargatecustoms-ink-3 mt-2 text-sm leading-6 ${primary ? 'max-w-3xl' : ''}`}
                     >
                       {description}
                     </p>
@@ -73,7 +73,7 @@ export function Services() {
 
       <section className="py-20 md:py-24">
         <div className="page-wrap grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-reveal>
-          <article className="bg-portway-primary flex min-h-64 flex-col rounded-[18px] p-7 text-white">
+          <article className="bg-cleargatecustoms-primary flex min-h-64 flex-col rounded-[18px] p-7 text-white">
             <div className="grid size-16 place-items-center rounded-2xl bg-white/10">
               <Handshake size={30} strokeWidth={2.4} />
             </div>
@@ -88,19 +88,19 @@ export function Services() {
               </ButtonLink>
             </div>
           </article>
-          <article className="bg-portway-mint-soft flex min-h-64 flex-col rounded-[18px] p-6 md:order-first md:col-span-2 lg:order-none lg:col-span-1">
+          <article className="bg-cleargatecustoms-mint-soft flex min-h-64 flex-col rounded-[18px] p-6 md:order-first md:col-span-2 lg:order-none lg:col-span-1">
             <div className="flex flex-1 flex-col justify-center pb-5">
               <strong className="text-3xl leading-none font-extrabold tracking-tight">
                 Без передоплати
               </strong>
               <p className="mt-2 font-semibold">за послуги Митних систем</p>
-              <p className="text-portway-ink-3 mt-2 text-sm leading-5">
+              <p className="text-cleargatecustoms-ink-3 mt-2 text-sm leading-5">
                 Розрахунок проводиться після митного випуску вантажу. Після оформлення передаємо
                 митну декларацію.
               </p>
             </div>
             <span
-              className="bg-portway-ink-3/25 h-0.5 w-full shrink-0 rounded-full"
+              className="bg-cleargatecustoms-ink-3/25 h-0.5 w-full shrink-0 rounded-full"
               aria-hidden="true"
             />
             <div className="flex flex-1 flex-col items-end justify-center pt-5 text-right">
@@ -108,12 +108,12 @@ export function Services() {
                 Вся Україна
               </strong>
               <p className="mt-2 font-semibold">доставка до адреси</p>
-              <p className="text-portway-ink-3 mt-2 text-sm leading-5">
+              <p className="text-cleargatecustoms-ink-3 mt-2 text-sm leading-5">
                 Організовуємо перевезення до вашого складу або безпосередньо до клієнта.
               </p>
             </div>
           </article>
-          <article className="bg-portway-primary flex min-h-64 flex-col rounded-[18px] p-7 text-white">
+          <article className="bg-cleargatecustoms-primary flex min-h-64 flex-col rounded-[18px] p-7 text-white">
             <div className="grid size-16 place-items-center rounded-2xl bg-white/10">
               <Calculator size={30} strokeWidth={2.4} />
             </div>

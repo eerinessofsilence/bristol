@@ -176,7 +176,7 @@ export function Hero() {
           <h1 className="max-w-[17ch] text-[clamp(2.35rem,10.8vw,3.5rem)] leading-[0.96] font-extrabold tracking-[-0.055em] sm:max-w-[18ch] sm:text-6xl lg:max-w-none lg:text-[64px]">
             Митне оформлення вантажів, експертний супровід та сучасні AI-рішення.
           </h1>
-          <p className="text-portway-ink mt-6 max-w-[620px] text-pretty text-[15px] leading-6 sm:mt-7 sm:text-lg sm:leading-7">
+          <p className="text-cleargatecustoms-ink mt-6 max-w-[620px] text-pretty text-[15px] leading-6 sm:mt-7 sm:text-lg sm:leading-7">
             Онлайн-розрахунок вартості, особистий менеджер і повний супровід імпорту та експорту —
             готові оформити вантаж без зайвих турбот?
           </p>

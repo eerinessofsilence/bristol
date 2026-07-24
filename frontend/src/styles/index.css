@@ -4,17 +4,17 @@
 @theme {
   --font-sans: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
-  --color-portway-soft: #f5f7f6;
-  --color-portway-ink: #141c1a;
-  --color-portway-ink-2: #3a4744;
-  --color-portway-ink-3: #6a7873;
-  --color-portway-primary: #16221e;
-  --color-portway-primary-hover: #0c1512;
-  --color-portway-mint: #3fb58c;
-  --color-portway-mint-deep: #2e9a75;
-  --color-portway-mint-muted: #86a49a;
-  --color-portway-mint-soft: #eaf3ee;
-  --color-portway-line: #e4e8e6;
+  --color-cleargatecustoms-soft: #f5f7f6;
+  --color-cleargatecustoms-ink: #141c1a;
+  --color-cleargatecustoms-ink-2: #3a4744;
+  --color-cleargatecustoms-ink-3: #6a7873;
+  --color-cleargatecustoms-primary: #16221e;
+  --color-cleargatecustoms-primary-hover: #0c1512;
+  --color-cleargatecustoms-mint: #3fb58c;
+  --color-cleargatecustoms-mint-deep: #2e9a75;
+  --color-cleargatecustoms-mint-muted: #86a49a;
+  --color-cleargatecustoms-mint-soft: #eaf3ee;
+  --color-cleargatecustoms-line: #e4e8e6;
 }
 
 @layer base {
@@ -30,7 +30,7 @@
     margin: 0;
     min-width: 320px;
     background: white;
-    color: var(--color-portway-ink);
+    color: var(--color-cleargatecustoms-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
@@ -170,7 +170,7 @@
   }
 
   .section-index {
-    color: var(--color-portway-mint-deep);
+    color: var(--color-cleargatecustoms-mint-deep);
     letter-spacing: 0.04em;
   }
 
@@ -352,8 +352,8 @@
   }
 
   .action-pill:hover .action-pill-icon-surface {
-    background-color: var(--color-portway-mint);
-    color: var(--color-portway-primary);
+    background-color: var(--color-cleargatecustoms-mint);
+    color: var(--color-cleargatecustoms-primary);
   }
 
   .glass-tag,
@@ -365,7 +365,7 @@
     border: 1px solid rgb(63 181 140 / 0.2);
     border-radius: 999px;
     background: linear-gradient(135deg, rgb(234 243 238 / 0.78), rgb(255 255 255 / 0.46));
-    color: var(--color-portway-ink-2);
+    color: var(--color-cleargatecustoms-ink-2);
     box-shadow:
       0 8px 24px rgb(22 34 30 / 0.07),
       inset 0 1px 0 rgb(255 255 255 / 0.9);
@@ -399,25 +399,25 @@
   .field-label {
     margin-bottom: 0.45rem;
     display: block;
-    color: var(--color-portway-ink-2);
+    color: var(--color-cleargatecustoms-ink-2);
     font-size: 0.8rem;
     font-weight: 600;
   }
 
   .field-control {
     width: 100%;
-    border: 1.5px solid var(--color-portway-line);
+    border: 1.5px solid var(--color-cleargatecustoms-line);
     border-radius: 0.75rem;
     background: white;
     padding: 0.8rem 0.9rem;
-    color: var(--color-portway-ink);
+    color: var(--color-cleargatecustoms-ink);
     font-size: 0.875rem;
     outline: none;
     transition: border-color 0.2s ease;
   }
 
   .field-control:focus {
-    border-color: var(--color-portway-mint);
+    border-color: var(--color-cleargatecustoms-mint);
   }
 }
 
