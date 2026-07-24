@@ -159,7 +159,7 @@ export function Process() {
                 aria-hidden="true"
               />
               <span>
-                <strong className="font-semibold text-white/90">Виконує “Митні системи”</strong>
+                <strong className="font-semibold text-white/90">Виконує “ClearGateCustoms”</strong>
                 <br />
                 митне оформлення
               </span>
@@ -170,7 +170,7 @@ export function Process() {
                 aria-hidden="true"
               />
               <span>
-                <strong className="font-semibold text-white/90">Координує “Митні системи”</strong>
+                <strong className="font-semibold text-white/90">Координує “ClearGateCustoms”</strong>
                 <br />
                 логістика
               </span>

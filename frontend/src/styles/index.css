@@ -287,13 +287,17 @@
   }
 
   .footer-brand-lockup {
-    --footer-brand-size: clamp(72px, 13vw, 184px);
-    width: min(100%, calc(var(--footer-brand-size) * 3.15));
+    width: min(100%, 38rem);
+  }
+
+  .footer-shell {
+    container-type: inline-size;
   }
 
   .footer-brand-word {
     margin-left: -0.04em;
-    font-size: var(--footer-brand-size);
+    font-size: clamp(1.5rem, 10.8cqw, 7.75rem);
+    width: 100%;
   }
 
   .action-pill {

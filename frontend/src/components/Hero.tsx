@@ -138,7 +138,7 @@ export function Hero() {
     <section
       ref={heroRef}
       id="top"
-      className="hero relative h-screen min-h-[620px] overflow-hidden bg-[#b8ccc3]"
+      className="hero relative min-h-[max(43rem,100svh)] overflow-hidden bg-[#b8ccc3] md:h-screen md:min-h-[620px]"
     >
       <div className="hero-parallax-media" aria-hidden="true">
         {heroSlides.map((src, index) => (
@@ -156,7 +156,7 @@ export function Hero() {
       <div className="hero-photo-scrim absolute inset-0" aria-hidden="true" />
       <div className="hero-parallax-glow" aria-hidden="true" />
       <div className="hero-customs-pattern" aria-hidden="true" />
-      <div className="page-wrap relative z-10 flex h-full items-center">
+      <div className="page-wrap relative z-10 flex min-h-[max(43rem,100svh)] items-center py-28 md:h-full md:min-h-0 md:py-0">
         <Header />
         <div className="max-w-[940px]">
           <div className="hero-customs-badge mb-6">
@@ -173,17 +173,14 @@ export function Hero() {
               </span>
             </span>
           </div>
-          <h1 className="text-[42px] leading-[0.98] font-extrabold tracking-[-0.055em] sm:text-6xl lg:text-[64px]">
-            Митне оформлення
-            <br />
-            вантажів з Китаю та Європи
+          <h1 className="max-w-[17ch] text-[clamp(2.35rem,10.8vw,3.5rem)] leading-[0.96] font-extrabold tracking-[-0.055em] sm:max-w-[18ch] sm:text-6xl lg:max-w-none lg:text-[64px]">
+            Митне оформлення вантажів, експертний супровід та сучасні AI-рішення.
           </h1>
-          <p className="text-portway-ink mt-7 max-w-[620px] text-base leading-7 sm:text-lg">
-            Митне оформлення вантажу виконують власні фахівці Митних систем — від подання декларації
-            до випуску. Додатково організовуємо супутню логістику: від порту прибуття до
-            вивантаження на вашому складі.
+          <p className="text-portway-ink mt-6 max-w-[620px] text-pretty text-[15px] leading-6 sm:mt-7 sm:text-lg sm:leading-7">
+            Онлайн-розрахунок вартості, особистий менеджер і повний супровід імпорту та експорту —
+            готові оформити вантаж без зайвих турбот?
           </p>
-          <ButtonLink href="#calc" className="mt-9">
+          <ButtonLink href="#calc" className="mt-7 sm:mt-9">
             Розрахувати митні платежі
           </ButtonLink>
         </div>

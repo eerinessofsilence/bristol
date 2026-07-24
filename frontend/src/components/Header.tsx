@@ -13,16 +13,16 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="liquid-header fixed top-5 right-6 left-6 z-50 mx-auto flex h-16 max-w-[1160px] items-center justify-between gap-6 rounded-full px-4 md:top-6 md:right-9 md:left-9 md:px-8">
+    <header className="liquid-header fixed top-4 right-4 left-4 z-50 mx-auto flex h-15 max-w-[1160px] items-center justify-between gap-3 rounded-full px-4 sm:top-5 sm:right-6 sm:left-6 sm:h-16 md:top-6 md:right-9 md:left-9 md:gap-6 md:px-8">
       <a
         href="#top"
-        className="text-[23px] font-extrabold tracking-[-0.04em] transition-[letter-spacing,opacity] duration-300 hover:tracking-[-0.02em] hover:opacity-75"
+        className="min-w-0 truncate text-[20px] font-extrabold tracking-[-0.04em] transition-[letter-spacing,opacity] duration-300 hover:tracking-[-0.02em] hover:opacity-75 sm:text-[23px]"
       >
-        Митні системи
+        ClearGateCustoms
       </a>
       <nav
         aria-label="Головна навігація"
-        className={`absolute top-20 right-0 left-0 flex origin-top flex-col gap-4 rounded-2xl bg-white p-6 shadow-xl transition-[opacity,transform,visibility] duration-300 ease-out md:visible md:static md:flex md:translate-y-0 md:scale-100 md:flex-row md:gap-8 md:bg-transparent md:p-0 md:opacity-100 md:shadow-none ${open ? 'visible translate-y-0 scale-100 opacity-100' : 'pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0 md:pointer-events-auto'}`}
+          className={`absolute top-[4.5rem] right-0 left-0 flex origin-top flex-col gap-4 rounded-2xl bg-white p-5 shadow-xl transition-[opacity,transform,visibility] duration-300 ease-out sm:top-20 sm:p-6 md:visible md:static md:flex md:translate-y-0 md:scale-100 md:flex-row md:gap-8 md:bg-transparent md:p-0 md:opacity-100 md:shadow-none ${open ? 'visible translate-y-0 scale-100 opacity-100' : 'pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0 md:pointer-events-auto'}`}
       >
         {links.map(([label, href]) => (
           <a
