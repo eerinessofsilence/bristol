@@ -12,9 +12,10 @@ type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement> & SharedP
 type LinkProps = PropsWithChildren<AnchorHTMLAttributes<HTMLAnchorElement> & SharedProps>;
 
 const variants = {
-  dark: 'border-cleargatecustoms-primary bg-cleargatecustoms-primary text-white',
-  mint: 'border-cleargatecustoms-mint bg-cleargatecustoms-mint text-[#08221a]',
-  outline: 'border-cleargatecustoms-line bg-white text-cleargatecustoms-ink hover:border-cleargatecustoms-mint-muted',
+  dark: 'border-primary bg-primary text-white',
+  mint: 'border-mint bg-mint text-[#08221a]',
+  outline:
+    'border-line bg-white text-ink hover:border-mint-muted',
 };
 
 const sizes = {
@@ -23,9 +24,9 @@ const sizes = {
 };
 
 const iconVariants = {
-  dark: 'bg-white text-cleargatecustoms-primary',
-  mint: 'bg-cleargatecustoms-primary text-white',
-  outline: 'bg-cleargatecustoms-primary text-white',
+  dark: 'bg-white text-primary',
+  mint: 'bg-primary text-white',
+  outline: 'bg-primary text-white',
 };
 
 const iconSizes = {
@@ -38,7 +39,8 @@ function getClassName(
   variant: NonNullable<SharedProps['variant']>,
   size: NonNullable<SharedProps['size']>,
 ) {
-  return `action-pill relative inline-flex cursor-pointer items-center justify-between rounded-full border-[1.5px] text-sm font-semibold whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-60 ${sizes[size]} ${variants[variant]} ${className}`;
+  const shadowClass = variant === 'outline' ? 'action-pill-flat' : '';
+  return `action-pill ${shadowClass} relative inline-flex cursor-pointer items-center justify-between rounded-full border-[1.5px] text-sm font-semibold whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-60 ${sizes[size]} ${variants[variant]} ${className}`;
 }
 
 function ActionIcon({

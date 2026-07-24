@@ -17,14 +17,6 @@ const productCodePattern = /^\d{10}$/;
 const formatMoney = (value?: number) =>
   value === undefined ? '—' : `${Math.round(value).toLocaleString('uk-UA')} ₴`;
 
-const formatUsd = (value?: number) =>
-  value === undefined
-    ? '—'
-    : value.toLocaleString('uk-UA', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-
 const formatRateDate = (value: string) => {
   const [year, month, day] = value.split('-');
   return `${day}.${month}.${year}`;
@@ -107,7 +99,7 @@ export function Calculator({ onContact }: Props) {
   return (
     <section
       id="calc"
-      className="customs-surface bg-cleargatecustoms-soft scroll-mt-10 py-14 md:py-24"
+      className="customs-surface bg-soft scroll-mt-10 py-14 md:py-24"
     >
       <div className="page-wrap">
         <div
@@ -117,7 +109,7 @@ export function Calculator({ onContact }: Props) {
           <div className="customs-document-page p-5 sm:p-7 md:p-11">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3 pb-4 sm:mb-7">
               <span className="section-tag">
-                <span className="section-index">02 /</span>&nbsp; Розрахунок
+                <span className="section-index">03 /</span>&nbsp; Розрахунок
               </span>
               <span className="technical-label hidden text-[#085041]/50 sm:inline">
                 MS-CALC / UA-2026
@@ -126,8 +118,8 @@ export function Calculator({ onContact }: Props) {
             <h2 className="mt-4 text-[1.85rem] leading-[1.05] font-bold tracking-tight sm:text-3xl">
               Калькулятор митних платежів
             </h2>
-            <p className="text-cleargatecustoms-ink-3 mt-2 text-sm">
-              Вкажіть код УКТ ЗЕД і вагу вантажу — візьмемо критичну ціну з довідника ризиків.
+            <p className="text-ink-3 mt-2 text-sm text-balance">
+              Вкажіть код УКТ ЗЕД і вагу вантажу.
             </p>
             <div className="mt-6 sm:mt-7">
               <label className="field-label" htmlFor="productCode">
@@ -154,7 +146,7 @@ export function Calculator({ onContact }: Props) {
                   icon={Camera}
                   variant="outline"
                   size="compact"
-                  className="shrink-0 self-stretch"
+                  className="action-pill-flat shrink-0 self-stretch"
                   onClick={() => setIsCodeFinderOpen(true)}
                 >
                   <span className="sm:hidden">За фото</span>
@@ -165,7 +157,7 @@ export function Calculator({ onContact }: Props) {
                 className={`mt-2 text-xs leading-5 ${
                   productCode.length > 0 && !hasValidCode
                     ? 'text-[#9a3412]'
-                    : 'text-cleargatecustoms-ink-3'
+                    : 'text-ink-3'
                 }`}
               >
                 {productCode.length > 0 && !hasValidCode
@@ -185,7 +177,7 @@ export function Calculator({ onContact }: Props) {
             <div className="mt-2">
               <div className="min-h-5 text-xs leading-5" aria-live="polite">
                 {rateStatus === 'loading' && (
-                  <p className="text-cleargatecustoms-ink-3 flex items-center gap-2" role="status">
+                  <p className="text-ink-3 flex items-center gap-2" role="status">
                     <RefreshCw className="animate-spin" size={13} aria-hidden="true" />
                     Отримуємо актуальний курс НБУ…
                   </p>
@@ -213,7 +205,7 @@ export function Calculator({ onContact }: Props) {
                 )}
               </div>
             </div>
-            <p className="text-cleargatecustoms-ink-3/80 mt-5 text-xs leading-5">
+            <p className="text-ink-3/80 mt-5 text-xs leading-5">
               Для кодів із кількісною одиницею виміру потрібен окремий розрахунок. Пошлина у цьому
               попередньому розрахунку становить 0%; ПДВ — 20%.
             </p>
@@ -224,44 +216,34 @@ export function Calculator({ onContact }: Props) {
             )}
           </div>
           <div
-            className="bg-cleargatecustoms-primary relative flex flex-col justify-center overflow-hidden border-t border-white/10 p-5 text-white sm:p-7 md:p-11 lg:border-t-0"
+            className="bg-primary relative flex flex-col overflow-hidden border-t border-white/10 p-5 text-white sm:p-7 md:p-11 lg:border-t-0"
             aria-busy={hasValidCode && exchangeRate !== null && result === null && !quoteError}
           >
             <div className="relative z-10 mb-4 flex flex-col items-start gap-1 border-b border-white/10 pb-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-3">
               <span className="technical-label whitespace-nowrap text-white/45">
-                Розрахунковий лист
+                Попередній розрахунок
               </span>
               <span className="technical-label whitespace-nowrap text-[#9fe1cb]/70">
-                Статус / попередній
+                Статус / орієнтовний
               </span>
             </div>
-            {[
-              ['Критична ціна, USD/кг', result ? formatUsd(result.criticalPriceUsdPerKg) : '—'],
-              ['Вартість за довідником, USD', result ? formatUsd(result.customsValueUsd) : '—'],
-              ['Митна вартість, ₴', formatMoney(result?.customsValueUah)],
-              ['Мито (0%)', formatMoney(result?.duty)],
-              ['ПДВ (20%)', formatMoney(result?.vat)],
-            ].map(([label, value]) => (
-              <div
-                key={label}
-                className="flex items-baseline justify-between gap-3 border-b border-white/10 py-3 text-sm"
-              >
-                <span className="min-w-0 text-white/55">{label}</span>
-                <span className="shrink-0 font-mono text-xs font-medium tabular-nums sm:text-sm">
-                  {value}
-                </span>
-              </div>
-            ))}
-            <div className="mt-2 flex flex-col gap-1 pt-5 sm:flex-row sm:items-baseline sm:justify-between">
-              <span className="font-semibold">Разом платежів</span>
-              <strong className="text-cleargatecustoms-mint font-mono text-[1.7rem] font-semibold tracking-tight tabular-nums sm:text-3xl">
+            <div className="relative z-10 flex flex-1 flex-col justify-center py-8 sm:py-12">
+              <span className="technical-label text-[#9fe1cb]/70">Митні платежі</span>
+              <h3 className="mt-3 max-w-[20ch] text-2xl leading-tight font-semibold tracking-tight sm:text-3xl">
+                Орієнтовна сума платежів
+              </h3>
+              <strong className="text-mint mt-5 font-mono text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
                 {formatMoney(result?.total)}
               </strong>
+              <p className="mt-4 max-w-sm text-sm leading-6 text-white/55">
+                Підсумок включає мито та ПДВ. Точна сума залежить від документів і характеристик
+                товару.
+              </p>
             </div>
             <Button
               icon={MessageCircle}
               variant="mint"
-              className="mt-6 w-full self-stretch sm:mt-7 sm:w-auto sm:self-start"
+              className="relative z-10 mt-2 w-full self-stretch sm:w-auto sm:self-start"
               disabled={result === null}
               onClick={() => {
                 if (result === null) return;

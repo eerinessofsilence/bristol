@@ -7,12 +7,14 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section id="faq" className="bg-cleargatecustoms-soft scroll-mt-10 py-20 md:py-24">
+    <section id="faq" className="bg-soft scroll-mt-10 py-20 md:py-24">
       <div className="page-wrap grid items-start gap-10 lg:grid-cols-[1.28fr_0.72fr] lg:gap-20">
         <div className="lg:sticky lg:top-30 lg:order-2 lg:-mt-3" data-reveal>
-          <span className="section-tag self-start">Питання</span>
+          <span className="section-tag self-start">
+            <span className="section-index">06 /</span>&nbsp; Питання
+          </span>
           <h2 className="section-title mt-4">Часті запитання</h2>
-          <p className="text-cleargatecustoms-ink-2 mt-5 max-w-sm leading-7">
+          <p className="text-ink-2 mt-5 max-w-sm leading-7">
             Коротко про роль Митних систем, роботу з портами, митне оформлення та доставку до
             складу клієнта.
           </p>
@@ -26,7 +28,7 @@ export function Faq() {
             return (
               <article
                 key={item.question}
-                className={`border-cleargatecustoms-line mb-3 overflow-hidden rounded-[14px] border ${isOpen ? 'bg-white/75' : 'bg-white'}`}
+                className={`border-line mb-3 overflow-hidden rounded-[14px] border ${isOpen ? 'bg-white/75' : 'bg-white'}`}
               >
                 <h3>
                   <button
@@ -40,7 +42,7 @@ export function Faq() {
                     <ChevronDown
                       size={20}
                       strokeWidth={2.4}
-                      className={`text-cleargatecustoms-ink-3 shrink-0 transition ${isOpen ? 'rotate-180' : ''}`}
+                      className={`text-ink-3 shrink-0 transition ${isOpen ? 'rotate-180' : ''}`}
                     />
                   </button>
                 </h3>
@@ -49,7 +51,7 @@ export function Faq() {
                   className={`grid transition-[grid-template-rows] duration-300 ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-cleargatecustoms-ink-2 pr-6 pb-5 pl-8 text-sm leading-6 text-balance">
+                    <p className="text-ink-2 pr-6 pb-5 pl-8 text-sm leading-6 text-balance">
                       {item.answer}
                     </p>
                   </div>

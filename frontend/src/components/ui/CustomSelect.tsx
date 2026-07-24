@@ -98,7 +98,7 @@ export function CustomSelect({ id, options, value, onChange }: Props) {
         type="button"
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`field-control flex min-h-12 cursor-pointer items-center justify-between gap-4 text-left transition duration-200 ${open ? 'border-cleargatecustoms-mint shadow-[0_0_0_3px_rgba(63,181,140,0.1)]' : ''}`}
+        className={`field-control flex min-h-12 cursor-pointer items-center justify-between gap-4 text-left transition duration-200 ${open ? 'border-mint shadow-[0_0_0_3px_rgba(63,181,140,0.1)]' : ''}`}
         onClick={() => setOpen((current) => !current)}
         onKeyDown={(event) => {
           if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
@@ -140,7 +140,7 @@ export function CustomSelect({ id, options, value, onChange }: Props) {
                   type="button"
                   role="option"
                   aria-selected={isSelected}
-                  className={`flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm transition duration-150 ${isSelected ? 'bg-cleargatecustoms-mint/15 text-cleargatecustoms-primary font-semibold' : 'text-cleargatecustoms-ink-2 hover:bg-white/80 hover:pl-4'}`}
+                  className={`flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm transition duration-150 ${isSelected ? 'bg-mint/15 text-primary font-semibold' : 'text-ink-2 hover:bg-white/80 hover:pl-4'}`}
                   onClick={() => {
                     onChange(option.value);
                     setOpen(false);
@@ -150,7 +150,7 @@ export function CustomSelect({ id, options, value, onChange }: Props) {
                   <Check
                     size={17}
                     strokeWidth={2.6}
-                    className={isSelected ? 'text-cleargatecustoms-mint-deep opacity-100' : 'opacity-0'}
+                    className={isSelected ? 'text-mint-deep opacity-100' : 'opacity-0'}
                   />
                 </button>
               );

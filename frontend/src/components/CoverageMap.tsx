@@ -208,10 +208,10 @@ export function CoverageMap() {
       <div className="page-wrap">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">04 /</span>&nbsp; Географія
+            <span className="section-index">05 /</span>&nbsp; Географія
           </span>
           <h2 className="section-title mt-5">Маршрут вантажу до України</h2>
-          <p className="text-cleargatecustoms-ink-2 mt-5 leading-7">
+          <p className="text-ink-2 mt-5 leading-7">
             Координуємо прибуття вантажу через порти Польщі та Румунії, виконуємо митне оформлення
             в Україні й організовуємо доставку до складу клієнта.
           </p>
@@ -227,7 +227,7 @@ export function CoverageMap() {
           </figcaption>
 
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-[#085041]/10 px-2 pb-4">
-            <span className="technical-label text-[#085041]/50">Route control / MS-UA-04</span>
+            <span className="technical-label text-[#085041]/50">Route control / MS-UA-05</span>
             <span className="flex items-center gap-2 rounded-full border border-[#1d9e75]/20 bg-[#e1f5ee] px-3 py-1.5 text-[11px] font-semibold text-[#085041]">
               <span className="size-1.5 rounded-full bg-[#1d9e75]" aria-hidden="true" />
               Митний контроль в Україні

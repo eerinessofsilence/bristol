@@ -61,11 +61,11 @@ const toneClasses = {
 
 export function Process() {
   return (
-    <section id="how" className="bg-cleargatecustoms-primary scroll-mt-10 py-20 text-white md:py-24">
+    <section id="how" className="bg-primary scroll-mt-10 py-20 text-white md:py-24">
       <div className="page-wrap grid items-stretch gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div className="flex min-h-0 flex-col" data-reveal>
           <span className="section-tag section-tag-dark self-start">
-            <span className="section-index">03 /</span>&nbsp; Маршрут
+            <span className="section-index">04 /</span>&nbsp; Маршрут
           </span>
           <h2 className="section-title mt-4 text-white">Як це працює</h2>
           <p className="mt-4 max-w-lg text-base leading-7 text-white/60">

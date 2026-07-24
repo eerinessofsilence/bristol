@@ -2,10 +2,10 @@ import { Quote } from 'lucide-react';
 import { testimonials } from '../data/content';
 
 const cardStyles = [
-  'bg-cleargatecustoms-primary text-white lg:col-span-7',
-  'bg-cleargatecustoms-mint-soft text-cleargatecustoms-ink lg:col-span-5',
-  'border-cleargatecustoms-line bg-white text-cleargatecustoms-ink border lg:col-span-5',
-  'bg-cleargatecustoms-soft text-cleargatecustoms-ink lg:col-span-7',
+  'bg-primary text-white lg:col-span-7',
+  'bg-mint-soft text-ink lg:col-span-5',
+  'border-line bg-white text-ink border lg:col-span-5',
+  'bg-soft text-ink lg:col-span-7',
 ];
 
 export function Testimonials() {
@@ -13,9 +13,11 @@ export function Testimonials() {
     <section id="testimonials" className="scroll-mt-10 py-20 md:py-24">
       <div className="page-wrap">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center" data-reveal>
-          <span className="section-tag">Відгуки</span>
+          <span className="section-tag">
+            <span className="section-index">07 /</span>&nbsp; Відгуки
+          </span>
           <h2 className="section-title mt-4">Спокійніше, коли весь маршрут під контролем</h2>
-          <p className="text-cleargatecustoms-ink-2 mt-5 max-w-2xl leading-7 text-balance">
+          <p className="text-ink-2 mt-5 max-w-2xl leading-7 text-balance">
             Клієнти цінують передбачувані строки, зрозумілу комунікацію та одного координатора від
             порту до складу.
           </p>
@@ -32,7 +34,7 @@ export function Testimonials() {
               >
                 <div
                   className={`grid size-12 place-items-center rounded-2xl ${
-                    isDark ? 'text-cleargatecustoms-mint bg-white/10' : 'bg-cleargatecustoms-primary text-white'
+                    isDark ? 'text-mint bg-white/10' : 'bg-primary text-white'
                   }`}
                   aria-hidden="true"
                 >
@@ -53,7 +55,7 @@ export function Testimonials() {
                       className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
                         isDark
                           ? 'border-white/15 bg-white/[0.08] text-white/80'
-                          : 'border-cleargatecustoms-primary/10 text-cleargatecustoms-ink-2 bg-white/70'
+                          : 'border-primary/10 text-ink-2 bg-white/70'
                       }`}
                     >
                       {outcome}
@@ -65,12 +67,12 @@ export function Testimonials() {
                   <img
                     src={testimonial.avatar}
                     alt=""
-                    className={`size-10 shrink-0 rounded-full object-cover ${isDark ? 'ring-2 ring-cleargatecustoms-mint/70' : 'ring-2 ring-cleargatecustoms-primary/10'}`}
+                    className={`size-10 shrink-0 rounded-full object-cover ${isDark ? 'ring-2 ring-mint/70' : 'ring-2 ring-primary/10'}`}
                   />
                   <span className="min-w-0">
                     <cite className="block text-sm font-bold not-italic">{testimonial.author}</cite>
                     <span
-                      className={`mt-0.5 flex flex-wrap items-center gap-x-1.5 text-xs leading-5 ${isDark ? 'text-white/70' : 'text-cleargatecustoms-ink-3'}`}
+                      className={`mt-0.5 flex flex-wrap items-center gap-x-1.5 text-xs leading-5 ${isDark ? 'text-white/70' : 'text-ink-3'}`}
                     >
                       <span>{testimonial.role}</span>
                       <span aria-hidden="true">·</span>
