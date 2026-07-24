@@ -1,7 +1,11 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app.schemas.exchange_rate import ExchangeRateResponse
-from app.services.exchange_rates import ExchangeRateUnavailableError, get_usd_exchange_rate
+from app.services.exchange_rates import (
+    ExchangeRateUnavailableError,
+    get_eur_exchange_rate,
+    get_usd_exchange_rate,
+)
 
 router = APIRouter(prefix="/exchange-rates", tags=["exchange-rates"])
 
@@ -14,4 +18,15 @@ async def usd_exchange_rate() -> ExchangeRateResponse:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Курс USD НБУ тимчасово недоступний",
+        ) from error
+
+
+@router.get("/eur", response_model=ExchangeRateResponse)
+async def eur_exchange_rate() -> ExchangeRateResponse:
+    try:
+        return await get_eur_exchange_rate()
+    except ExchangeRateUnavailableError as error:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Курс EUR НБУ тимчасово недоступний",
         ) from error

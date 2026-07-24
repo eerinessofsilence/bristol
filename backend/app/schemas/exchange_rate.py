@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 
 class ExchangeRateResponse(BaseModel):
-    currency: Literal["USD"] = "USD"
+    currency: Literal["USD", "EUR"]
     rate: float = Field(gt=0)
     exchangeDate: date
     fetchedAt: datetime

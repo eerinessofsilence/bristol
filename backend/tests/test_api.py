@@ -97,6 +97,34 @@ def test_usd_exchange_rate_is_cached_for_twelve_hours(monkeypatch) -> None:
     assert calls == 1
 
 
+def test_eur_exchange_rate_is_cached_for_twelve_hours(monkeypatch) -> None:
+    fetched_at = datetime(2026, 7, 24, 9, 0, tzinfo=timezone.utc)
+    calls = 0
+
+    async def fetch_rate() -> tuple[float, date]:
+        nonlocal calls
+        calls += 1
+        return 48.5678, date(2026, 7, 24)
+
+    monkeypatch.setattr(exchange_rates, "_utcnow", lambda: fetched_at)
+    monkeypatch.setattr(exchange_rates, "_fetch_eur_rate", fetch_rate)
+
+    first_response = client.get("/api/v1/exchange-rates/eur")
+    second_response = client.get("/api/v1/exchange-rates/eur")
+
+    assert first_response.status_code == 200
+    assert second_response.status_code == 200
+    assert first_response.json() == {
+        "currency": "EUR",
+        "rate": 48.5678,
+        "exchangeDate": "2026-07-24",
+        "fetchedAt": "2026-07-24T09:00:00Z",
+        "isStale": False,
+    }
+    assert second_response.json() == first_response.json()
+    assert calls == 1
+
+
 def test_usd_exchange_rate_uses_stale_cache_when_nbu_fails(monkeypatch) -> None:
     current_time = datetime(2026, 7, 24, 9, 0, tzinfo=timezone.utc)
 

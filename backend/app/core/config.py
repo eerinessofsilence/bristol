@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     nbu_exchange_rate_url: str = (
         "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"
     )
+    nbu_eur_exchange_rate_url: str = (
+        "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR&json"
+    )
     nbu_timeout_seconds: float = 5.0
     nbu_cache_ttl_hours: int = 12
 
