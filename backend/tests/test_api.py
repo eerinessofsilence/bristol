@@ -45,13 +45,39 @@ def test_health() -> None:
     assert response.json() == {"status": "ok"}
 
 
-def test_quote_calculation() -> None:
+def test_quote_calculation_by_weight_and_product_code() -> None:
     response = client.post(
         "/api/v1/quotes/calculate",
-        json={"customs_value": 1000, "currency_rate": 41.5, "duty_rate": 5},
+        json={"product_code": "0201203000", "weight_kg": 100, "currency_rate": 41.5},
     )
     assert response.status_code == 200
-    assert response.json()["total"] == 10790
+    assert response.json() == {
+        "productCode": "0201203000",
+        "weightKg": 100.0,
+        "criticalPriceUsdPerKg": 2.95,
+        "customsValueUsd": 295.0,
+        "customsValueUah": 12242.5,
+        "duty": 0.0,
+        "vatBase": 12242.5,
+        "vat": 2448.5,
+        "total": 2448.5,
+    }
+
+
+def test_quote_rejects_unknown_product_code() -> None:
+    response = client.post(
+        "/api/v1/quotes/calculate",
+        json={"product_code": "9999999999", "weight_kg": 100, "currency_rate": 41.5},
+    )
+    assert response.status_code == 404
+
+
+def test_quote_rejects_product_code_with_non_weight_unit() -> None:
+    response = client.post(
+        "/api/v1/quotes/calculate",
+        json={"product_code": "8512301090", "weight_kg": 100, "currency_rate": 41.5},
+    )
+    assert response.status_code == 422
 
 
 def test_lead_creation() -> None:

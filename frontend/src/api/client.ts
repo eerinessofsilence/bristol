@@ -12,7 +12,15 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
   });
 
   if (!response.ok) {
-    throw new Error('Не вдалося виконати запит. Спробуйте ще раз.');
+    const payload: unknown = await response.json().catch(() => null);
+    const detail =
+      typeof payload === 'object' &&
+      payload !== null &&
+      'detail' in payload &&
+      typeof payload.detail === 'string'
+        ? payload.detail
+        : 'Не вдалося виконати запит. Спробуйте ще раз.';
+    throw new Error(detail);
   }
 
   return response.json() as Promise<T>;
@@ -35,9 +43,9 @@ export function calculateQuote(payload: QuoteRequest) {
   return request<QuoteResult>('/api/v1/quotes/calculate', {
     method: 'POST',
     body: JSON.stringify({
-      customs_value: payload.customsValue,
+      product_code: payload.productCode,
+      weight_kg: payload.weightKg,
       currency_rate: payload.currencyRate,
-      duty_rate: payload.dutyRate,
     }),
   });
 }

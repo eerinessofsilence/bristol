@@ -12,6 +12,8 @@ type Props = {
 const initialForm = { firstName: '', lastName: '', phone: '', email: '' };
 
 const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-UA')} ₴`;
+const formatUsd = (value: number) =>
+  value.toLocaleString('uk-UA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export function ContactModal({ quote, onClose }: Props) {
   const [form, setForm] = useState(initialForm);
@@ -56,7 +58,7 @@ export function ContactModal({ quote, onClose }: Props) {
 
   return (
     <div
-      className="bg-portway-primary/55 fixed inset-0 z-[1000] flex items-center justify-center overflow-y-auto p-5 backdrop-blur-sm"
+      className="bg-portway-primary/55 fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto p-3 backdrop-blur-sm sm:items-center sm:p-5"
       role="presentation"
       onMouseDown={(event) => event.target === event.currentTarget && onClose()}
     >
@@ -64,10 +66,10 @@ export function ContactModal({ quote, onClose }: Props) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="contact-title"
-        className="relative my-auto w-full max-w-[520px] rounded-[22px] bg-white p-8 shadow-2xl md:px-10 md:py-11"
+        className="relative my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-[520px] overflow-y-auto rounded-[22px] bg-white p-5 shadow-2xl sm:max-h-[calc(100dvh-2.5rem)] sm:p-8 md:px-10 md:py-11"
       >
         <div className="relative flex min-h-9 items-center justify-center">
-          <h2 id="contact-title" className="px-12 text-center text-2xl font-bold tracking-tight">
+          <h2 id="contact-title" className="px-10 text-center text-xl font-bold tracking-tight sm:px-12 sm:text-2xl">
             Уточнимо розрахунок
           </h2>
           <button
@@ -87,16 +89,16 @@ export function ContactModal({ quote, onClose }: Props) {
           <p className="text-portway-ink-3 text-xs font-semibold tracking-wide uppercase">
             Ваш розрахунок
           </p>
-          <p className="mt-2 text-sm font-semibold">{quote.category}</p>
+          <p className="mt-2 text-sm font-semibold">Код УКТ ЗЕД: {quote.productCode}</p>
           <div className="text-portway-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
-            <span>
-              Митна вартість: {quote.customsValue.toLocaleString('uk-UA')} {quote.currency}
-            </span>
+            <span>Вага: {quote.weightKg.toLocaleString('uk-UA')} кг</span>
+            <span>Критична ціна: {formatUsd(quote.criticalPriceUsdPerKg)} USD/кг</span>
+            <span>Вартість за довідником: {formatUsd(quote.customsValueUsd)} USD</span>
             <span>Платежі: {formatMoney(quote.total)}</span>
           </div>
         </div>
-        <form className="mt-8" onSubmit={handleSubmit}>
-          <div className="grid gap-5 sm:grid-cols-2">
+        <form className="mt-6 sm:mt-8" onSubmit={handleSubmit}>
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
             <div>
               <label htmlFor="firstName" className="field-label">
                 Ім'я
@@ -125,7 +127,7 @@ export function ContactModal({ quote, onClose }: Props) {
               />
             </div>
           </div>
-          <div className="mt-5">
+          <div className="mt-4 sm:mt-5">
             <label htmlFor="phone" className="field-label">
               Телефон
             </label>
@@ -140,7 +142,7 @@ export function ContactModal({ quote, onClose }: Props) {
               placeholder="+38 (0__) ___-__-__"
             />
           </div>
-          <div className="mt-5">
+          <div className="mt-4 sm:mt-5">
             <label htmlFor="email" className="field-label">
               Email <span className="text-portway-ink-3 font-normal">(необов'язково)</span>
             </label>

@@ -7,12 +7,16 @@ export type LeadPayload = {
 };
 
 export type QuoteRequest = {
-  customsValue: number;
+  productCode: string;
+  weightKg: number;
   currencyRate: number;
-  dutyRate: number;
 };
 
 export type QuoteResult = {
+  productCode: string;
+  weightKg: number;
+  criticalPriceUsdPerKg: number;
+  customsValueUsd: number;
   customsValueUah: number;
   duty: number;
   vatBase: number;
@@ -29,9 +33,9 @@ export type ExchangeRateResult = {
 };
 
 export type CalculatorQuote = {
-  category: string;
-  customsValue: number;
-  currency: string;
-  dutyRate: number;
+  productCode: string;
+  weightKg: number;
+  criticalPriceUsdPerKg: number;
+  customsValueUsd: number;
   total: number;
 };
