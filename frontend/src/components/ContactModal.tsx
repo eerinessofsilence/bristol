@@ -1,6 +1,6 @@
 import { Send, X } from 'lucide-react';
 import { type FormEvent, useEffect, useRef, useState } from 'react';
-import { createLead } from '../api/client';
+import { ApiError, createLead } from '../api/client';
 import type { CalculatorQuote } from '../types';
 import { Button } from './ui/Button';
 
@@ -49,7 +49,11 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
       );
       setForm(initialForm);
     } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Сталася помилка. Спробуйте ще раз.');
+      setStatus(
+        error instanceof ApiError
+          ? error.message
+          : 'Не вдалося надіслати заявку. Перевірте з’єднання і спробуйте ще раз.',
+      );
     } finally {
       setSubmitting(false);
     }

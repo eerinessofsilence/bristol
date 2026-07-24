@@ -1,4 +1,4 @@
-import { Check, CircleQuestionMark, ImageOff, ImagePlus, Sparkles, Trash2, X } from 'lucide-react';
+import { Check, ImageOff, ImagePlus, Info, Sparkles, Trash2, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { ThinkingOrb, type OrbState } from 'thinking-orbs';
 import { ApiError, suggestProductCodes } from '../api/client';
@@ -41,11 +41,11 @@ const orbLabels: Record<OrbState, string> = {
 };
 
 function getAnalysisErrorMessage(error: unknown) {
-  if (!(error instanceof Error)) {
-    return 'Не вдалося проаналізувати фото. Спробуйте ще раз.';
+  if (!(error instanceof ApiError)) {
+    return 'Не вдалося проаналізувати фото. Перевірте з’єднання і спробуйте ще раз.';
   }
 
-  if (error instanceof ApiError && error.status === 503) {
+  if (error.status === 503) {
     return 'Сервіс AI-підбору тимчасово недоступний. Спробуйте ще раз трохи пізніше.';
   }
 
@@ -296,8 +296,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
 
             <div className="mt-5">
               <label className="field-label" htmlFor="product-description">
-                Короткий опис{' '}
-                <span className="text-ink-3 font-normal">(необов’язково)</span>
+                Короткий опис <span className="text-ink-3 font-normal">(необов’язково)</span>
               </label>
               <textarea
                 id="product-description"
@@ -320,7 +319,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
 
             <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-ink-3 flex items-center gap-2 text-[12px] leading-4">
-                <CircleQuestionMark className="text-ink-2 shrink-0" size={16} />
+                <Info className="text-ink-2 shrink-0" size={16} />
                 Фото надсилаються в OpenAI лише для аналізу.
               </p>
               <Button
@@ -434,9 +433,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                           </span>
                         </div>
                         <h3 className="mt-3 text-sm font-semibold">{candidate.titleUk}</h3>
-                        <p className="text-ink-3 mt-1 text-xs leading-5">
-                          {candidate.reasonUk}
-                        </p>
+                        <p className="text-ink-3 mt-1 text-xs leading-5">{candidate.reasonUk}</p>
                         <p
                           className={`mt-2 text-xs font-semibold ${
                             candidate.calculatorSupported ? 'text-[#1d7f62]' : 'text-[#9a6412]'
@@ -479,9 +476,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                 </div>
               )}
 
-            <p className="text-ink-3 mt-4 text-xs leading-5">
-              {result.disclaimer}
-            </p>
+            <p className="text-ink-3 mt-4 text-xs leading-5">{result.disclaimer}</p>
             <div
               className={`mt-6 flex ${result.productIdentified ? 'justify-end' : 'justify-start'}`}
             >

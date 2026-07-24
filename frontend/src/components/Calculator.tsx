@@ -1,6 +1,6 @@
 import { Camera, MessageCircle, RefreshCw } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { calculateQuote, getUsdExchangeRate } from '../api/client';
+import { ApiError, calculateQuote, getUsdExchangeRate } from '../api/client';
 import type { CalculatorQuote, ExchangeRateResult, QuoteResult } from '../types';
 import { Button } from './ui/Button';
 import { PricePicker } from './ui/PricePicker';
@@ -83,9 +83,9 @@ export function Calculator({ onContact }: Props) {
           setRemoteError({
             key: requestKey,
             message:
-              error instanceof Error
+              error instanceof ApiError
                 ? error.message
-                : 'Не вдалося виконати розрахунок. Спробуйте ще раз.',
+                : 'Не вдалося виконати розрахунок. Перевірте з’єднання і спробуйте ще раз.',
           });
         });
     }, 300);
