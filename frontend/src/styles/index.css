@@ -69,33 +69,40 @@
 
   .hero-parallax-media {
     position: absolute;
-    inset: -18% 0;
+    inset: 0;
     overflow: hidden;
     background: #789589;
-    transform: translate3d(0, var(--hero-parallax-y, 0), 0);
-    will-change: transform;
   }
 
   .hero-parallax-image {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    inset: -22% -2%;
     object-fit: cover;
     object-position: center center;
     opacity: 0;
-    transform: scale(1.025);
+    transform: translate3d(
+        var(--hero-media-x, 0px),
+        calc(var(--hero-parallax-y, 0px) + var(--hero-media-y, 0px)),
+        0
+      )
+      scale(1.04);
     filter: saturate(0.82) contrast(0.94);
     transition:
       opacity 1600ms cubic-bezier(0.4, 0, 0.2, 1),
       transform 6500ms cubic-bezier(0.2, 0.65, 0.3, 1);
     user-select: none;
+    will-change: transform;
   }
 
   .hero-parallax-image.is-active {
     z-index: 1;
     opacity: 1;
-    transform: scale(1);
+    transform: translate3d(
+        var(--hero-media-x, 0px),
+        calc(var(--hero-parallax-y, 0px) + var(--hero-media-y, 0px)),
+        0
+      )
+      scale(var(--hero-parallax-scale, 1.015));
   }
 
   .hero-photo-scrim {
@@ -110,6 +117,15 @@
       linear-gradient(180deg, rgb(240 248 244 / 0.06), rgb(16 32 27 / 0.18));
   }
 
+  .hero-parallax-glow {
+    position: absolute;
+    inset: -14%;
+    background: radial-gradient(circle at 31% 53%, rgb(232 250 241 / 0.34), transparent 48%);
+    pointer-events: none;
+    transform: translate3d(var(--hero-glow-x, 0px), var(--hero-glow-y, 0px), 0);
+    will-change: transform;
+  }
+
   .hero-customs-pattern {
     position: absolute;
     inset: 0;
@@ -120,6 +136,8 @@
     background-size: 32px 32px;
     mask-image: linear-gradient(90deg, rgb(0 0 0 / 0.75), transparent 67%);
     pointer-events: none;
+    transform: translate3d(var(--hero-grid-x, 0px), var(--hero-grid-y, 0px), 0);
+    will-change: transform;
   }
 
   .hero-customs-badge {
@@ -471,8 +489,15 @@
     will-change: auto;
   }
 
+  .hero-parallax-glow,
+  .hero-customs-pattern {
+    transform: none;
+    will-change: auto;
+  }
+
   .hero-parallax-image {
     transition: none;
     transform: none;
+    will-change: auto;
   }
 }

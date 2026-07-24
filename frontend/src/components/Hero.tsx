@@ -60,33 +60,76 @@ export function Hero() {
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let frame = 0;
+    let pointerX = 0;
+    let pointerY = 0;
 
-    const updateParallax = () => {
+    const resetMotion = () => {
+      hero.style.setProperty('--hero-parallax-y', '0px');
+      hero.style.setProperty('--hero-parallax-scale', '1');
+      hero.style.setProperty('--hero-media-x', '0px');
+      hero.style.setProperty('--hero-media-y', '0px');
+      hero.style.setProperty('--hero-grid-x', '0px');
+      hero.style.setProperty('--hero-grid-y', '0px');
+      hero.style.setProperty('--hero-glow-x', '0px');
+      hero.style.setProperty('--hero-glow-y', '0px');
+    };
+
+    const updateMotion = () => {
       frame = 0;
 
       if (reducedMotion.matches) {
-        hero.style.setProperty('--hero-parallax-y', '0px');
+        resetMotion();
         return;
       }
 
       const progress = Math.min(Math.max(window.scrollY / hero.offsetHeight, 0), 1);
       const travel = Math.min(hero.offsetHeight * 0.18, 180);
       hero.style.setProperty('--hero-parallax-y', `${Math.round(progress * travel)}px`);
+      hero.style.setProperty('--hero-parallax-scale', `${1.015 + progress * 0.035}`);
+      hero.style.setProperty('--hero-media-x', `${Math.round(pointerX * 8)}px`);
+      hero.style.setProperty('--hero-media-y', `${Math.round(pointerY * 7)}px`);
+      hero.style.setProperty('--hero-grid-x', `${Math.round(pointerX * 15)}px`);
+      hero.style.setProperty(
+        '--hero-grid-y',
+        `${Math.round(progress * travel * 1.35 + pointerY * 13)}px`,
+      );
+      hero.style.setProperty('--hero-glow-x', `${Math.round(pointerX * -18)}px`);
+      hero.style.setProperty(
+        '--hero-glow-y',
+        `${Math.round(progress * travel * -0.2 + pointerY * -10)}px`,
+      );
     };
 
     const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateParallax);
+      if (!frame) frame = window.requestAnimationFrame(updateMotion);
     };
 
-    updateParallax();
+    const updatePointer = (event: PointerEvent) => {
+      const bounds = hero.getBoundingClientRect();
+      pointerX = Math.min(Math.max(((event.clientX - bounds.left) / bounds.width) * 2 - 1, -1), 1);
+      pointerY = Math.min(Math.max(((event.clientY - bounds.top) / bounds.height) * 2 - 1, -1), 1);
+      requestUpdate();
+    };
+
+    const resetPointer = () => {
+      pointerX = 0;
+      pointerY = 0;
+      requestUpdate();
+    };
+
+    updateMotion();
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate);
     reducedMotion.addEventListener('change', requestUpdate);
+    hero.addEventListener('pointermove', updatePointer, { passive: true });
+    hero.addEventListener('pointerleave', resetPointer);
 
     return () => {
       window.removeEventListener('scroll', requestUpdate);
       window.removeEventListener('resize', requestUpdate);
       reducedMotion.removeEventListener('change', requestUpdate);
+      hero.removeEventListener('pointermove', updatePointer);
+      hero.removeEventListener('pointerleave', resetPointer);
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, []);
@@ -101,7 +144,7 @@ export function Hero() {
         {heroSlides.map((src, index) => (
           <img
             key={src}
-            className={`hero-parallax-image${index === activeSlide ? ' is-active' : ''}`}
+            className={`hero-parallax-image${index === activeSlide ? 'is-active' : ''}`}
             src={src}
             alt=""
             fetchPriority={index === 0 ? 'high' : 'low'}
@@ -111,6 +154,7 @@ export function Hero() {
         ))}
       </div>
       <div className="hero-photo-scrim absolute inset-0" aria-hidden="true" />
+      <div className="hero-parallax-glow" aria-hidden="true" />
       <div className="hero-customs-pattern" aria-hidden="true" />
       <div className="page-wrap relative z-10 flex h-full items-center">
         <Header />
@@ -134,10 +178,10 @@ export function Hero() {
             <br />
             вантажів з Китаю та Європи
           </h1>
-          <p className="text-portway-ink-2 mt-7 max-w-[620px] text-base leading-7 sm:text-lg">
-            Митне оформлення вантажу виконують власні фахівці Митних систем — від подання
-            декларації до випуску. Додатково організовуємо супутню логістику: від порту прибуття
-            до вивантаження на вашому складі.
+          <p className="text-portway-ink mt-7 max-w-[620px] text-base leading-7 sm:text-lg">
+            Митне оформлення вантажу виконують власні фахівці Митних систем — від подання декларації
+            до випуску. Додатково організовуємо супутню логістику: від порту прибуття до
+            вивантаження на вашому складі.
           </p>
           <ButtonLink href="#calc" className="mt-9">
             Розрахувати митні платежі
