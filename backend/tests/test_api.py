@@ -4,6 +4,7 @@ from types import SimpleNamespace
 import httpx
 import pytest
 from fastapi.testclient import TestClient
+from pydantic import ValidationError
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
@@ -93,6 +94,7 @@ def test_product_code_suggestion_from_image(monkeypatch) -> None:
             )
             return SimpleNamespace(
                 output_parsed=ProductCodeAIResult(
+                    product_identified=True,
                     identified_product="Шкіряна сумка",
                     candidates=[
                         {
@@ -123,6 +125,7 @@ def test_product_code_suggestion_from_image(monkeypatch) -> None:
 
     assert response.status_code == 200
     assert response.json() == {
+        "productIdentified": True,
         "identifiedProduct": "Шкіряна сумка",
         "candidates": [
             {
@@ -150,6 +153,56 @@ def test_product_code_suggestion_rejects_non_image() -> None:
 
     assert response.status_code == 415
     assert response.json() == {"detail": "Підтримуються JPG, PNG, WEBP та GIF"}
+
+
+def test_product_code_suggestion_returns_no_codes_when_product_is_not_identified(
+    monkeypatch,
+) -> None:
+    class FakeResponses:
+        async def parse(self, **kwargs):
+            return SimpleNamespace(
+                output_parsed=ProductCodeAIResult(
+                    product_identified=False,
+                    identified_product="На фото немає товару для класифікації",
+                    candidates=[],
+                    needs_more_info=True,
+                    missing_details=["Додайте фото самого товару крупним планом"],
+                )
+            )
+
+    class FakeOpenAI:
+        def __init__(self, **kwargs):
+            self.responses = FakeResponses()
+
+    monkeypatch.setattr(product_codes.settings, "openai_api_key", "test-key")
+    monkeypatch.setattr(product_codes, "AsyncOpenAI", FakeOpenAI)
+
+    response = client.post(
+        "/api/v1/product-codes/suggest",
+        files={"images": ("warehouse.jpg", b"fake-image", "image/jpeg")},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["productIdentified"] is False
+    assert response.json()["candidates"] == []
+
+
+def test_product_code_ai_result_rejects_candidates_for_unidentified_product() -> None:
+    with pytest.raises(ValidationError, match="Candidates must be empty"):
+        ProductCodeAIResult(
+            product_identified=False,
+            identified_product="На фото склад",
+            candidates=[
+                {
+                    "code": "4202210000",
+                    "title_uk": "Сумка",
+                    "reason_uk": "Помилковий варіант",
+                    "confidence": "low",
+                }
+            ],
+            needs_more_info=True,
+            missing_details=["Додайте фото товару"],
+        )
 
 
 def test_lead_creation() -> None:

@@ -49,6 +49,7 @@ export type ProductCodeCandidate = {
 };
 
 export type ProductCodeSuggestion = {
+  productIdentified: boolean;
   identifiedProduct: string;
   candidates: ProductCodeCandidate[];
   needsMoreInfo: boolean;

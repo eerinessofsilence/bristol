@@ -18,6 +18,10 @@ composition, intended use, processing, technical specifications, power, model,
 or supporting documents that are not visible in a photo. If essential details
 are missing, set needs_more_info to true and list concise follow-up questions in
 Ukrainian. Write all product titles and explanations in Ukrainian.
+Set product_identified to false when the image does not show a specific product
+clearly enough to identify it, such as a port, warehouse, landscape, packaging
+without a visible product, or an unrelated scene. In that case, set
+needs_more_info to true and return an empty candidates list.
 """.strip()
 
 DISCLAIMER = (
@@ -94,6 +98,7 @@ async def suggest_product_codes(
     ]
 
     return ProductCodeSuggestionResponse(
+        productIdentified=result.product_identified,
         identifiedProduct=result.identified_product,
         candidates=candidates,
         needsMoreInfo=result.needs_more_info,

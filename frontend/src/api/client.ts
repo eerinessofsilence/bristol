@@ -8,6 +8,16 @@ import type {
 
 const API_URL = import.meta.env.VITE_API_URL ?? '';
 
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+  ) {
+    super(message);
+    this.name = 'ApiError';
+  }
+}
+
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const isFormData = options?.body instanceof FormData;
   const response = await fetch(`${API_URL}${path}`, {
@@ -27,7 +37,7 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
       typeof payload.detail === 'string'
         ? payload.detail
         : 'Не вдалося виконати запит. Спробуйте ще раз.';
-    throw new Error(detail);
+    throw new ApiError(detail, response.status);
   }
 
   return response.json() as Promise<T>;
