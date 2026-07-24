@@ -119,8 +119,7 @@ export function Calculator({ onContact }: Props) {
               </div>
             </div>
             <p className="text-portway-ink-3/80 mt-4 text-xs leading-5">
-              Розрахунок попередній і не є підставою для сплати. Ставка мита залежить від коду
-              УКТЗЕД і характеристик товару; точну суму визначає брокер після перевірки документів.
+              Розрахунок орієнтовний. Для точної суми зверніться до менеджера.
             </p>
           </div>
           <div className="bg-portway-primary flex flex-col justify-center border-t border-white/10 p-7 text-white md:p-11 lg:border-t-0">
@@ -162,6 +161,11 @@ export function Calculator({ onContact }: Props) {
             </Button>
           </div>
         </div>
+        <p className="text-portway-ink-3 mx-auto mt-5 max-w-3xl text-center text-xs leading-5">
+          Усі розрахунки мають інформативний характер і не є підставою для сплати. Точна ставка
+          мита залежить від коду УКТ ЗЕД, походження товару та особливостей поставки. Для
+          остаточного розрахунку, будь ласка, зверніться до нашого менеджера.
+        </p>
       </div>
     </section>
   );

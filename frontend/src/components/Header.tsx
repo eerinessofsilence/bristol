@@ -18,7 +18,7 @@ export function Header() {
         href="#top"
         className="text-[23px] font-extrabold tracking-[-0.04em] transition-[letter-spacing,opacity] duration-300 hover:tracking-[-0.02em] hover:opacity-75"
       >
-        Bristol
+        Митні системи
       </a>
       <nav
         aria-label="Головна навігація"

@@ -8,7 +8,7 @@ export function Footer() {
               Розкажіть про вантаж — підготуємо план оформлення та маршрут до вашого складу.
             </h2>
             <div className="footer-brand-word leading-[0.82] font-extrabold tracking-[-0.055em] select-none">
-              Bristol
+              Митні системи
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8 lg:pt-1">
@@ -56,7 +56,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-7 flex flex-wrap justify-between gap-4 py-7 text-xs text-white/40">
-          <span>© 2026 Bristol. Усі права захищено.</span>
+          <span>© 2026 Митні системи. Усі права захищено.</span>
           <nav className="flex gap-5" aria-label="Юридична інформація">
             <a href="/privacy" className="transition hover:text-white/80">
               Конфіденційність
