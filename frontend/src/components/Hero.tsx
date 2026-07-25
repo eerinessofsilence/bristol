@@ -74,7 +74,6 @@ export function Hero({ onRequestConsultation }: Props) {
 
     const resetMotion = () => {
       hero.style.setProperty('--hero-parallax-y', '0px');
-      hero.style.setProperty('--hero-parallax-scale', '1');
       hero.style.setProperty('--hero-grid-y', '0px');
       hero.style.setProperty('--hero-glow-y', '0px');
     };
@@ -90,7 +89,6 @@ export function Hero({ onRequestConsultation }: Props) {
       const progress = Math.min(Math.max(window.scrollY / hero.offsetHeight, 0), 1);
       const travel = Math.min(hero.offsetHeight * 0.18, 180);
       hero.style.setProperty('--hero-parallax-y', `${Math.round(progress * travel)}px`);
-      hero.style.setProperty('--hero-parallax-scale', `${1.015 + progress * 0.035}`);
       hero.style.setProperty('--hero-grid-y', `${Math.round(progress * travel * 1.35)}px`);
       hero.style.setProperty('--hero-glow-y', `${Math.round(progress * travel * -0.2)}px`);
     };
