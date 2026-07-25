@@ -12,15 +12,13 @@ export function Partners() {
             відносини.
           </p>
         </div>
-        <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4" data-reveal>
-          {partners.map((name) => (
+        <div className="mt-12 flex flex-wrap justify-center gap-4" data-reveal>
+          {partners.map(({ name, logo }) => (
             <div
               key={name}
-              className="border-line flex min-h-24 items-center justify-center rounded-2xl border bg-white px-4 text-center shadow-[0_8px_24px_rgba(22,34,30,0.05)]"
+              className="border-line flex min-h-28 basis-[calc((100%-1rem)/2)] items-center justify-center rounded-2xl border bg-white px-6 shadow-[0_8px_24px_rgba(22,34,30,0.05)] sm:min-h-32 sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-3rem)/4)]"
             >
-              <span className="text-ink-2 font-mono text-sm font-bold tracking-[0.08em] uppercase">
-                {name}
-              </span>
+              <img src={logo} alt={name} className="h-8 max-w-[70%] object-contain sm:h-10" />
             </div>
           ))}
         </div>

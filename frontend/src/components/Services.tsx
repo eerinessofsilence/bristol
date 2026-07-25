@@ -136,7 +136,7 @@ export function Services() {
           </div>
 
           <div className="mt-5 grid gap-5 sm:grid-cols-2" data-reveal>
-            <article className="border-line flex flex-col gap-4 rounded-[18px] border bg-white p-7">
+            <article className="bg-soft flex flex-col gap-4 rounded-3xl p-7 md:p-9">
               <div className="grid size-14 place-items-center rounded-2xl bg-[#e1f5ee] text-[#085041]">
                 <Award size={26} strokeWidth={2.2} />
               </div>
@@ -149,7 +149,7 @@ export function Services() {
                 </p>
               </div>
             </article>
-            <article className="border-line flex flex-col gap-4 rounded-[18px] border bg-white p-7">
+            <article className="bg-soft flex flex-col gap-4 rounded-3xl p-7 md:p-9">
               <div className="grid size-14 place-items-center rounded-2xl bg-[#faece7] text-[#712b13]">
                 <Zap size={26} strokeWidth={2.2} />
               </div>

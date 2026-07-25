@@ -179,4 +179,12 @@ export const values = [
   { icon: HeartHandshake, label: 'Повага до кожного клієнта' },
 ];
 
-export const partners = ['MAERSK', 'CMA CGM', 'EVERGREEN', 'COSCO', 'OOCL', 'MSC', 'ZIM'];
+export const partners = [
+  { name: 'Maersk', logo: '/images/partners/maersk-logo.svg' },
+  { name: 'CMA CGM', logo: '/images/partners/cma-cgm-logo.svg' },
+  { name: 'Evergreen', logo: '/images/partners/evergreen-logo.svg' },
+  { name: 'COSCO', logo: '/images/partners/cosco-logo.svg' },
+  { name: 'OOCL', logo: '/images/partners/oocl-logo.svg' },
+  { name: 'MSC', logo: '/images/partners/msc-logo.svg' },
+  { name: 'ZIM', logo: '/images/partners/zim-logo.svg' },
+];

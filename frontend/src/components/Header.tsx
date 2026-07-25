@@ -14,15 +14,12 @@ export function Header() {
 
   return (
     <header className="liquid-header fixed top-4 right-4 left-4 z-50 mx-auto flex h-15 max-w-[1160px] items-center justify-between gap-3 rounded-full px-4 sm:top-5 sm:right-6 sm:left-6 sm:h-16 md:top-6 md:right-9 md:left-9 md:gap-6 md:px-8">
-      <a
-        href="#top"
-        className="min-w-0 truncate text-[20px] font-extrabold tracking-[-0.04em] transition-[letter-spacing,opacity] duration-300 hover:tracking-[-0.02em] hover:opacity-75 sm:text-[23px]"
-      >
-        ClearGateCustoms
+      <a href="#top" className="min-w-0 shrink-0 transition-opacity duration-300 hover:opacity-75">
+        <img src="/images/brand/logo.svg" alt="ClearGateCustoms" className="h-7 w-auto sm:h-8" />
       </a>
       <nav
         aria-label="Головна навігація"
-          className={`absolute top-[4.5rem] right-0 left-0 flex origin-top flex-col gap-4 rounded-2xl bg-white p-5 shadow-xl transition-[opacity,transform,visibility] duration-300 ease-out sm:top-20 sm:p-6 md:visible md:static md:flex md:translate-y-0 md:scale-100 md:flex-row md:gap-8 md:bg-transparent md:p-0 md:opacity-100 md:shadow-none ${open ? 'visible translate-y-0 scale-100 opacity-100' : 'pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0 md:pointer-events-auto'}`}
+        className={`absolute top-[4.5rem] right-0 left-0 flex origin-top flex-col gap-4 rounded-2xl bg-white p-5 shadow-xl transition-[opacity,transform,visibility] duration-300 ease-out sm:top-20 sm:p-6 md:visible md:static md:flex md:translate-y-0 md:scale-100 md:flex-row md:gap-8 md:bg-transparent md:p-0 md:opacity-100 md:shadow-none ${open ? 'visible translate-y-0 scale-100 opacity-100' : 'pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0 md:pointer-events-auto'}`}
       >
         {links.map(([label, href]) => (
           <a
