@@ -69,6 +69,7 @@
 
   .hero-parallax-media {
     position: absolute;
+    z-index: 0;
     inset: 0;
     overflow: hidden;
     background: #789589;
@@ -76,7 +77,11 @@
 
   .hero-parallax-image {
     position: absolute;
-    inset: -22% -2%;
+    top: -22%;
+    left: -2%;
+    width: 104%;
+    max-width: none;
+    height: 144%;
     object-fit: cover;
     object-position: center center;
     opacity: 0;

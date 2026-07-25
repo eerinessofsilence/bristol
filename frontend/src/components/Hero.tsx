@@ -155,7 +155,9 @@ export function Hero({ onRequestConsultation }: Props) {
         {heroSlides.map((src, index) => (
           <img
             key={src}
-            className={`hero-parallax-image${index === activeSlide ? 'is-active' : ''}`}
+            className={['hero-parallax-image', index === activeSlide && 'is-active']
+              .filter(Boolean)
+              .join(' ')}
             src={src}
             alt=""
             fetchPriority={index === 0 ? 'high' : 'low'}
