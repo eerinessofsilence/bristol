@@ -18,7 +18,11 @@ export function Partners() {
               key={name}
               className="border-line flex min-h-28 basis-[calc((100%-1rem)/2)] items-center justify-center rounded-2xl border bg-white px-6 shadow-[0_8px_24px_rgba(22,34,30,0.05)] sm:min-h-32 sm:basis-[calc((100%-2rem)/3)] lg:basis-[calc((100%-3rem)/4)]"
             >
-              <img src={logo} alt={name} className="h-8 max-w-[70%] object-contain sm:h-10" />
+              <img
+                src={logo}
+                alt={name}
+                className="h-[2.5rem] max-w-[70%] object-contain sm:h-[3.125rem]"
+              />
             </div>
           ))}
         </div>
