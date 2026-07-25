@@ -201,7 +201,7 @@ export function Hero({ onRequestConsultation }: Props) {
           <p className="text-ink-2 mt-8 text-sm font-semibold sm:text-base">
             Готові оформити вантаж без зайвих турбот?
           </p>
-          <div className="mt-4 flex flex-col gap-3 sm:mt-5 sm:flex-row sm:items-center">
+          <div className="mt-4 flex flex-wrap items-center gap-3 sm:mt-5">
             <ButtonLink href="#calc">Розрахувати вартість</ButtonLink>
             <Button type="button" variant="outline" onClick={onRequestConsultation}>
               Отримати консультацію
