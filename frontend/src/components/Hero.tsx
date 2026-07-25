@@ -170,7 +170,7 @@ export function Hero({ onRequestConsultation }: Props) {
       <div className="page-wrap relative z-10 flex min-h-[max(43rem,100svh)] items-center py-28 md:h-full md:min-h-0 md:py-0">
         <Header />
         <div className="max-w-[940px]">
-          <div className="hero-customs-badge mb-6">
+          <div className="hero-customs-badge mb-6 md:mt-10">
             <span
               className="grid size-9 shrink-0 place-items-center rounded-lg bg-[#085041] text-[#9fe1cb]"
               aria-hidden="true"
