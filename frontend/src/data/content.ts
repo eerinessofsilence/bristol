@@ -1,6 +1,6 @@
 import {
   Anchor,
-  Banknote,
+  DollarSign,
   ClipboardCheck,
   Cpu,
   Eye,
@@ -262,7 +262,7 @@ export const values = [
   { icon: ClipboardCheck, label: 'Відповідальність' },
   { icon: Zap, label: 'Швидкість' },
   { icon: HeartHandshake, label: 'Повага до кожного клієнта' },
-  { icon: Banknote, label: 'Без передоплат' },
+  { icon: DollarSign, label: 'Без передоплат' },
 ];
 
 export const partners = [
