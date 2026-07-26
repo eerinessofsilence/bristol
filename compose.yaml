@@ -16,7 +16,9 @@ services:
   backend:
     build: ./backend
     env_file:
-      - ./backend/.env
+      # Keep literal characters (notably `$`) in SMTP app passwords intact.
+      - path: ./backend/.env
+        format: raw
     environment:
       DATABASE_URL: postgresql+psycopg://cleargatecustoms:cleargatecustoms@db:5432/cleargatecustoms
       CORS_ORIGINS: https://cleargatecustoms.com.ua,https://www.cleargatecustoms.com.ua
