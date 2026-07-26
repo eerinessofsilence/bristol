@@ -520,6 +520,19 @@
   }
 }
 
+@media (max-width: 767px), (hover: none), (pointer: coarse) {
+  .hero-parallax-glow,
+  .hero-customs-pattern,
+  .hero-parallax-image {
+    translate: none;
+    will-change: auto;
+  }
+
+  .hero-parallax-image {
+    transition: none;
+  }
+}
+
 @media (max-width: 640px) {
   .page-wrap {
     width: min(100% - 3rem, 1160px);

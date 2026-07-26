@@ -20,6 +20,7 @@ export function Hero({ onRequestConsultation }: Props) {
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktopPointer = window.matchMedia('(min-width: 768px) and (hover: hover) and (pointer: fine)');
     let timer: number | undefined;
 
     const stopSlideshow = () => {
@@ -32,7 +33,13 @@ export function Hero({ onRequestConsultation }: Props) {
     const startSlideshow = () => {
       stopSlideshow();
 
-      if (reducedMotion.matches || document.visibilityState !== 'visible') return;
+      if (
+        reducedMotion.matches ||
+        !desktopPointer.matches ||
+        document.visibilityState !== 'visible'
+      ) {
+        return;
+      }
 
       timer = window.setInterval(() => {
         setActiveSlide((current) => (current + 1) % heroSlides.length);
@@ -50,11 +57,13 @@ export function Hero({ onRequestConsultation }: Props) {
     startSlideshow();
     document.addEventListener('visibilitychange', handleVisibilityChange);
     reducedMotion.addEventListener('change', startSlideshow);
+    desktopPointer.addEventListener('change', startSlideshow);
 
     return () => {
       stopSlideshow();
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       reducedMotion.removeEventListener('change', startSlideshow);
+      desktopPointer.removeEventListener('change', startSlideshow);
     };
   }, []);
 
@@ -63,6 +72,7 @@ export function Hero({ onRequestConsultation }: Props) {
     if (!hero) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktopPointer = window.matchMedia('(min-width: 768px) and (hover: hover) and (pointer: fine)');
     let frame = 0;
 
     const resetMotion = () => {
@@ -74,7 +84,7 @@ export function Hero({ onRequestConsultation }: Props) {
     const updateMotion = () => {
       frame = 0;
 
-      if (reducedMotion.matches) {
+      if (reducedMotion.matches || !desktopPointer.matches) {
         resetMotion();
         return;
       }
@@ -90,16 +100,30 @@ export function Hero({ onRequestConsultation }: Props) {
       if (!frame) frame = window.requestAnimationFrame(updateMotion);
     };
 
-    updateMotion();
-    window.addEventListener('scroll', requestUpdate, { passive: true });
-    window.addEventListener('resize', requestUpdate);
-    reducedMotion.addEventListener('change', requestUpdate);
-
-    return () => {
+    const stopParallax = () => {
       window.removeEventListener('scroll', requestUpdate);
       window.removeEventListener('resize', requestUpdate);
-      reducedMotion.removeEventListener('change', requestUpdate);
       if (frame) window.cancelAnimationFrame(frame);
+      frame = 0;
+      resetMotion();
+    };
+
+    const syncParallax = () => {
+      stopParallax();
+      if (reducedMotion.matches || !desktopPointer.matches) return;
+      updateMotion();
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
+    };
+
+    syncParallax();
+    reducedMotion.addEventListener('change', syncParallax);
+    desktopPointer.addEventListener('change', syncParallax);
+
+    return () => {
+      stopParallax();
+      reducedMotion.removeEventListener('change', syncParallax);
+      desktopPointer.removeEventListener('change', syncParallax);
     };
   }, []);
 
@@ -130,7 +154,7 @@ export function Hero({ onRequestConsultation }: Props) {
       <Header onRequestConsultation={onRequestConsultation} />
       <div className="page-wrap relative z-10 flex min-h-[max(43rem,100svh)] items-center py-28 md:h-full md:min-h-0 md:py-0">
         <div className="max-w-[940px]">
-          <h1 className="max-w-[17ch] text-[3rem] leading-[0.98] font-extrabold tracking-tighter text-balance sm:max-w-[18ch] sm:text-5xl lg:max-w-none">
+          <h1 className="max-w-[17ch] text-4xl leading-[0.98] font-extrabold tracking-tighter text-balance sm:max-w-[18ch] sm:text-5xl lg:max-w-none">
             Митне оформлення вантажів, експертний супровід та сучасні AI-рішення
           </h1>
           <p className="text-ink mt-6 max-w-[620px] text-base leading-6 text-pretty sm:mt-7 sm:text-lg sm:leading-7">
