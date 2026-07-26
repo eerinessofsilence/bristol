@@ -1,9 +1,12 @@
 export function Intro() {
   return (
-    <section className="py-20 md:py-24">
+    <section className="bg-soft py-20 md:py-24">
       <div className="page-wrap grid items-start gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
-        <div className="lg:sticky lg:top-36" data-reveal>
-          <h2 className="section-title max-w-xl">
+        <div data-reveal>
+          <span className="section-tag">
+            <span className="section-index">03 /</span>&nbsp; Підхід
+          </span>
+          <h2 className="section-title mt-4 max-w-xl">
             Митне оформлення виконуємо самі. Логістику — організовуємо під ключ.
           </h2>
           <p className="text-ink-2 mt-7 max-w-xl leading-7">

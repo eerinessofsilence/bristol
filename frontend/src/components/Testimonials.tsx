@@ -109,11 +109,11 @@ export function Testimonials() {
                   {testimonial.outcomes.map((outcome) => (
                     <li
                       key={outcome}
-                      className={`badge badge-sm ${
+                      className={
                         isDark
-                          ? 'border-white/15 bg-white/[0.08] text-white/80'
-                          : 'border-primary/10 text-ink-2 bg-white/70'
-                      }`}
+                          ? 'section-tag section-tag-dark !tracking-normal !normal-case'
+                          : 'badge badge-sm border-primary/10 text-ink-2 bg-white/70'
+                      }
                     >
                       {outcome}
                     </li>

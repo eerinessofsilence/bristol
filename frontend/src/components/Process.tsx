@@ -42,20 +42,20 @@ const toneClasses = {
   neutral: {
     card: 'border-white/15 bg-[#444441] text-white',
     icon: 'bg-white/10 text-white',
-    role: 'bg-white/10 text-white/75',
-    description: 'text-white/70',
+    role: '!border-white/70 !bg-[#e5e8e6] !text-[#303330]',
+    description: 'text-white/80',
   },
   coral: {
-    card: 'border-[#d85a30] bg-[#712b13] text-[#f5c4b3]',
-    icon: 'bg-[#faece7]/10 text-[#f5c4b3]',
-    role: 'bg-[#faece7]/10 text-[#f5c4b3]',
-    description: 'text-[#f5c4b3]/80',
+    card: 'border-[#e76f46] bg-[#712b13] text-[#ffe2d8]',
+    icon: 'bg-[#faece7]/15 text-[#ffe2d8]',
+    role: '!border-[#ffe2d8]/80 !bg-[#f7d8cc] !text-[#64220d]',
+    description: 'text-[#f8cbbb]',
   },
   teal: {
-    card: 'border-[#1d9e75] bg-[#085041] text-[#9fe1cb] shadow-[0_18px_44px_rgba(29,158,117,0.2)]',
-    icon: 'border border-[#9fe1cb]/15 bg-[#063f34] text-[#9fe1cb]',
-    role: 'bg-[#9fe1cb] text-[#085041]',
-    description: 'text-[#9fe1cb]/85',
+    card: 'border-[#28b58a] bg-[#085041] text-[#c5f3e3] shadow-[0_18px_44px_rgba(29,158,117,0.2)]',
+    icon: 'border border-[#c5f3e3]/20 bg-[#063f34] text-[#c5f3e3]',
+    role: '!border-[#d7f7ec] !bg-[#c5f3e3] !text-[#06473a]',
+    description: 'text-[#afe8d5]',
   },
 } as const;
 
@@ -65,7 +65,7 @@ export function Process() {
       <div className="page-wrap grid items-stretch gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div className="flex min-h-0 flex-col" data-reveal>
           <span className="section-tag section-tag-dark self-start">
-            <span className="section-index">04 /</span>&nbsp; Маршрут
+            <span className="section-index">06 /</span>&nbsp; Маршрут
           </span>
           <h2 className="section-title mt-4 text-white">Як це працює</h2>
           <p className="mt-4 max-w-lg text-base leading-7 text-white/60">

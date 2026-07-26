@@ -53,15 +53,15 @@ export function App() {
     <>
       <Hero onRequestConsultation={() => setIsConsultationOpen(true)} />
       <main>
-        <MissionValues />
-        <Intro />
         <Services onRequestConsultation={() => setIsConsultationOpen(true)} />
+        <Intro />
         <Calculator onContact={setContactQuote} />
         <Process />
-        <CoverageMap />
-        <Faq />
         <Testimonials />
         <Partners />
+        <CoverageMap />
+        <MissionValues />
+        <Faq />
       </main>
       <Footer />
       <ContactModal

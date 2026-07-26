@@ -11,13 +11,15 @@ export function MissionValues() {
             data-reveal
           >
             <div>
-              <span className="section-tag section-tag-dark">Місія</span>
+              <span className="section-tag section-tag-dark">
+                <span className="section-index">10 /</span>&nbsp; Місія
+              </span>
               <p className="mt-6 text-2xl leading-[1.3] font-bold tracking-tight text-balance sm:text-3xl">
                 {mission}
               </p>
             </div>
 
-            <div className="lg:border-l lg:border-white/10 lg:pl-14">
+            <div>
               <p className="technical-label text-[#9fe1cb]/65">Наші цінності</p>
               <ul className="mt-5 grid gap-x-6 gap-y-3.5 sm:grid-cols-2">
                 {values.map(({ icon: Icon, label }) => (

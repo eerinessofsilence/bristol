@@ -5,7 +5,9 @@ export function Partners() {
     <section id="partners" className="bg-soft scroll-mt-10 py-20 md:py-24">
       <div className="page-wrap">
         <div className="mx-auto max-w-2xl text-center" data-reveal>
-          <span className="section-tag">Партнери</span>
+          <span className="section-tag">
+            <span className="section-index">08 /</span>&nbsp; Партнери
+          </span>
           <h2 className="section-title mt-4">Наші партнери</h2>
           <p className="text-ink-2 mt-4 text-balance">
             Координуємо доставку через провідні контейнерні лінії, з якими у нас діють договірні

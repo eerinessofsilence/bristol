@@ -208,7 +208,7 @@ export function CoverageMap() {
       <div className="page-wrap">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">05 /</span>&nbsp; Географія
+            <span className="section-index">09 /</span>&nbsp; Географія
           </span>
           <h2 className="section-title mt-5">Маршрут вантажу до України</h2>
           <p className="text-ink-2 mt-5 leading-7">
@@ -227,7 +227,7 @@ export function CoverageMap() {
           </figcaption>
 
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-[#085041]/10 px-2 pb-4">
-            <span className="technical-label text-[#085041]/50">Route control / CGC-UA-05</span>
+            <span className="technical-label text-[#085041]/50">Route control / CGC-UA-09</span>
             <span className="badge badge-sm border-[#1d9e75]/20 bg-[#e1f5ee] text-[#085041]">
               <span className="size-1.5 rounded-full bg-[#1d9e75]" aria-hidden="true" />
               Митний контроль в Україні

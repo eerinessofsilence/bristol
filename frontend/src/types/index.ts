@@ -18,6 +18,7 @@ export type QuoteResult = {
   criticalPriceUsdPerKg: number;
   customsValueUsd: number;
   customsValueUah: number;
+  dutyRatePercent: number;
   duty: number;
   vatBase: number;
   vat: number;

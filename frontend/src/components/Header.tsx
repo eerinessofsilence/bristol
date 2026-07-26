@@ -4,8 +4,8 @@ import { Button } from './ui/Button';
 
 const links = [
   ['Послуги', '#services'],
+  ['Калькулятор', '#calc'],
   ['Як працюємо', '#how'],
-  ['Підготовка', '#operate'],
   ['Питання', '#faq'],
 ];
 
@@ -38,7 +38,7 @@ export function Header({ onRequestConsultation }: Props) {
         <Button
           type="button"
           icon={Phone}
-          variant="outline"
+          variant="mint"
           className="mt-1 w-full md:hidden"
           onClick={() => {
             setOpen(false);

@@ -143,19 +143,70 @@ export const testimonials = [
 ];
 
 export const productCategories = [
-  { label: 'Побутова електроніка · орієнтовно 0%', duty: 0 },
-  { label: 'Комп’ютерна техніка та комплектуючі · орієнтовно 0%', duty: 0 },
-  { label: 'Мобільні телефони та аксесуари · орієнтовно 0%', duty: 0 },
-  { label: 'Побутова техніка · орієнтовно 0–10%', duty: 10 },
-  { label: 'Одяг, взуття, текстиль · орієнтовно 5–12%', duty: 12 },
-  { label: 'Меблі та товари для дому · орієнтовно 0–5%', duty: 5 },
-  { label: 'Іграшки та дитячі товари · орієнтовно 0–4,7%', duty: 4.7 },
-  { label: 'Спортивні товари та інвентар · орієнтовно 0–5%', duty: 5 },
-  { label: 'Автозапчастини та аксесуари · орієнтовно 0–10%', duty: 10 },
-  { label: 'Будівельні матеріали та інструменти · орієнтовно 0–5%', duty: 5 },
-  { label: 'Косметика та засоби гігієни · орієнтовно 0–6,5%', duty: 6.5 },
-  { label: 'Ювелірні вироби та аксесуари · орієнтовно 0–5%', duty: 5 },
-  { label: 'Інше / не знайшли категорію · уточнити з менеджером', duty: 0 },
+  {
+    label: 'Побутова техніка',
+    image: '/images/categories/home-appliances.webp',
+  },
+  {
+    label: 'Мобільні аксесуари',
+    image: '/images/categories/mobile-phones.webp',
+  },
+  {
+    label: 'Постільна білизна, рушники та ковдри',
+    image: '/images/categories/bedding-home-textiles.webp',
+  },
+  {
+    label: 'Музичні колонки',
+    image: '/images/categories/household-electronics.webp',
+  },
+  {
+    label: 'Радіотовари та радіоелектроніка',
+    image: '/images/categories/radio-electronics.webp',
+  },
+  {
+    label: 'Електрообладнання',
+    image: '/images/categories/electrical-equipment.webp',
+  },
+  {
+    label: 'Канцелярські товари',
+    image: '/images/categories/stationery.webp',
+  },
+  {
+    label: 'Іграшки',
+    image: '/images/categories/toys-children.webp',
+  },
+  {
+    label: 'Сумки, рюкзаки та валізи',
+    image: '/images/categories/bags-luggage.webp',
+  },
+  {
+    label: 'Товари для дому',
+    image: '/images/categories/home-goods.webp',
+  },
+  {
+    label: 'Кухонне начиння',
+    image: '/images/categories/kitchen-utensils.webp',
+  },
+  {
+    label: 'Посуд',
+    image: '/images/categories/tableware.webp',
+  },
+  {
+    label: 'Освітлювальне обладнання та ліхтарики',
+    image: '/images/categories/lighting-flashlights.webp',
+  },
+  {
+    label: 'Меблі',
+    image: '/images/categories/furniture-home.webp',
+  },
+  {
+    label: 'Сантехніка',
+    image: '/images/categories/plumbing.webp',
+  },
+  {
+    label: 'Інше',
+    image: '/images/categories/other-goods.webp',
+  },
 ];
 
 export const currencies = [

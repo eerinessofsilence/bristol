@@ -11,7 +11,7 @@ export function Faq() {
       <div className="page-wrap grid items-start gap-10 lg:grid-cols-[1.28fr_0.72fr] lg:gap-20">
         <div className="lg:sticky lg:top-30 lg:order-2 lg:-mt-3" data-reveal>
           <span className="section-tag self-start">
-            <span className="section-index">06 /</span>&nbsp; Питання
+            <span className="section-index">11 /</span>&nbsp; Питання
           </span>
           <h2 className="section-title mt-4">Часті запитання</h2>
           <p className="text-ink-2 mt-5 max-w-sm leading-7">

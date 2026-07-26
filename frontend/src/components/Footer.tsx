@@ -54,7 +54,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="footer-brand-word text-primary-hover/30 leading-[0.82] font-extrabold tracking-[-0.055em] whitespace-nowrap select-none">
+        <div className="footer-brand-word text-primary-hover/40 leading-[0.82] font-extrabold tracking-[-0.055em] whitespace-nowrap select-none">
           ClearGateCustoms
         </div>
         <div className="mt-7 flex flex-wrap justify-between gap-4 py-7 text-xs text-white/40">

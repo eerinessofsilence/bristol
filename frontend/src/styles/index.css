@@ -223,7 +223,7 @@
         rgb(8 80 65 / 0.035) 2rem,
         rgb(8 80 65 / 0.035) calc(2rem + 1px)
       ),
-      #f3f0e8;
+      #fff;
   }
 
   .field-index {
@@ -253,7 +253,7 @@
 
   .customs-checkpoint-corners {
     position: absolute;
-    inset: 0.55rem;
+    inset: 1.1rem;
     border: 1px solid transparent;
     background:
       linear-gradient(#9fe1cb, #9fe1cb) left top / 0.8rem 1px no-repeat,

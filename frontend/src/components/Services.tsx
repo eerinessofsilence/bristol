@@ -34,7 +34,7 @@ export function Services({ onRequestConsultation }: Props) {
                 }`}
               >
                 {primary && (
-                  <span className="badge badge-xs absolute -top-3 right-4 border-[#1d9e75]/20 bg-[#9fe1cb] text-[#085041] shadow-[0_6px_16px_rgba(29,158,117,0.16)]">
+                  <span className="badge badge-xs absolute -top-3.5 right-4 border-[#1d9e75]/20 bg-[#9fe1cb] text-[#085041] shadow-[0_6px_16px_rgba(29,158,117,0.16)]">
                     Основна послуга
                   </span>
                 )}
