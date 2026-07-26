@@ -130,14 +130,14 @@ export function Hero({ onRequestConsultation }: Props) {
       <Header onRequestConsultation={onRequestConsultation} />
       <div className="page-wrap relative z-10 flex min-h-[max(43rem,100svh)] items-center py-28 md:h-full md:min-h-0 md:py-0">
         <div className="max-w-[940px]">
-          <h1 className="max-w-[17ch] text-5xl leading-[0.98] font-extrabold tracking-tighter text-balance sm:max-w-[18ch] lg:max-w-none">
+          <h1 className="max-w-[17ch] text-[3rem] leading-[0.98] font-extrabold tracking-tighter text-balance sm:max-w-[18ch] sm:text-5xl lg:max-w-none">
             Митне оформлення вантажів, експертний супровід та сучасні AI-рішення
           </h1>
           <p className="text-ink mt-6 max-w-[620px] text-base leading-6 text-pretty sm:mt-7 sm:text-lg sm:leading-7">
             Відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод. ClearGateCustoms —
             просто, прозоро і передбачувано.
           </p>
-          <p className="text-ink mt-8 text-sm font-semibold sm:text-base">
+          <p className="text-ink mt-8 text-lg font-semibold sm:text-xl">
             Готові оформити вантаж без зайвих турбот?
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3 sm:mt-5">

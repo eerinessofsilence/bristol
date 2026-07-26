@@ -42,6 +42,57 @@
   }
 }
 
+@media (max-width: 639px) {
+  .text-xs {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .text-sm {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .text-base {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .text-lg {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .text-xl {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .text-2xl {
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  .text-3xl {
+    font-size: 34px;
+    line-height: 40px;
+  }
+
+  .text-4xl {
+    font-size: 40px;
+    line-height: 44px;
+  }
+
+  .text-5xl {
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  .section-title {
+    font-size: 32px;
+  }
+}
+
 @layer components {
   .page-wrap {
     width: min(100% - 4.5rem, 1160px);
@@ -86,7 +137,7 @@
     object-position: center center;
     opacity: 0;
     translate: 0 var(--hero-parallax-y, 0px);
-    filter: saturate(0.82) contrast(0.94);
+    filter: saturate(0.96) contrast(1.02) brightness(1.04);
     transition: opacity 1600ms cubic-bezier(0.4, 0, 0.2, 1);
     user-select: none;
     will-change: translate;
@@ -101,12 +152,12 @@
     background:
       linear-gradient(
         90deg,
-        rgb(234 246 240 / 0.97) 0%,
-        rgb(218 237 228 / 0.9) 34%,
-        rgb(134 166 153 / 0.48) 62%,
-        rgb(34 55 48 / 0.26) 100%
+        rgb(239 248 244 / 0.96) 0%,
+        rgb(224 240 232 / 0.88) 34%,
+        rgb(194 220 209 / 0.48) 62%,
+        rgb(19 49 40 / 0.22) 100%
       ),
-      linear-gradient(180deg, rgb(240 248 244 / 0.06), rgb(16 32 27 / 0.18));
+      linear-gradient(180deg, rgb(240 248 244 / 0.03), rgb(10 30 24 / 0.13));
   }
 
   .hero-parallax-glow {
@@ -482,11 +533,11 @@
     background:
       linear-gradient(
         90deg,
-        rgb(234 246 240 / 0.7) 0%,
-        rgb(217 237 227 / 0.4) 64%,
-        rgb(75 103 92 / 0.12) 100%
+        rgb(239 248 244 / 0.88) 0%,
+        rgb(217 237 227 / 0.62) 64%,
+        rgb(98 133 119 / 0.2) 100%
       ),
-      linear-gradient(180deg, rgb(240 248 244 / 0.02), rgb(16 32 27 / 0.1));
+      linear-gradient(180deg, rgb(240 248 244 / 0.02), rgb(10 30 24 / 0.1));
   }
 }
 

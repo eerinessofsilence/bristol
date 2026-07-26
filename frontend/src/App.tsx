@@ -76,7 +76,7 @@ export function App() {
         <button
           type="button"
           aria-label="Відкрити контактну форму"
-          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 z-[900] grid size-14 cursor-pointer place-items-center rounded-full border border-[#085041]/15 bg-white text-[#085041] shadow-[0_10px_28px_rgba(8,80,65,0.2)] transition hover:-translate-y-0.5 hover:bg-[#e1f5ee] hover:shadow-[0_14px_32px_rgba(8,80,65,0.26)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#085041] sm:bottom-[max(1.5rem,env(safe-area-inset-bottom))] sm:left-6"
+          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 z-[900] grid size-14 cursor-pointer place-items-center rounded-full border border-[#085041]/15 bg-[#1d9e75] text-white shadow-[0_10px_28px_rgba(8,80,65,0.24)] transition hover:-translate-y-0.5 hover:bg-[#085041] hover:shadow-[0_14px_32px_rgba(8,80,65,0.3)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#085041] sm:bottom-[max(1.5rem,env(safe-area-inset-bottom))] sm:left-6"
           onClick={() => setIsQuickContactOpen(true)}
         >
           <Phone size={25} strokeWidth={2.4} aria-hidden="true" />
