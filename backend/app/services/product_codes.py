@@ -22,6 +22,9 @@ Set product_identified to false when the image does not show a specific product
 clearly enough to identify it, such as a port, warehouse, landscape, packaging
 without a visible product, or an unrelated scene. In that case, set
 needs_more_info to true and return an empty candidates list.
+Treat a phone photo of a product as a valid source even if it has a home, shop,
+or warehouse background. Identify the main product in the foreground first;
+use the background only when it changes the classification.
 """.strip()
 
 DISCLAIMER = (
@@ -60,7 +63,7 @@ async def suggest_product_codes(
             {
                 "type": "input_image",
                 "image_url": f"data:{content_type};base64,{encoded}",
-                "detail": "high",
+                "detail": "original",
             }
         )
 

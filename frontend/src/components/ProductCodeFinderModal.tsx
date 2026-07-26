@@ -16,7 +16,14 @@ type SelectedImage = {
   preview: string;
 };
 
-const acceptedImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif']);
+const acceptedImageTypes = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/heic',
+  'image/heif',
+]);
 const maxImageSize = 10 * 1024 * 1024;
 const orbStates: OrbState[] = ['searching', 'solving', 'composing'];
 
@@ -121,7 +128,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
     );
 
     if (validFiles.length !== files.length) {
-      setError('Додайте JPG, PNG, WEBP або GIF до 10 МБ.');
+      setError('Додайте JPG, PNG, WEBP, GIF, HEIC або HEIF до 10 МБ.');
     } else {
       setError('');
     }
@@ -242,7 +249,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                 id="product-code-images"
                 className="sr-only"
                 type="file"
-                accept="image/jpeg,image/png,image/webp,image/gif"
+                accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif"
                 multiple
                 onChange={(event) => {
                   addImages(Array.from(event.target.files ?? []));
@@ -257,7 +264,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                   Перетягніть фото сюди або виберіть з пристрою
                 </span>
                 <span className="text-ink-3 mt-1 block text-xs">
-                  JPG, PNG, WEBP або GIF · до 10 МБ · максимум 3 фото
+                  JPG, PNG, WEBP, GIF, HEIC або HEIF · до 10 МБ · максимум 3 фото
                 </span>
               </span>
             </label>
@@ -428,7 +435,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                           <strong className="font-accent text-lg tracking-[0.08em]">
                             {candidate.code}
                           </strong>
-                          <span className="rounded-full bg-[#e8f6f1] px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#085041] uppercase">
+                          <span className="badge badge-xs border-[#1d9e75]/15 bg-[#e8f6f1] text-[#085041]">
                             {confidenceLabels[candidate.confidence]}
                           </span>
                         </div>

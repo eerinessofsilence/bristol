@@ -1,9 +1,11 @@
 from datetime import date, datetime, timedelta, timezone
+from io import BytesIO
 from types import SimpleNamespace
 
 import httpx
 import pytest
 from fastapi.testclient import TestClient
+from PIL import Image
 from pydantic import ValidationError
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -13,6 +15,7 @@ from app.db.session import Base, get_db
 from app.main import app
 from app.schemas.product_code import ProductCodeAIResult
 from app.services import exchange_rates, product_codes
+from app.services.image_normalization import normalize_product_image
 
 engine = create_engine(
     "sqlite://",
@@ -33,6 +36,27 @@ def override_get_db():
 
 app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
+
+
+def jpeg_bytes() -> bytes:
+    image = Image.new("RGB", (32, 24), color="navy")
+    output = BytesIO()
+    image.save(output, format="JPEG")
+    return output.getvalue()
+
+
+def test_normalize_product_image_applies_exif_rotation() -> None:
+    image = Image.new("RGB", (40, 20), color="navy")
+    exif = image.getexif()
+    exif[274] = 6
+    uploaded = BytesIO()
+    image.save(uploaded, format="JPEG", exif=exif)
+
+    content_type, normalized = normalize_product_image(uploaded.getvalue())
+
+    assert content_type == "image/jpeg"
+    with Image.open(BytesIO(normalized)) as result:
+        assert result.size == (20, 40)
 
 
 @pytest.fixture(autouse=True)
@@ -92,6 +116,7 @@ def test_product_code_suggestion_from_image(monkeypatch) -> None:
             assert kwargs["input"][0]["content"][1]["image_url"].startswith(
                 "data:image/jpeg;base64,"
             )
+            assert kwargs["input"][0]["content"][1]["detail"] == "original"
             return SimpleNamespace(
                 output_parsed=ProductCodeAIResult(
                     product_identified=True,
@@ -119,7 +144,7 @@ def test_product_code_suggestion_from_image(monkeypatch) -> None:
 
     response = client.post(
         "/api/v1/product-codes/suggest",
-        files={"images": ("bag.jpg", b"fake-image", "image/jpeg")},
+        files={"images": ("bag.jpg", jpeg_bytes(), "image/jpeg")},
         data={"description": "Шкіряна сумка"},
     )
 
@@ -152,7 +177,7 @@ def test_product_code_suggestion_rejects_non_image() -> None:
     )
 
     assert response.status_code == 415
-    assert response.json() == {"detail": "Підтримуються JPG, PNG, WEBP та GIF"}
+    assert response.json() == {"detail": "Підтримуються JPG, PNG, WEBP, GIF, HEIC та HEIF"}
 
 
 def test_product_code_suggestion_returns_no_codes_when_product_is_not_identified(
@@ -179,7 +204,7 @@ def test_product_code_suggestion_returns_no_codes_when_product_is_not_identified
 
     response = client.post(
         "/api/v1/product-codes/suggest",
-        files={"images": ("warehouse.jpg", b"fake-image", "image/jpeg")},
+        files={"images": ("warehouse.jpg", jpeg_bytes(), "image/jpeg")},
     )
 
     assert response.status_code == 200
