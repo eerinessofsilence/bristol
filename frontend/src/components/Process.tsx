@@ -3,7 +3,7 @@ import { Anchor, ArrowDown, ClipboardCheck, Globe2, Truck, Warehouse } from 'luc
 const routeSteps = [
   {
     icon: Globe2,
-    title: '🇨🇳 Китай і Європа',
+    title: 'Китай 🇨🇳 і Європа 🇪🇺',
     description: 'Відправлення вантажу',
     role: 'Етап маршруту',
     tone: 'neutral',

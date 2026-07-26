@@ -20,8 +20,14 @@ export function Services({ onRequestConsultation }: Props) {
             <h2 className="section-title mt-4">Що ми робимо</h2>
             <p className="text-ink-2 mt-4 text-base leading-6 text-balance sm:text-lg sm:leading-7">
               Спеціалізуємося на митному оформленні вантажів з{' '}
-              <span aria-hidden="true">🇨🇳</span> Китаю та <span aria-hidden="true">🇪🇺</span> Європи й супроводжуємо їх до
-              складу клієнта.
+              <span className="whitespace-nowrap">
+                Китаю <span aria-hidden="true">🇨🇳</span>
+              </span>{' '}
+              та{' '}
+              <span className="whitespace-nowrap">
+                Європи <span aria-hidden="true">🇪🇺</span>
+              </span>{' '}
+              й супроводжуємо їх до складу клієнта.
             </p>
           </div>
           <div className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
