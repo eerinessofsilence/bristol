@@ -156,6 +156,10 @@ export const productCategories = [
     image: '/images/categories/bedding-home-textiles.webp',
   },
   {
+    label: 'Риболовля',
+    image: '/images/categories/fishing.webp',
+  },
+  {
     label: 'Музичні колонки',
     image: '/images/categories/household-electronics.webp',
   },
@@ -214,6 +218,35 @@ export const currencies = [
   { code: 'EUR', label: 'EUR', rate: null },
   { code: 'UAH', label: 'UAH', rate: 1 },
 ];
+
+// Замініть ім'я та посилання на актуальні контакти менеджера перед публікацією сайту.
+export const directContact = {
+  personName: 'Менеджер ClearGateCustoms',
+  position: 'Консультації з митного оформлення',
+  initials: 'CG',
+  phone: '+380 93 830 7006',
+  phoneHref: 'tel:+380938307006',
+  channels: [
+    {
+      name: 'Viber',
+      label: 'Написати у Viber',
+      href: 'viber://chat?number=%2B380938307006',
+      icon: '/images/messengers/viber.svg',
+    },
+    {
+      name: 'Telegram',
+      label: 'Написати у Telegram',
+      href: 'tg://resolve?phone=380938307006',
+      icon: '/images/messengers/telegram.svg',
+    },
+    {
+      name: 'WhatsApp',
+      label: 'Написати у WhatsApp',
+      href: 'https://wa.me/380938307006',
+      icon: '/images/messengers/whatsapp.svg',
+    },
+  ],
+};
 
 export const trustIcon = ShieldCheck;
 
