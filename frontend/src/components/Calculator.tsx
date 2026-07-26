@@ -103,7 +103,7 @@ export function Calculator({ onContact }: Props) {
           className="customs-document-shell grid overflow-hidden rounded-3xl bg-[#eff2f0] shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
           data-reveal
         >
-          <div className="customs-document-page p-5 sm:p-7 md:p-11">
+          <div className="customs-document-page min-w-0 p-5 sm:p-7 md:p-11">
             <div className="mb-6 box-content flex min-h-8 flex-wrap items-center justify-between gap-3 pb-4 sm:mb-7">
               <span className="section-tag">
                 <span className="section-index">03 /</span>&nbsp; Розрахунок
@@ -112,7 +112,7 @@ export function Calculator({ onContact }: Props) {
                 CGC-CALC / UA-2026
               </span>
             </div>
-            <h2 className="mt-4 text-[1.85rem] leading-[1.05] font-bold tracking-tight sm:text-3xl">
+            <h2 className="mt-4 text-3xl leading-[1.05] font-bold tracking-tight">
               Калькулятор митних платежів
             </h2>
             <p className="text-ink-3 mt-2 text-sm text-balance">
@@ -125,7 +125,7 @@ export function Calculator({ onContact }: Props) {
                 </span>
                 Код УКТ ЗЕД
               </label>
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+              <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-stretch">
                 <input
                   id="productCode"
                   value={productCode}
@@ -211,7 +211,7 @@ export function Calculator({ onContact }: Props) {
             )}
           </div>
           <div
-            className="bg-primary relative flex flex-col overflow-hidden border-t border-white/10 p-5 text-white sm:p-7 md:p-11 lg:border-t-0"
+            className="bg-primary relative flex min-w-0 flex-col overflow-hidden border-t border-white/10 p-5 text-white sm:p-7 md:p-11 lg:border-t-0"
             aria-busy={hasValidCode && exchangeRate !== null && result === null && !quoteError}
           >
             <div className="relative z-10 mb-4 box-content flex min-h-8 flex-col items-start gap-1 border-b border-white/10 pb-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-3">
