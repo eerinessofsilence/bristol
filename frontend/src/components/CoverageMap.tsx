@@ -228,7 +228,7 @@ export function CoverageMap() {
 
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-[#085041]/10 px-2 pb-4">
             <span className="technical-label text-[#085041]/50">Route control / CGC-UA-05</span>
-            <span className="flex items-center gap-2 rounded-full border border-[#1d9e75]/20 bg-[#e1f5ee] px-3 py-1.5 text-[11px] font-semibold text-[#085041]">
+            <span className="badge badge-sm border-[#1d9e75]/20 bg-[#e1f5ee] text-[#085041]">
               <span className="size-1.5 rounded-full bg-[#1d9e75]" aria-hidden="true" />
               Митний контроль в Україні
             </span>

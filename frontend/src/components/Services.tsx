@@ -1,10 +1,14 @@
-import { Award, Calculator, Handshake, Zap } from 'lucide-react';
+import { Award, Calculator, Handshake, Phone, Zap } from 'lucide-react';
 import { services } from '../data/content';
-import { ButtonLink } from './ui/Button';
+import { Button, ButtonLink } from './ui/Button';
 
 const serviceMarkers = ['УКТ ЗЕД · ДЕКЛАРАЦІЯ', 'КООРДИНАЦІЯ', 'ПОРТИ ЄС', 'ДОСТАВКА'] as const;
 
-export function Services() {
+type Props = {
+  onRequestConsultation: () => void;
+};
+
+export function Services({ onRequestConsultation }: Props) {
   return (
     <>
       <section id="services" className="customs-surface bg-soft scroll-mt-10 py-20 md:py-24">
@@ -30,7 +34,7 @@ export function Services() {
                 }`}
               >
                 {primary && (
-                  <span className="absolute -top-3.5 right-4 rounded-full border border-[#1d9e75]/20 bg-[#9fe1cb] px-3 py-1.5 text-[10px] font-bold tracking-wide text-[#085041] uppercase shadow-[0_6px_16px_rgba(29,158,117,0.16)]">
+                  <span className="badge badge-xs absolute -top-3 right-4 border-[#1d9e75]/20 bg-[#9fe1cb] text-[#085041] shadow-[0_6px_16px_rgba(29,158,117,0.16)]">
                     Основна послуга
                   </span>
                 )}
@@ -91,9 +95,15 @@ export function Services() {
                   Один менеджер координує експедиторів, лінійних агентів, портові служби та
                   перевізника.
                 </p>
-                <ButtonLink href="#calc" variant="outline" className="mt-6 w-full">
-                  Перейти до розрахунку
-                </ButtonLink>
+                <Button
+                  type="button"
+                  icon={Phone}
+                  variant="outline"
+                  className="mt-6 w-full"
+                  onClick={onRequestConsultation}
+                >
+                  Зв'язатися з нами
+                </Button>
               </div>
             </article>
             <article className="bg-mint-soft flex min-h-64 flex-col rounded-[18px] p-6 md:order-first md:col-span-2 lg:order-none lg:col-span-1">
@@ -128,7 +138,12 @@ export function Services() {
                   Вкажіть категорію товару, митну вартість і валюту — калькулятор орієнтовно
                   розрахує мито, ПДВ та загальну суму платежів.
                 </p>
-                <ButtonLink href="#calc" variant="outline" className="mt-6 w-full">
+                <ButtonLink
+                  href="#calc"
+                  icon={Calculator}
+                  variant="outline"
+                  className="mt-6 w-full"
+                >
                   Розрахувати платежі
                 </ButtonLink>
               </div>

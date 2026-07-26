@@ -1,4 +1,4 @@
-import { ChevronDown } from 'lucide-react';
+import { Calculator, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { faqs } from '../data/content';
 import { ButtonLink } from './ui/Button';
@@ -18,7 +18,7 @@ export function Faq() {
             Коротко про роль ClearGateCustoms, роботу з портами, митне оформлення та доставку до
             складу клієнта.
           </p>
-          <ButtonLink href="#calc" className="mt-7 lg:-translate-y-3">
+          <ButtonLink href="#calc" icon={Calculator} className="mt-7 lg:-translate-y-3">
             Розрахувати митні платежі
           </ButtonLink>
         </div>

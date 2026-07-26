@@ -1,3 +1,4 @@
+import { Calculator, Phone } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
 import { Button, ButtonLink } from './ui/Button';
@@ -7,13 +8,6 @@ const heroSlides = [
   '/images/hero/ningbo-china.jpg',
   '/images/hero/guangzhou-china.jpg',
   '/images/hero/shanghai-china.jpg',
-];
-
-const heroHighlights = [
-  'Розрахунок вартості онлайн',
-  'Особистий менеджер',
-  'Повний супровід',
-  'Імпорт • Експорт',
 ];
 
 type Props = {
@@ -133,30 +127,25 @@ export function Hero({ onRequestConsultation }: Props) {
       <div className="hero-photo-scrim absolute inset-0" aria-hidden="true" />
       <div className="hero-parallax-glow" aria-hidden="true" />
       <div className="hero-customs-pattern" aria-hidden="true" />
-      <Header />
+      <Header onRequestConsultation={onRequestConsultation} />
       <div className="page-wrap relative z-10 flex min-h-[max(43rem,100svh)] items-center py-28 md:h-full md:min-h-0 md:py-0">
         <div className="max-w-[940px]">
-          <h1 className="max-w-[17ch] text-[clamp(2.05rem,9.2vw,3rem)] leading-[0.98] font-extrabold tracking-[-0.05em] sm:max-w-[18ch] sm:text-5xl lg:max-w-none lg:text-[52px]">
+          <h1 className="max-w-[17ch] text-[clamp(2.05rem,9.2vw,3rem)] leading-[0.98] font-extrabold tracking-tighter text-balance sm:max-w-[18ch] sm:text-5xl lg:max-w-none lg:text-[52px]">
             Митне оформлення вантажів, експертний супровід та сучасні AI-рішення
           </h1>
           <p className="text-ink mt-6 max-w-[620px] text-[15px] leading-6 text-pretty sm:mt-7 sm:text-lg sm:leading-7">
-            Відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод. Митне оформлення
-            виконують власні фахівці ClearGateCustoms — просто, прозоро і передбачувано.
+            Відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод. ClearGateCustoms —
+            просто, прозоро і передбачувано.
           </p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {heroHighlights.map((label) => (
-              <span key={label} className="glass-tag">
-                {label}
-              </span>
-            ))}
-          </div>
-          <p className="text-ink-2 mt-8 text-sm font-semibold sm:text-base">
+          <p className="text-ink mt-8 text-sm font-semibold sm:text-base">
             Готові оформити вантаж без зайвих турбот?
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3 sm:mt-5">
-            <ButtonLink href="#calc">Розрахувати вартість</ButtonLink>
-            <Button type="button" variant="outline" onClick={onRequestConsultation}>
-              Отримати консультацію
+            <ButtonLink href="#calc" icon={Calculator}>
+              Розрахувати вартість
+            </ButtonLink>
+            <Button type="button" icon={Phone} variant="outline" onClick={onRequestConsultation}>
+              Зв'язатися з нами
             </Button>
           </div>
         </div>

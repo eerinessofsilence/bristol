@@ -1,4 +1,4 @@
-import { Camera, MessageCircle, RefreshCw } from 'lucide-react';
+import { Camera, Phone, RefreshCw } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { ApiError, calculateQuote, getUsdExchangeRate } from '../api/client';
 import type { CalculatorQuote, ExchangeRateResult, QuoteResult } from '../types';
@@ -7,7 +7,7 @@ import { PricePicker } from './ui/PricePicker';
 import { ProductCodeFinderModal } from './ProductCodeFinderModal';
 
 type Props = {
-  onContact: (quote: CalculatorQuote) => void;
+  onContact: (quote: CalculatorQuote | null) => void;
 };
 
 type RateStatus = 'loading' | 'success' | 'error';
@@ -97,7 +97,7 @@ export function Calculator({ onContact }: Props) {
   }, [exchangeRate, hasValidCode, productCode, weightKg]);
 
   return (
-    <section id="calc" className="customs-surface bg-soft scroll-mt-10 py-14 md:py-24">
+    <section id="calc" className="customs-surface bg-soft scroll-mt-28 py-14 md:scroll-mt-32 md:py-24">
       <div className="page-wrap">
         <div
           className="customs-document-shell grid overflow-hidden rounded-3xl bg-[#eff2f0] shadow-[0_20px_60px_rgba(22,34,30,0.1)] lg:grid-cols-[1.05fr_0.95fr]"
@@ -125,7 +125,7 @@ export function Calculator({ onContact }: Props) {
                 </span>
                 Код УКТ ЗЕД
               </label>
-              <div className="flex items-stretch gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
                 <input
                   id="productCode"
                   value={productCode}
@@ -143,7 +143,7 @@ export function Calculator({ onContact }: Props) {
                   icon={Camera}
                   variant="outline"
                   size="compact"
-                  className="action-pill-flat shrink-0 self-stretch"
+                  className="action-pill-flat w-full shrink-0 self-stretch sm:w-auto"
                   onClick={() => setIsCodeFinderOpen(true)}
                 >
                   <span className="sm:hidden">За фото</span>
@@ -236,19 +236,21 @@ export function Calculator({ onContact }: Props) {
               </p>
             </div>
             <Button
-              icon={MessageCircle}
+              icon={Phone}
               variant="mint"
-              className="relative z-10 mt-2 w-full self-stretch sm:w-auto sm:self-start"
-              disabled={result === null}
+              className="relative z-10 mt-2 w-full self-stretch gap-3 py-2.5 pr-2.5 pl-4 text-left [&>span:first-child]:whitespace-normal [&>span:first-child]:leading-5 sm:w-auto sm:self-start sm:gap-8 sm:pl-6 sm:[&>span:first-child]:whitespace-nowrap"
               onClick={() => {
-                if (result === null) return;
-                onContact({
-                  productCode: result.productCode,
-                  weightKg: result.weightKg,
-                  criticalPriceUsdPerKg: result.criticalPriceUsdPerKg,
-                  customsValueUsd: result.customsValueUsd,
-                  total: result.total,
-                });
+                onContact(
+                  result
+                    ? {
+                        productCode: result.productCode,
+                        weightKg: result.weightKg,
+                        criticalPriceUsdPerKg: result.criticalPriceUsdPerKg,
+                        customsValueUsd: result.customsValueUsd,
+                        total: result.total,
+                      }
+                    : null,
+                );
               }}
             >
               Запросити точний розрахунок

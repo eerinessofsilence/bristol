@@ -55,7 +55,7 @@ export function App() {
       <main>
         <MissionValues />
         <Intro />
-        <Services />
+        <Services onRequestConsultation={() => setIsConsultationOpen(true)} />
         <Calculator onContact={setContactQuote} />
         <Process />
         <CoverageMap />

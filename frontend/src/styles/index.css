@@ -354,12 +354,15 @@
     color: var(--color-primary);
   }
 
+  .badge,
   .glass-tag,
   .section-tag {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 2rem;
+    min-height: 1.625rem;
+    gap: 0.35rem;
+    padding: 0.25rem 0.7rem;
     font-family: var(--font-accent);
     border: 1px solid rgb(63 181 140 / 0.2);
     border-radius: 999px;
@@ -372,15 +375,31 @@
     -webkit-backdrop-filter: blur(14px) saturate(135%);
   }
 
+  .badge-xs {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+
+  .badge-sm {
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .badge-md {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
+  }
+
   .glass-tag {
-    gap: 0.35rem;
-    padding-inline: 0.78rem;
     font-size: 0.75rem;
     font-weight: 500;
   }
 
   .section-tag {
-    padding-inline: 0.9rem;
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.075em;
@@ -418,7 +437,6 @@
   .field-control:focus {
     border-color: var(--color-mint);
   }
-
 }
 
 [data-reveal] {

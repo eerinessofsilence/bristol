@@ -111,11 +111,7 @@ export function Process() {
                         >
                           {String(index + 1).padStart(2, '0')}
                         </span>
-                        <span
-                          className={`rounded-full px-2.5 py-1 text-[10px] font-bold tracking-wide uppercase ${colors.role}`}
-                        >
-                          {step.role}
-                        </span>
+                        <span className={`badge badge-xs ${colors.role}`}>{step.role}</span>
                       </div>
                       <div className="mt-3 flex items-center gap-4 sm:gap-5">
                         <span

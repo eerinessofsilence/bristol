@@ -1,6 +1,6 @@
-import { Menu, X } from 'lucide-react';
+import { Menu, Phone, X } from 'lucide-react';
 import { useState } from 'react';
-import { ButtonLink } from './ui/Button';
+import { Button } from './ui/Button';
 
 const links = [
   ['Послуги', '#services'],
@@ -9,7 +9,11 @@ const links = [
   ['Питання', '#faq'],
 ];
 
-export function Header() {
+type Props = {
+  onRequestConsultation: () => void;
+};
+
+export function Header({ onRequestConsultation }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -31,16 +35,31 @@ export function Header() {
             {label}
           </a>
         ))}
+        <Button
+          type="button"
+          icon={Phone}
+          variant="outline"
+          className="mt-1 w-full md:hidden"
+          onClick={() => {
+            setOpen(false);
+            onRequestConsultation();
+          }}
+        >
+          Зв'язатися з нами
+        </Button>
       </nav>
       <div className="flex items-center gap-3">
-        <ButtonLink
-          href="#calc"
+        <Button
+          type="button"
+          icon={Phone}
+          variant="outline"
           size="compact"
           className="header-contact-button hover:translate-y-0 max-md:hidden md:inline-flex"
           style={{ borderRadius: '9999px', boxShadow: 'none' }}
+          onClick={onRequestConsultation}
         >
-          Розрахувати
-        </ButtonLink>
+          Зв'язатися з нами
+        </Button>
         <button
           type="button"
           aria-label={open ? 'Закрити меню' : 'Відкрити меню'}
