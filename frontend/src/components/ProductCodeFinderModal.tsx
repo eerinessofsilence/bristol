@@ -425,7 +425,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                           <span className="field-index" aria-hidden="true">
                             {String(index + 1).padStart(2, '0')}
                           </span>
-                          <strong className="font-mono text-lg tracking-[0.08em]">
+                          <strong className="font-accent text-lg tracking-[0.08em]">
                             {candidate.code}
                           </strong>
                           <span className="rounded-full bg-[#e8f6f1] px-2.5 py-1 text-[10px] font-semibold tracking-wide text-[#085041] uppercase">

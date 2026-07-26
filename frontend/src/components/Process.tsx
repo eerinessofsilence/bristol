@@ -106,7 +106,7 @@ export function Process() {
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-3">
                         <span
-                          className="font-mono text-3xl leading-none font-semibold tracking-[0.06em] opacity-70 sm:text-[34px]"
+                          className="font-accent text-2xl leading-none font-semibold tracking-[0.06em] opacity-70 sm:text-[28px]"
                           aria-hidden="true"
                         >
                           {String(index + 1).padStart(2, '0')}

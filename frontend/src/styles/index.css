@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Sora:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 
 @theme {
   --font-sans: 'Sora', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-accent: 'Unbounded', 'Sora', ui-sans-serif, system-ui, sans-serif;
   --color-soft: #f5f7f6;
   --color-ink: #141c1a;
   --color-ink-2: #3a4744;
@@ -150,7 +150,7 @@
   .technical-label,
   .section-index,
   .field-index {
-    font-family: var(--font-mono);
+    font-family: var(--font-accent);
     font-variant-numeric: tabular-nums;
   }
 
@@ -360,6 +360,7 @@
     align-items: center;
     justify-content: center;
     height: 2rem;
+    font-family: var(--font-accent);
     border: 1px solid rgb(63 181 140 / 0.2);
     border-radius: 999px;
     background: linear-gradient(135deg, rgb(234 243 238 / 0.78), rgb(255 255 255 / 0.46));
@@ -417,6 +418,7 @@
   .field-control:focus {
     border-color: var(--color-mint);
   }
+
 }
 
 [data-reveal] {

@@ -388,7 +388,7 @@ export function CoverageMap() {
                         x={WAREHOUSE.labelOffset[0]}
                         y={WAREHOUSE.labelOffset[1] + 18}
                         fill="#085041"
-                        fontFamily="'IBM Plex Mono', monospace"
+                        fontFamily="'Unbounded', 'Sora', sans-serif"
                         fontSize="10"
                         fontWeight="600"
                         letterSpacing="1.2"

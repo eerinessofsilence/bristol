@@ -104,7 +104,7 @@ export function Calculator({ onContact }: Props) {
           data-reveal
         >
           <div className="customs-document-page p-5 sm:p-7 md:p-11">
-            <div className="mb-6 flex min-h-8 flex-wrap items-center justify-between gap-3 pb-4 sm:mb-7">
+            <div className="mb-6 box-content flex min-h-8 flex-wrap items-center justify-between gap-3 pb-4 sm:mb-7">
               <span className="section-tag">
                 <span className="section-index">03 /</span>&nbsp; Розрахунок
               </span>
@@ -132,7 +132,7 @@ export function Calculator({ onContact }: Props) {
                   inputMode="numeric"
                   autoComplete="off"
                   maxLength={10}
-                  className="field-control min-w-0 flex-1 font-mono tracking-[0.08em]"
+                  className="field-control min-w-0 flex-1"
                   placeholder="Наприклад, 0201203000"
                   onChange={(event) =>
                     setProductCode(event.target.value.replace(/\D/g, '').slice(0, 10))
@@ -214,7 +214,7 @@ export function Calculator({ onContact }: Props) {
             className="bg-primary relative flex flex-col overflow-hidden border-t border-white/10 p-5 text-white sm:p-7 md:p-11 lg:border-t-0"
             aria-busy={hasValidCode && exchangeRate !== null && result === null && !quoteError}
           >
-            <div className="relative z-10 mb-4 flex min-h-8 flex-col items-start gap-1 border-b border-white/10 pb-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-3">
+            <div className="relative z-10 mb-4 box-content flex min-h-8 flex-col items-start gap-1 border-b border-white/10 pb-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-3">
               <span className="technical-label whitespace-nowrap text-white/45">
                 Попередній розрахунок
               </span>
@@ -227,7 +227,7 @@ export function Calculator({ onContact }: Props) {
               <h3 className="mt-3 max-w-[20ch] text-2xl leading-tight font-semibold tracking-tight sm:text-3xl">
                 Орієнтовна сума платежів
               </h3>
-              <strong className="text-mint mt-5 font-mono text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
+              <strong className="text-mint mt-5 font-accent text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
                 {formatMoney(result?.total)}
               </strong>
               <p className="mt-4 max-w-sm text-sm leading-6 text-white/55">
