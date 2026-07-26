@@ -14,7 +14,7 @@ from sqlalchemy.pool import StaticPool
 from app.db.session import Base, get_db
 from app.main import app
 from app.schemas.product_code import ProductCodeAIResult
-from app.services import duty_rates, exchange_rates, product_codes
+from app.services import duty_rates, email_notifications, exchange_rates, product_codes
 from app.services.image_normalization import normalize_product_image
 
 engine = create_engine(
@@ -278,6 +278,54 @@ def test_lead_creation() -> None:
     )
     assert response.status_code == 201
     assert response.json()["message"] == "Заявку прийнято"
+
+
+def test_lead_notification_is_sent_when_configured(monkeypatch) -> None:
+    sent_messages = []
+
+    class FakeSMTP:
+        def __init__(self, host: str, port: int, timeout: int) -> None:
+            assert (host, port, timeout) == ("smtp.example.com", 587, 10)
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args) -> None:
+            return None
+
+        def starttls(self) -> None:
+            return None
+
+        def login(self, username: str, password: str) -> None:
+            assert (username, password) == ("info@example.com", "app-password")
+
+        def send_message(self, message) -> None:
+            sent_messages.append(message)
+
+    monkeypatch.setattr(email_notifications.settings, "email_notifications_enabled", True)
+    monkeypatch.setattr(email_notifications.settings, "smtp_host", "smtp.example.com")
+    monkeypatch.setattr(email_notifications.settings, "smtp_username", "info@example.com")
+    monkeypatch.setattr(email_notifications.settings, "smtp_password", "app-password")
+    monkeypatch.setattr(email_notifications.settings, "smtp_from_email", "info@example.com")
+    monkeypatch.setattr(
+        email_notifications.settings, "lead_notification_email", "leads@example.com"
+    )
+    monkeypatch.setattr(email_notifications.smtplib, "SMTP", FakeSMTP)
+
+    response = client.post(
+        "/api/v1/leads",
+        json={
+            "first_name": "Олена",
+            "last_name": "Коваль",
+            "phone": "+380501234567",
+            "email": "olena@example.com",
+        },
+    )
+
+    assert response.status_code == 201
+    assert len(sent_messages) == 1
+    assert sent_messages[0]["To"] == "leads@example.com"
+    assert "Олена Коваль" in sent_messages[0].get_body(preferencelist=("plain",)).get_content()
 
 
 def test_usd_exchange_rate_is_cached_for_twelve_hours(monkeypatch) -> None:

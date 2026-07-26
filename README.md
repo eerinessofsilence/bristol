@@ -64,6 +64,20 @@ npm run dev
 OPENAI_API_KEY=your_new_key docker compose up --build
 ```
 
+## Поштові сповіщення про заявки
+
+Заявки завжди зберігаються в PostgreSQL. Щоб додатково отримувати їх на робочу пошту,
+створіть скриньку `info@cleargatecustoms.com.ua` у поштовому сервісі, скопіюйте SMTP-параметри
+до `backend/.env` (шаблон є у `backend/.env.example`) та встановіть
+`EMAIL_NOTIFICATIONS_ENABLED=true`.
+
+Для Google Workspace використовуйте `SMTP_HOST=smtp.gmail.com`, порт `587`, TLS та
+окремий пароль застосунку, а не основний пароль пошти. Значення `LEAD_NOTIFICATION_EMAIL`
+можна замінити на окрему скриньку, наприклад `leads@cleargatecustoms.com.ua`.
+
+Не коммітьте `backend/.env`: у ньому міститься пароль SMTP. Якщо SMTP тимчасово недоступний,
+сайт збереже заявку, а помилку запише до журналу бекенду.
+
 ## Проверки
 
 ```bash
