@@ -5,8 +5,6 @@ services:
       POSTGRES_DB: cleargatecustoms
       POSTGRES_USER: cleargatecustoms
       POSTGRES_PASSWORD: cleargatecustoms
-    ports:
-      - "5432:5432"
     volumes:
       - cleargatecustoms_postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -21,9 +19,7 @@ services:
       - ./backend/.env
     environment:
       DATABASE_URL: postgresql+psycopg://cleargatecustoms:cleargatecustoms@db:5432/cleargatecustoms
-      CORS_ORIGINS: http://localhost:5173
-    ports:
-      - "8000:8000"
+      CORS_ORIGINS: https://cleargatecustoms.com.ua,https://www.cleargatecustoms.com.ua
     depends_on:
       db:
         condition: service_healthy
@@ -31,7 +27,7 @@ services:
   frontend:
     build: ./frontend
     ports:
-      - "5173:80"
+      - "127.0.0.1:5173:80"
     depends_on:
       - backend
 
