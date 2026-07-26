@@ -22,7 +22,7 @@ export function Header({ onRequestConsultation }: Props) {
   return (
     <header className="liquid-header fixed top-4 right-4 left-4 z-50 mx-auto flex h-15 max-w-[1160px] items-center justify-between gap-3 rounded-full px-4 sm:top-5 sm:right-6 sm:left-6 sm:h-16 md:top-6 md:right-9 md:left-9 md:gap-6 md:px-8">
       <a href="#top" className="min-w-0 shrink-0 transition-opacity duration-300 hover:opacity-75">
-        <img src="/images/brand/logo.svg" alt="ClearGateCustoms" className="h-7 w-auto sm:h-8" />
+        <img src="/images/brand/logo.svg" alt="ClearGateCustoms" className="h-9 w-auto sm:h-10" />
       </a>
       <nav
         aria-label="Головна навігація"
@@ -33,7 +33,7 @@ export function Header({ onRequestConsultation }: Props) {
             key={href}
             href={href}
             onClick={() => setOpen(false)}
-            className="text-primary hover:text-primary-hover after:bg-mint-muted relative w-fit translate-y-0 transform-gpu self-start py-1 text-lg font-bold tracking-[0.06em] uppercase transition-[color,transform] duration-400 ease-in-out will-change-transform after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:transition-transform after:duration-400 after:ease-in-out hover:-translate-y-[1.5px] hover:after:scale-x-125 xl:self-auto xl:text-xs xl:font-semibold xl:tracking-normal xl:normal-case xl:after:left-1/2 xl:after:w-0 xl:after:-translate-x-1/2 xl:after:scale-x-100 xl:after:transition-[width] xl:hover:after:w-[72%] xl:hover:after:scale-x-100"
+            className="text-primary hover:text-primary-hover after:bg-mint-muted relative w-fit translate-y-0 transform-gpu self-start py-1 text-lg font-bold tracking-[0.06em] uppercase transition-[color,transform] duration-400 ease-in-out will-change-transform after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:transition-transform after:duration-400 after:ease-in-out hover:-translate-y-[1.5px] hover:after:scale-x-125 xl:self-auto xl:text-sm xl:font-semibold xl:tracking-normal xl:normal-case xl:after:left-1/2 xl:after:w-0 xl:after:-translate-x-1/2 xl:after:scale-x-100 xl:after:transition-[width] xl:hover:after:w-[72%] xl:hover:after:scale-x-100"
           >
             {label}
           </a>

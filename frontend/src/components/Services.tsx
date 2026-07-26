@@ -65,7 +65,13 @@ export function Services({ onRequestConsultation }: Props) {
                     <h3
                       className={`text-base font-bold tracking-tight ${primary ? 'mt-5 sm:mt-0 sm:text-xl' : 'mt-5'}`}
                     >
-                      {title}
+                      {title === 'Гданськ і Констанца' ? (
+                        <>
+                          Гданськ <CountryFlag code="pl" /> і Констанца <CountryFlag code="ro" />
+                        </>
+                      ) : (
+                        title
+                      )}
                     </h3>
                     <p
                       className={`text-ink-3 mt-2 text-base leading-6 sm:text-lg sm:leading-7 ${primary ? 'max-w-3xl' : ''}`}

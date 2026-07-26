@@ -19,7 +19,7 @@ export function CountryFlag({ code, className = '' }: Props) {
     <img
       src={flag.src}
       alt={flag.label}
-      className={`inline-block h-[1.125em] w-[1.6875em] shrink-0 rounded-[2px] object-cover align-[-0.14em] shadow-[0_0_0_1px_rgba(0,0,0,0.15)] ${className}`}
+      className={`mx-1 inline-block h-[1.125em] w-[1.6875em] shrink-0 rounded-[2px] object-cover align-[-0.14em] shadow-[0_0_0_1px_rgba(0,0,0,0.15)] ${className}`}
     />
   );
 }
