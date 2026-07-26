@@ -1,4 +1,3 @@
-import { BadgeCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Header } from './Header';
 import { Button, ButtonLink } from './ui/Button';
@@ -137,20 +136,6 @@ export function Hero({ onRequestConsultation }: Props) {
       <Header />
       <div className="page-wrap relative z-10 flex min-h-[max(43rem,100svh)] items-center py-28 md:h-full md:min-h-0 md:py-0">
         <div className="max-w-[940px]">
-          <div className="hero-customs-badge mb-6 md:mt-10">
-            <span
-              className="grid size-9 shrink-0 place-items-center rounded-lg bg-[#085041] text-[#9fe1cb]"
-              aria-hidden="true"
-            >
-              <BadgeCheck size={19} strokeWidth={2.4} />
-            </span>
-            <span>
-              <span className="technical-label block text-[#085041]/55">Підтверджена послуга</span>
-              <span className="block text-xs font-bold text-[#085041] sm:text-sm">
-                Митне оформлення власними фахівцями
-              </span>
-            </span>
-          </div>
           <h1 className="max-w-[17ch] text-[clamp(2.05rem,9.2vw,3rem)] leading-[0.98] font-extrabold tracking-[-0.05em] sm:max-w-[18ch] sm:text-5xl lg:max-w-none lg:text-[52px]">
             Митне оформлення вантажів, експертний супровід та сучасні AI-рішення
           </h1>
