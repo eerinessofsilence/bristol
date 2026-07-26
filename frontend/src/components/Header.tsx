@@ -38,7 +38,7 @@ export function Header({ onRequestConsultation }: Props) {
         <Button
           type="button"
           icon={Phone}
-          variant="mint"
+          variant="primary"
           className="mt-1 w-full md:hidden"
           onClick={() => {
             setOpen(false);

@@ -332,7 +332,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
               <Button
                 type="button"
                 icon={Sparkles}
-                variant="mint"
+                variant="primary"
                 disabled={images.length === 0}
                 onClick={analyze}
               >
@@ -455,7 +455,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                         type="button"
                         icon={Check}
                         size="compact"
-                        variant={index === 0 ? 'mint' : 'outline'}
+                        variant={index === 0 ? 'primary' : 'outline'}
                         className="shrink-0"
                         onClick={() => {
                           onSelect(candidate.code);
@@ -492,7 +492,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                   Перевірити інший товар
                 </Button>
               ) : (
-                <Button type="button" icon={ImagePlus} variant="mint" onClick={resetAnalysis}>
+                <Button type="button" icon={ImagePlus} variant="primary" onClick={resetAnalysis}>
                   Додати інші фото
                 </Button>
               )}

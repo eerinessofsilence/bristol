@@ -349,11 +349,6 @@
     transform: scale(1.1) rotate(-12deg);
   }
 
-  .action-pill:hover .action-pill-icon-surface {
-    background-color: var(--color-mint);
-    color: var(--color-primary);
-  }
-
   .badge,
   .glass-tag,
   .section-tag {

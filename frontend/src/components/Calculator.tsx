@@ -348,7 +348,7 @@ export function Calculator({ onContact }: Props) {
               </div>
               <Button
                 icon={Phone}
-                variant="mint"
+                variant="primary"
                 className="relative z-10 mt-2 w-full gap-3 self-stretch py-2.5 pr-2.5 pl-4 text-left sm:w-auto sm:gap-8 sm:self-start sm:pl-6 [&>span:first-child]:leading-5 [&>span:first-child]:whitespace-normal sm:[&>span:first-child]:whitespace-nowrap"
                 onClick={() => {
                   onContact(

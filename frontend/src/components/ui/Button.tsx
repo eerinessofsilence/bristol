@@ -3,7 +3,7 @@ import { ArrowRight, type LucideIcon } from 'lucide-react';
 
 type SharedProps = {
   icon?: LucideIcon;
-  variant?: 'dark' | 'mint' | 'outline';
+  variant?: 'primary' | 'outline';
   size?: 'default' | 'compact';
 };
 
@@ -12,8 +12,7 @@ type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement> & SharedP
 type LinkProps = PropsWithChildren<AnchorHTMLAttributes<HTMLAnchorElement> & SharedProps>;
 
 const variants = {
-  dark: 'border-primary bg-primary text-white',
-  mint: 'border-mint bg-mint text-[#08221a]',
+  primary: 'border-mint bg-mint text-[#08221a]',
   outline:
     'border-line bg-white text-ink hover:border-mint-muted',
 };
@@ -24,9 +23,8 @@ const sizes = {
 };
 
 const iconVariants = {
-  dark: 'bg-white text-primary',
-  mint: 'bg-primary text-white',
-  outline: 'bg-primary text-white',
+  primary: 'bg-primary text-white',
+  outline: 'bg-primary text-mint',
 };
 
 const iconSizes = {
@@ -66,7 +64,7 @@ export function Button({
   children,
   className = '',
   icon = ArrowRight,
-  variant = 'dark',
+  variant = 'primary',
   size = 'default',
   ...props
 }: Props) {
@@ -82,7 +80,7 @@ export function ButtonLink({
   children,
   className = '',
   icon = ArrowRight,
-  variant = 'dark',
+  variant = 'primary',
   size = 'default',
   ...props
 }: LinkProps) {
