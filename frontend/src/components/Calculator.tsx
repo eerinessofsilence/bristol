@@ -64,7 +64,7 @@ function ProductCategories() {
   };
 
   return (
-    <section className="bg-soft py-20 md:py-24">
+    <section id="categories" className="bg-soft scroll-mt-28 py-20 md:scroll-mt-32 md:py-24">
       <div className="page-wrap">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
           <span className="section-tag">
