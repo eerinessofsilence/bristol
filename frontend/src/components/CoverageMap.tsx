@@ -208,12 +208,12 @@ export function CoverageMap() {
       <div className="page-wrap">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">09 /</span>&nbsp; Географія
+            <span className="section-index">10 /</span>&nbsp; Географія
           </span>
           <h2 className="section-title mt-5">Маршрут вантажу до України</h2>
-          <p className="text-ink-2 mt-5 leading-7">
+          <p className="text-ink-2 mt-5 text-base leading-6 sm:text-lg sm:leading-7">
             Координуємо прибуття вантажу через порти Польщі та Румунії, виконуємо митне оформлення в
-            Україні й організовуємо доставку до складу клієнта.
+            оформлення в Україні й організовуємо доставку до складу клієнта.
           </p>
         </div>
 
@@ -269,8 +269,8 @@ export function CoverageMap() {
                 <title id="map-svg-title">Маршрути через Гданськ і Констанцу</title>
                 <desc id="map-svg-description">
                   Польща та Румунія позначені як країни координації. Україна, включно з Кримом,
-                  позначена як країна митного оформлення. Пунктирні лінії ведуть від портів до
-                  складу клієнта в Україні.
+                  Кримом, позначена як країна митного оформлення. Пунктирні лінії ведуть від портів
+                  до складу клієнта в Україні.
                 </desc>
                 <defs>
                   <filter id="map-point-shadow" x="-100%" y="-100%" width="300%" height="300%">

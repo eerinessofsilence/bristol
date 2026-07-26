@@ -53,6 +53,7 @@ export function App() {
     <>
       <Hero onRequestConsultation={() => setIsConsultationOpen(true)} />
       <main>
+        <MissionValues />
         <Services onRequestConsultation={() => setIsConsultationOpen(true)} />
         <Intro />
         <Calculator onContact={setContactQuote} />
@@ -60,7 +61,6 @@ export function App() {
         <Testimonials />
         <Partners />
         <CoverageMap />
-        <MissionValues />
         <Faq />
       </main>
       <Footer />

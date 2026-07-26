@@ -12,7 +12,7 @@ export function MissionValues() {
           >
             <div>
               <span className="section-tag section-tag-dark">
-                <span className="section-index">10 /</span>&nbsp; Місія
+                <span className="section-index">01 /</span>&nbsp; Місія
               </span>
               <p className="mt-6 text-2xl leading-[1.3] font-bold tracking-tight text-balance sm:text-3xl">
                 {mission}

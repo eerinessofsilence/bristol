@@ -3,14 +3,14 @@ import { Anchor, ArrowDown, ClipboardCheck, Globe2, Truck, Warehouse } from 'luc
 const routeSteps = [
   {
     icon: Globe2,
-    title: 'Китай і Європа',
+    title: '🇨🇳 Китай і Європа',
     description: 'Відправлення вантажу',
     role: 'Етап маршруту',
     tone: 'neutral',
   },
   {
     icon: Anchor,
-    title: 'Порт Гданськ / Констанца',
+    title: 'Порт Гданськ 🇵🇱 / Констанца 🇷🇴',
     description: 'Координуємо прибуття',
     role: 'Координуємо',
     tone: 'coral',
@@ -65,10 +65,10 @@ export function Process() {
       <div className="page-wrap grid items-stretch gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div className="flex min-h-0 flex-col" data-reveal>
           <span className="section-tag section-tag-dark self-start">
-            <span className="section-index">06 /</span>&nbsp; Маршрут
+            <span className="section-index">07 /</span>&nbsp; Маршрут
           </span>
           <h2 className="section-title mt-4 text-white">Як це працює</h2>
-          <p className="mt-4 max-w-lg text-base leading-7 text-white/60">
+          <p className="mt-4 max-w-lg text-base leading-6 text-white/60 sm:text-lg sm:leading-7">
             Від порту відправлення до складу клієнта: одразу видно, де ми виконуємо митне оформлення
             самі, а де координуємо логістику.
           </p>
@@ -124,7 +124,7 @@ export function Process() {
                           <h3 className="text-base font-bold tracking-tight sm:text-lg">
                             {step.title}
                           </h3>
-                          <p className={`mt-1 text-sm leading-5 ${colors.description}`}>
+                          <p className={`mt-1 text-base leading-6 sm:text-lg sm:leading-7 ${colors.description}`}>
                             {step.description}
                           </p>
                         </div>

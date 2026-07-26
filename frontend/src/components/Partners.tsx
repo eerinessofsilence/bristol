@@ -6,7 +6,7 @@ export function Partners() {
       <div className="page-wrap">
         <div className="mx-auto max-w-2xl text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">08 /</span>&nbsp; Партнери
+            <span className="section-index">09 /</span>&nbsp; Партнери
           </span>
           <h2 className="section-title mt-4">Наші партнери</h2>
           <p className="text-ink-2 mt-4 text-balance">

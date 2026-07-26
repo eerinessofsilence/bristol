@@ -1,5 +1,5 @@
-import { Camera, Phone, RefreshCw } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Camera, ChevronLeft, ChevronRight, Phone, RefreshCw } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { ApiError, calculateQuote, getUsdExchangeRate } from '../api/client';
 import { productCategories } from '../data/content';
 import type { CalculatorQuote, ExchangeRateResult, QuoteResult } from '../types';
@@ -30,25 +30,82 @@ const formatRate = (value: number) =>
   });
 
 function ProductCategories() {
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [canMoveBack, setCanMoveBack] = useState(false);
+  const [canMoveForward, setCanMoveForward] = useState(true);
+
+  const updateControls = () => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    setCanMoveBack(carousel.scrollLeft > 4);
+    setCanMoveForward(carousel.scrollLeft + carousel.clientWidth < carousel.scrollWidth - 4);
+  };
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    updateControls();
+    carousel.addEventListener('scroll', updateControls, { passive: true });
+    window.addEventListener('resize', updateControls);
+
+    return () => {
+      carousel.removeEventListener('scroll', updateControls);
+      window.removeEventListener('resize', updateControls);
+    };
+  }, []);
+
+  const moveCarousel = (direction: -1 | 1) => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    carousel.scrollBy({ left: direction * carousel.clientWidth * 0.82, behavior: 'smooth' });
+  };
+
   return (
     <section className="bg-soft py-20 md:py-24">
       <div className="page-wrap">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">05 /</span>&nbsp; Категорії товарів
+            <span className="section-index">06 /</span>&nbsp; Категорії товарів
           </span>
           <h2 className="mt-4 text-2xl leading-tight font-bold tracking-tight sm:text-3xl">
             Основні товарні групи, з якими ми працюємо
           </h2>
-          <p className="text-ink-3 mt-3 text-sm leading-6 text-balance">
+          <p className="text-ink-3 mt-3 text-base leading-6 text-balance sm:text-lg sm:leading-7">
             Оформлюємо регулярні та разові поставки цих категорій з Китаю та Європи.
           </p>
         </div>
-        <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+        <div className="mt-10 flex items-center justify-end gap-2 sm:mt-12" data-reveal>
+          <button
+            type="button"
+            className="flex size-11 cursor-pointer items-center justify-center rounded-full border border-[#085041]/20 bg-white text-[#085041] transition hover:border-[#085041] hover:bg-[#085041] hover:text-white disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-[#085041]/20 disabled:hover:bg-white disabled:hover:text-[#085041]"
+            aria-label="Попередні категорії"
+            disabled={!canMoveBack}
+            onClick={() => moveCarousel(-1)}
+          >
+            <ChevronLeft size={20} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="flex size-11 cursor-pointer items-center justify-center rounded-full border border-[#085041]/20 bg-white text-[#085041] transition hover:border-[#085041] hover:bg-[#085041] hover:text-white disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-[#085041]/20 disabled:hover:bg-white disabled:hover:text-[#085041]"
+            aria-label="Наступні категорії"
+            disabled={!canMoveForward}
+            onClick={() => moveCarousel(1)}
+          >
+            <ChevronRight size={20} aria-hidden="true" />
+          </button>
+        </div>
+        <div
+          ref={carouselRef}
+          className="-mx-5 mt-4 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-3 sm:-mx-7 sm:px-7 md:-mx-10 md:px-10 lg:-mx-0 lg:px-0 [&::-webkit-scrollbar]:hidden"
+          data-reveal
+        >
           {productCategories.map(({ image, label }) => (
             <article
               key={label}
-              className="group bg-primary relative flex aspect-[4/3] min-h-44 overflow-hidden rounded-2xl border border-[#9fe1cb]/60 p-5 shadow-[0_10px_24px_rgba(22,34,30,0.1)]"
+              className="group bg-primary relative flex aspect-[4/3] min-h-52 w-[82vw] shrink-0 snap-start overflow-hidden rounded-2xl border border-[#9fe1cb]/60 p-5 shadow-[0_10px_24px_rgba(22,34,30,0.1)] sm:w-[min(52vw,25rem)] lg:w-[calc((100%-2rem)/3)]"
             >
               <img
                 src={image}
@@ -153,7 +210,7 @@ export function Calculator({ onContact }: Props) {
             <div className="customs-document-page min-w-0 p-5 sm:p-7 md:p-11">
               <div className="mb-6 box-content flex min-h-8 flex-wrap items-center justify-between gap-3 pb-4 sm:mb-7">
                 <span className="section-tag">
-                  <span className="section-index">04 /</span>&nbsp; Розрахунок
+                  <span className="section-index">05 /</span>&nbsp; Розрахунок
                 </span>
                 <span className="technical-label hidden text-[#085041]/50 sm:inline">
                   CGC-CALC / UA-2026
@@ -162,7 +219,7 @@ export function Calculator({ onContact }: Props) {
               <h2 className="mt-4 text-3xl leading-[1.05] font-bold tracking-tight">
                 Калькулятор митних платежів
               </h2>
-              <p className="text-ink-3 mt-2 text-sm text-balance">
+              <p className="text-ink-3 mt-2 text-base leading-6 text-balance sm:text-lg sm:leading-7">
                 Вкажіть код УКТ ЗЕД і вагу вантажу.
               </p>
               <div className="mt-6 sm:mt-7">
@@ -283,7 +340,7 @@ export function Calculator({ onContact }: Props) {
                 <strong className="text-mint font-accent mt-5 text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
                   {formatMoney(result?.total)}
                 </strong>
-                <p className="mt-4 max-w-sm text-sm leading-6 text-white/55">
+                <p className="mt-4 max-w-sm text-base leading-6 text-white/55 sm:text-lg sm:leading-7">
                   {result
                     ? `Пільгова ставка мита — ${formatRate(result.dutyRatePercent)}%. Мито: ${formatMoney(result.duty)}, ПДВ: ${formatMoney(result.vat)}.`
                     : 'Підсумок включає мито та ПДВ. Розрахунок орієнтовний.'}

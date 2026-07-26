@@ -4,26 +4,26 @@ export function Intro() {
       <div className="page-wrap grid items-start gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
         <div data-reveal>
           <span className="section-tag">
-            <span className="section-index">03 /</span>&nbsp; Підхід
+            <span className="section-index">04 /</span>&nbsp; Підхід
           </span>
           <h2 className="section-title mt-4 max-w-xl">
             Митне оформлення виконуємо самі. Логістику — організовуємо під ключ.
           </h2>
-          <p className="text-ink-2 mt-7 max-w-xl leading-7">
+          <p className="text-ink-2 mt-7 max-w-xl text-base leading-6 sm:text-lg sm:leading-7">
             ClearGateCustoms — митний брокер, який безпосередньо здійснює декларування та митне
             оформлення вантажів з Китаю та Європи. Паралельно, як логістичний партнер, ми
             організовуємо доставку: координуємо роботу експедиторів і лінійних агентів у портах
             Гданська та Констанци та супроводжуємо вантаж до складу клієнта в Україні. Працюємо без
             передоплати за послуги — розрахунок після митного випуску вантажу.
           </p>
-          <p className="text-ink-2 mt-4 max-w-xl leading-7">
+          <p className="text-ink-2 mt-4 max-w-xl text-base leading-6 sm:text-lg sm:leading-7">
             Наші цінності — законність, надійність, прозорість, технологічність, відповідальність і
             швидкість, з повагою до кожного клієнта.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {[
               'Без передоплати',
-              'Китай і Європа',
+              '🇨🇳 Китай і Європа',
               'Координація доставки',
               'Доставка до складу',
             ].map((tag) => (

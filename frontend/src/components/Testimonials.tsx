@@ -48,10 +48,10 @@ export function Testimonials() {
       <div className="page-wrap">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">07 /</span>&nbsp; Відгуки
+            <span className="section-index">08 /</span>&nbsp; Відгуки
           </span>
           <h2 className="section-title mt-4">Спокійніше, коли весь маршрут під контролем</h2>
-          <p className="text-ink-2 mt-5 max-w-2xl leading-7 text-balance">
+          <p className="text-ink-2 mt-5 max-w-2xl text-base leading-6 text-balance sm:text-lg sm:leading-7">
             Клієнти цінують передбачувані строки, зрозумілу комунікацію та одного координатора від
             порту до складу.
           </p>

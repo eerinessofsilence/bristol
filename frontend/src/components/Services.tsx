@@ -15,11 +15,12 @@ export function Services({ onRequestConsultation }: Props) {
         <div className="page-wrap">
           <div className="mx-auto max-w-2xl text-center" data-reveal>
             <span className="section-tag">
-              <span className="section-index">01 /</span>&nbsp; Послуги
+              <span className="section-index">02 /</span>&nbsp; Послуги
             </span>
             <h2 className="section-title mt-4">Що ми робимо</h2>
-            <p className="text-ink-2 mt-4 text-balance">
-              Спеціалізуємося на митному оформленні вантажів з Китаю та Європи й супроводжуємо їх до
+            <p className="text-ink-2 mt-4 text-base leading-6 text-balance sm:text-lg sm:leading-7">
+              Спеціалізуємося на митному оформленні вантажів з{' '}
+              <span aria-hidden="true">🇨🇳</span> Китаю та <span aria-hidden="true">🇪🇺</span> Європи й супроводжуємо їх до
               складу клієнта.
             </p>
           </div>
@@ -60,7 +61,7 @@ export function Services({ onRequestConsultation }: Props) {
                       {title}
                     </h3>
                     <p
-                      className={`text-ink-3 mt-2 text-sm leading-6 ${primary ? 'max-w-3xl' : ''}`}
+                      className={`text-ink-3 mt-2 text-base leading-6 sm:text-lg sm:leading-7 ${primary ? 'max-w-3xl' : ''}`}
                     >
                       {description}
                     </p>
@@ -76,10 +77,10 @@ export function Services({ onRequestConsultation }: Props) {
         <div className="page-wrap">
           <div className="mx-auto max-w-2xl text-center" data-reveal>
             <span className="section-tag">
-              <span className="section-index">02 /</span>&nbsp; Переваги
+              <span className="section-index">03 /</span>&nbsp; Переваги
             </span>
             <h2 className="section-title mt-4">Контроль на кожному етапі</h2>
-            <p className="text-ink-2 mt-4 text-balance">
+            <p className="text-ink-2 mt-4 text-base leading-6 text-balance sm:text-lg sm:leading-7">
               Координуємо перевезення, оформлюємо вантажі та допомагаємо заздалегідь оцінити митні
               платежі.
             </p>
@@ -91,7 +92,7 @@ export function Services({ onRequestConsultation }: Props) {
               </div>
               <div className="mt-auto pt-7">
                 <h3 className="text-xl font-bold">Відповідальний супровід</h3>
-                <p className="mt-3 text-sm leading-6 text-white/65">
+                <p className="mt-3 text-base leading-6 text-white/65 sm:text-lg sm:leading-7">
                   Один менеджер координує експедиторів, лінійних агентів, портові служби та
                   перевізника.
                 </p>
@@ -112,7 +113,7 @@ export function Services({ onRequestConsultation }: Props) {
                   Без передоплати
                 </strong>
                 <p className="mt-2 font-semibold">за послуги ClearGateCustoms</p>
-                <p className="text-ink-3 mt-2 text-sm leading-5">
+                <p className="text-ink-3 mt-2 text-base leading-6 sm:text-lg sm:leading-7">
                   Розрахунок проводиться після митного випуску вантажу. Після оформлення передаємо
                   митну декларацію.
                 </p>
@@ -123,7 +124,7 @@ export function Services({ onRequestConsultation }: Props) {
                   Вся Україна
                 </strong>
                 <p className="mt-2 font-semibold">доставка до адреси</p>
-                <p className="text-ink-3 mt-2 text-sm leading-5">
+                <p className="text-ink-3 mt-2 text-base leading-6 sm:text-lg sm:leading-7">
                   Організовуємо перевезення до вашого складу або безпосередньо до клієнта.
                 </p>
               </div>
@@ -134,7 +135,7 @@ export function Services({ onRequestConsultation }: Props) {
               </div>
               <div className="mt-auto pt-7">
                 <h3 className="text-xl font-bold">Оцініть митні платежі</h3>
-                <p className="mt-3 text-sm leading-6 text-white/65">
+                <p className="mt-3 text-base leading-6 text-white/65 sm:text-lg sm:leading-7">
                   Вкажіть категорію товару, митну вартість і валюту — калькулятор орієнтовно
                   розрахує мито, ПДВ та загальну суму платежів.
                 </p>
@@ -157,7 +158,7 @@ export function Services({ onRequestConsultation }: Props) {
               </div>
               <div>
                 <h3 className="text-xl font-bold">Високий професіоналізм</h3>
-                <p className="text-ink-3 mt-3 text-sm leading-6">
+                <p className="text-ink-3 mt-3 text-base leading-6 sm:text-lg sm:leading-7">
                   Наші фахівці мають багатий досвід роботи в митній сфері, що дозволяє впевнено та
                   оперативно вирішувати будь-які проблеми і перешкоди, які виникають у процесі
                   оформлення.
@@ -170,7 +171,7 @@ export function Services({ onRequestConsultation }: Props) {
               </div>
               <div>
                 <h3 className="text-xl font-bold">Швидке реагування</h3>
-                <p className="text-ink-3 mt-3 text-sm leading-6">
+                <p className="text-ink-3 mt-3 text-base leading-6 sm:text-lg sm:leading-7">
                   Гарантуємо оперативність — розуміємо, наскільки важлива швидкість для вашого
                   бізнесу. Налагоджена комунікація з митними органами дозволяє мінімізувати
                   затримки.
