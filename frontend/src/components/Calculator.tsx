@@ -340,11 +340,6 @@ export function Calculator({ onContact }: Props) {
                 <strong className="text-mint font-accent mt-5 text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
                   {formatMoney(result?.total)}
                 </strong>
-                <p className="mt-4 max-w-sm text-base leading-6 text-white/55 sm:text-lg sm:leading-7">
-                  {result
-                    ? `Пільгова ставка мита — ${formatRate(result.dutyRatePercent)}%. Мито: ${formatMoney(result.duty)}, ПДВ: ${formatMoney(result.vat)}.`
-                    : 'Підсумок включає мито та ПДВ. Розрахунок орієнтовний.'}
-                </p>
               </div>
               <Button
                 icon={Phone}

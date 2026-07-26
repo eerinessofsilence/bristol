@@ -142,8 +142,8 @@ export function Services({ onRequestConsultation }: Props) {
               <div className="mt-auto pt-7">
                 <h3 className="text-xl font-bold">Оцініть митні платежі</h3>
                 <p className="mt-3 text-base leading-6 text-white/65 sm:text-lg sm:leading-7">
-                  Вкажіть категорію товару, митну вартість і валюту — калькулятор орієнтовно
-                  розрахує мито, ПДВ та загальну суму платежів.
+                  Вкажіть код УКТ ЗЕД і вагу вантажу — калькулятор орієнтовно розрахує мито,
+                  ПДВ та загальну суму платежів.
                 </p>
                 <ButtonLink
                   href="#calc"
