@@ -6,6 +6,9 @@ const links = [
   ['Послуги', '#services'],
   ['Калькулятор', '#calc'],
   ['Як працюємо', '#how'],
+  ['Маршрути', '#operate'],
+  ['Відгуки', '#testimonials'],
+  ['Партнери', '#partners'],
   ['Питання', '#faq'],
 ];
 
@@ -23,14 +26,14 @@ export function Header({ onRequestConsultation }: Props) {
       </a>
       <nav
         aria-label="Головна навігація"
-        className={`absolute top-[4.5rem] right-0 left-0 flex origin-top flex-col gap-4 rounded-2xl bg-white p-5 shadow-xl transition-[opacity,transform,visibility] duration-300 ease-out sm:top-20 sm:p-6 md:visible md:static md:flex md:translate-y-0 md:scale-100 md:flex-row md:gap-8 md:bg-transparent md:p-0 md:opacity-100 md:shadow-none ${open ? 'visible translate-y-0 scale-100 opacity-100' : 'pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0 md:pointer-events-auto'}`}
+        className={`absolute top-[4.5rem] right-0 left-0 flex origin-top flex-col gap-2.5 rounded-2xl bg-white p-4 shadow-xl transition-[opacity,transform,visibility] duration-300 ease-out sm:top-20 sm:p-5 xl:visible xl:static xl:flex xl:translate-y-0 xl:scale-100 xl:flex-row xl:gap-4 xl:bg-transparent xl:p-0 xl:opacity-100 xl:shadow-none ${open ? 'visible translate-y-0 scale-100 opacity-100' : 'pointer-events-none invisible -translate-y-2 scale-[0.98] opacity-0 xl:pointer-events-auto'}`}
       >
         {links.map(([label, href]) => (
           <a
             key={href}
             href={href}
             onClick={() => setOpen(false)}
-            className="text-primary hover:text-primary-hover after:bg-mint-muted relative w-fit translate-y-0 transform-gpu self-start py-1 text-lg font-bold tracking-[0.06em] uppercase transition-[color,transform] duration-400 ease-in-out will-change-transform after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:transition-transform after:duration-400 after:ease-in-out hover:-translate-y-[1.5px] hover:after:scale-x-125 md:self-auto md:text-sm md:font-semibold md:tracking-normal md:normal-case md:after:left-1/2 md:after:w-0 md:after:-translate-x-1/2 md:after:scale-x-100 md:after:transition-[width] md:hover:after:w-[72%] md:hover:after:scale-x-100"
+            className="text-primary hover:text-primary-hover after:bg-mint-muted relative w-fit translate-y-0 transform-gpu self-start py-1 text-lg font-bold tracking-[0.06em] uppercase transition-[color,transform] duration-400 ease-in-out will-change-transform after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:rounded-full after:transition-transform after:duration-400 after:ease-in-out hover:-translate-y-[1.5px] hover:after:scale-x-125 xl:self-auto xl:text-xs xl:font-semibold xl:tracking-normal xl:normal-case xl:after:left-1/2 xl:after:w-0 xl:after:-translate-x-1/2 xl:after:scale-x-100 xl:after:transition-[width] xl:hover:after:w-[72%] xl:hover:after:scale-x-100"
           >
             {label}
           </a>
@@ -39,7 +42,7 @@ export function Header({ onRequestConsultation }: Props) {
           type="button"
           icon={Phone}
           variant="primary"
-          className="mt-1 w-full md:hidden"
+          className="mt-1 w-full xl:hidden"
           onClick={() => {
             setOpen(false);
             onRequestConsultation();
@@ -54,7 +57,7 @@ export function Header({ onRequestConsultation }: Props) {
           icon={Phone}
           variant="outline"
           size="compact"
-          className="header-contact-button hover:translate-y-0 max-md:hidden md:inline-flex"
+          className="header-contact-button hover:translate-y-0 max-xl:hidden xl:inline-flex"
           style={{ borderRadius: '9999px', boxShadow: 'none' }}
           onClick={onRequestConsultation}
         >
@@ -64,7 +67,7 @@ export function Header({ onRequestConsultation }: Props) {
           type="button"
           aria-label={open ? 'Закрити меню' : 'Відкрити меню'}
           aria-expanded={open}
-          className="grid size-11 place-items-center rounded-full bg-white/60 md:hidden"
+          className="grid size-11 place-items-center rounded-full bg-white/60 xl:hidden"
           onClick={() => setOpen((value) => !value)}
         >
           {open ? <X size={22} strokeWidth={2.4} /> : <Menu size={22} strokeWidth={2.4} />}
