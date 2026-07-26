@@ -13,6 +13,7 @@ class QuoteResponse(BaseModel):
     criticalPriceUsdPerKg: float
     customsValueUsd: float
     customsValueUah: float
+    dutyRatePercent: float
     duty: float
     vatBase: float
     vat: float

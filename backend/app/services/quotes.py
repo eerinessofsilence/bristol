@@ -3,6 +3,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from app.schemas.quote import QuoteRequest, QuoteResponse
+from app.services.duty_rates import get_preferential_duty_rate
 
 
 class ProductCodeNotFoundError(ValueError):
@@ -32,7 +33,8 @@ def calculate_quote(payload: QuoteRequest) -> QuoteResponse:
 
     customs_value_usd = payload.weight_kg * critical_price_usd_per_kg
     customs_value_uah = customs_value_usd * payload.currency_rate
-    duty = 0.0
+    duty_rate_percent = get_preferential_duty_rate(payload.product_code)
+    duty = customs_value_uah * (duty_rate_percent / 100)
     vat_base = customs_value_uah + duty
     vat = vat_base * 0.2
 
@@ -42,6 +44,7 @@ def calculate_quote(payload: QuoteRequest) -> QuoteResponse:
         criticalPriceUsdPerKg=round(critical_price_usd_per_kg, 4),
         customsValueUsd=round(customs_value_usd, 2),
         customsValueUah=round(customs_value_uah, 2),
+        dutyRatePercent=round(duty_rate_percent, 4),
         duty=round(duty, 2),
         vatBase=round(vat_base, 2),
         vat=round(vat, 2),

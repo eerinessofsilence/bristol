@@ -14,7 +14,7 @@ from sqlalchemy.pool import StaticPool
 from app.db.session import Base, get_db
 from app.main import app
 from app.schemas.product_code import ProductCodeAIResult
-from app.services import exchange_rates, product_codes
+from app.services import duty_rates, exchange_rates, product_codes
 from app.services.image_normalization import normalize_product_image
 
 engine = create_engine(
@@ -60,10 +60,12 @@ def test_normalize_product_image_applies_exif_rotation() -> None:
 
 
 @pytest.fixture(autouse=True)
-def reset_exchange_rate_cache():
+def reset_service_caches():
     exchange_rates.clear_exchange_rate_cache()
+    duty_rates.clear_duty_rate_cache()
     yield
     exchange_rates.clear_exchange_rate_cache()
+    duty_rates.clear_duty_rate_cache()
 
 
 def test_health() -> None:
@@ -75,20 +77,53 @@ def test_health() -> None:
 def test_quote_calculation_by_weight_and_product_code() -> None:
     response = client.post(
         "/api/v1/quotes/calculate",
-        json={"product_code": "0201203000", "weight_kg": 100, "currency_rate": 41.5},
+        json={"product_code": "0202309000", "weight_kg": 100, "currency_rate": 41.5},
     )
     assert response.status_code == 200
     assert response.json() == {
-        "productCode": "0201203000",
+        "productCode": "0202309000",
         "weightKg": 100.0,
-        "criticalPriceUsdPerKg": 2.95,
-        "customsValueUsd": 295.0,
-        "customsValueUah": 12242.5,
-        "duty": 0.0,
-        "vatBase": 12242.5,
-        "vat": 2448.5,
-        "total": 2448.5,
+        "criticalPriceUsdPerKg": 5.4,
+        "customsValueUsd": 540.0,
+        "customsValueUah": 22410.0,
+        "dutyRatePercent": 15.0,
+        "duty": 3361.5,
+        "vatBase": 25771.5,
+        "vat": 5154.3,
+        "total": 8515.8,
     }
+
+
+def test_quote_uses_local_preferential_rate_for_example_code() -> None:
+    response = client.post(
+        "/api/v1/quotes/calculate",
+        json={"product_code": "8501710090", "weight_kg": 100, "currency_rate": 41.5},
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "productCode": "8501710090",
+        "weightKg": 100.0,
+        "criticalPriceUsdPerKg": 3.44,
+        "customsValueUsd": 344.0,
+        "customsValueUah": 14276.0,
+        "dutyRatePercent": 5.0,
+        "duty": 713.8,
+        "vatBase": 14989.8,
+        "vat": 2997.96,
+        "total": 3711.76,
+    }
+
+
+def test_local_preferential_rate_for_example_code() -> None:
+    assert duty_rates.get_preferential_duty_rate("8501710090") == 5.0
+
+
+def test_quote_rejects_code_available_only_for_specific_countries() -> None:
+    response = client.post(
+        "/api/v1/quotes/calculate",
+        json={"product_code": "0201203000", "weight_kg": 100, "currency_rate": 41.5},
+    )
+    assert response.status_code == 404
 
 
 def test_quote_rejects_unknown_product_code() -> None:

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from app.schemas.quote import QuoteRequest, QuoteResponse
+from app.services.duty_rates import DutyRateNotFoundError
 from app.services.quotes import (
     ProductCodeNotFoundError,
     WeightCalculationNotSupportedError,
@@ -25,5 +26,13 @@ def quote(payload: QuoteRequest) -> QuoteResponse:
             detail=(
                 f"Для коду УКТ ЗЕД {error.args[0]} потрібен розрахунок за кількістю одиниць, "
                 "а не вагою"
+            ),
+        ) from error
+    except DutyRateNotFoundError as error:
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                f"Для коду УКТ ЗЕД {error.args[0]} немає ставки у локальному "
+                "довіднику Митного тарифу"
             ),
         ) from error
