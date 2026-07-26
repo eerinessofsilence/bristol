@@ -14,9 +14,29 @@ const initialForm = { firstName: '', lastName: '', phone: '', email: '' };
 
 const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-UA')} ₴`;
 
+const ukrainianMobilePattern = /^\+380(?:39|50|63|66|67|68|73|75|77|91|92|93|94|95|96|97|98|99)\d{7}$/;
+
+function formatPhone(value: string) {
+  let digits = value.replace(/\D/g, '');
+  if (digits.startsWith('380')) digits = digits.slice(3);
+  else if (digits.startsWith('0')) digits = digits.slice(1);
+  digits = digits.slice(0, 9);
+
+  const parts = [digits.slice(0, 2), digits.slice(2, 5), digits.slice(5, 7), digits.slice(7, 9)].filter(
+    Boolean,
+  );
+  return parts.length ? `+380 ${parts.join(' ')}` : '';
+}
+
+function normalizedPhone(value: string) {
+  const digits = value.replace(/\D/g, '');
+  return `+380${digits.startsWith('380') ? digits.slice(3) : digits}`;
+}
+
 export function ContactModal({ isOpen, quote, onClose }: Props) {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const [submissionSucceeded, setSubmissionSucceeded] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
@@ -38,11 +58,21 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const phone = normalizedPhone(form.phone);
+    if (!ukrainianMobilePattern.test(phone)) {
+      setPhoneError('Вкажіть номер у форматі +380 XX XXX XX XX');
+      return;
+    }
+
     setSubmitting(true);
     setStatus('');
     setSubmissionSucceeded(false);
     try {
-      await createLead({ ...form, source: quote ? 'calculator_quote' : 'hero_consultation' });
+      await createLead({
+        ...form,
+        phone,
+        source: quote ? 'calculator_quote' : 'hero_consultation',
+      });
       setSubmissionSucceeded(true);
       setStatus(
         `Заявку прийнято до опрацювання. Дякуємо, ${form.firstName}! Зателефонуємо найближчим часом.`,
@@ -143,11 +173,28 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
               className="field-control"
               type="tel"
               required
-              minLength={7}
+              inputMode="tel"
+              autoComplete="tel"
+              aria-invalid={Boolean(phoneError)}
+              aria-describedby={phoneError ? 'phone-error' : undefined}
               value={form.phone}
-              onChange={(event) => setForm({ ...form, phone: event.target.value })}
-              placeholder="+38 (0__) ___-__-__"
+              onChange={(event) => {
+                const phone = formatPhone(event.target.value);
+                setForm({ ...form, phone });
+                if (ukrainianMobilePattern.test(normalizedPhone(phone))) setPhoneError('');
+              }}
+              onBlur={() => {
+                if (form.phone && !ukrainianMobilePattern.test(normalizedPhone(form.phone))) {
+                  setPhoneError('Вкажіть номер у форматі +380 XX XXX XX XX');
+                }
+              }}
+              placeholder="+380 50 123 45 67"
             />
+            {phoneError && (
+              <p id="phone-error" className="mt-2 text-sm text-[#b42318]" role="alert">
+                {phoneError}
+              </p>
+            )}
           </div>
           <div className="mt-4 sm:mt-5">
             <label htmlFor="email" className="field-label">
@@ -176,9 +223,6 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
                 : 'sr-only'
             }`}
           >
-            {submissionSucceeded && (
-              <span className="technical-label mr-2 text-[#085041]/55">Status / accepted</span>
-            )}
             {status}
           </p>
         </form>

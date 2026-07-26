@@ -280,6 +280,33 @@ def test_lead_creation() -> None:
     assert response.json()["message"] == "Заявку прийнято"
 
 
+def test_lead_phone_is_normalized() -> None:
+    response = client.post(
+        "/api/v1/leads",
+        json={
+            "first_name": "Олена",
+            "last_name": "Коваль",
+            "phone": "050 123 45 67",
+        },
+    )
+
+    assert response.status_code == 201
+
+
+@pytest.mark.parametrize("phone", ["asdsad", "+380 12 123 45 67", "+380 50 123 45"])
+def test_lead_rejects_invalid_phone(phone: str) -> None:
+    response = client.post(
+        "/api/v1/leads",
+        json={
+            "first_name": "Олена",
+            "last_name": "Коваль",
+            "phone": phone,
+        },
+    )
+
+    assert response.status_code == 422
+
+
 def test_lead_notification_is_sent_when_configured(monkeypatch) -> None:
     sent_messages = []
 
