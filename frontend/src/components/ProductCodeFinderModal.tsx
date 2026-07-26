@@ -325,7 +325,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
             )}
 
             <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-ink-3 flex items-center gap-2 text-[12px] leading-4">
+              <p className="text-ink-3 flex items-center gap-2 text-xs leading-4">
                 <Info className="text-ink-2 shrink-0" size={16} />
                 Фото надсилаються в OpenAI лише для аналізу.
               </p>
