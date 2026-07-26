@@ -1,0 +1,117 @@
+{
+  "input": "/Users/eeri/Downloads/\u041a\u043e\u043f\u0438\u044f ChaseTalks Resume Template.docx",
+  "fonts_by_char_count": {
+    "Rubik": 4606,
+    "Calibri": 1335,
+    "Rubik Medium": 391
+  },
+  "direct_run_formatting_runs": 117,
+  "direct_paragraph_formatting_paragraphs": 64,
+  "heading_like_paragraphs_not_heading_style": [
+    {
+      "para_index": 16,
+      "text": "John Doe",
+      "style": "normal"
+    },
+    {
+      "para_index": 21,
+      "text": "EDUCATION",
+      "style": "normal"
+    },
+    {
+      "para_index": 24,
+      "text": "Stanford University   ",
+      "style": "normal"
+    },
+    {
+      "para_index": 34,
+      "text": "EXPERIENCE",
+      "style": "normal"
+    },
+    {
+      "para_index": 35,
+      "text": "EXPERIENCE",
+      "style": "normal"
+    },
+    {
+      "para_index": 74,
+      "text": "PROJECTS",
+      "style": "normal"
+    },
+    {
+      "para_index": 75,
+      "text": "PROJECTS",
+      "style": "normal"
+    },
+    {
+      "para_index": 116,
+      "text": "TECHNICAL SKILLS",
+      "style": "normal"
+    },
+    {
+      "para_index": 117,
+      "text": "TECHNICAL SKILLS",
+      "style": "normal"
+    }
+  ],
+  "examples": {
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 1,
+        "text": "Hey, it's Chase!",
+        "style": "normal"
+      },
+      {
+        "para_index": 2,
+        "text": "",
+        "style": "normal"
+      },
+      {
+        "para_index": 3,
+        "text": "This is the exact resume template I used when I got hired at Meta.",
+        "style": "normal"
+      },
+      {
+        "para_index": 4,
+        "text": "",
+        "style": "normal"
+      },
+      {
+        "para_index": 5,
+        "text": "The template is on the next page. Swap in your own experience, projects, and skills - the structure and format are what ",
+        "style": "normal"
+      }
+    ],
+    "direct_run_formatting": [
+      {
+        "para_index": 1,
+        "run_text": "Hey, it's Chase!",
+        "style": "normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "This is the exact resume template I used when I got hired at Meta.",
+        "style": "normal"
+      },
+      {
+        "para_index": 5,
+        "run_text": "The template is on the next page. Swap in your own experience, projects, and ski",
+        "style": "normal"
+      },
+      {
+        "para_index": 7,
+        "run_text": "IMPORTANT",
+        "style": "normal"
+      },
+      {
+        "para_index": 7,
+        "run_text": ": ",
+        "style": "normal"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}

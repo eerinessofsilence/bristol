@@ -1,0 +1,111 @@
+{
+  "input": "/Users/eeri/coding/monorepo/projects/cleargatecustoms/output/docx/Aleksandr_Hubanov_Resume_ChaseTalks_Style.docx",
+  "fonts_by_char_count": {
+    "Rubik": 2765,
+    "Rubik Medium": 247
+  },
+  "direct_run_formatting_runs": 63,
+  "direct_paragraph_formatting_paragraphs": 28,
+  "heading_like_paragraphs_not_heading_style": [
+    {
+      "para_index": 1,
+      "text": "Aleksandr Hubanov",
+      "style": "normal"
+    },
+    {
+      "para_index": 6,
+      "text": "PROFILE",
+      "style": "normal"
+    },
+    {
+      "para_index": 12,
+      "text": "EXPERIENCE",
+      "style": "normal"
+    },
+    {
+      "para_index": 13,
+      "text": "EXPERIENCE",
+      "style": "normal"
+    },
+    {
+      "para_index": 50,
+      "text": "TECHNICAL SKILLS",
+      "style": "normal"
+    },
+    {
+      "para_index": 51,
+      "text": "TECHNICAL SKILLS",
+      "style": "normal"
+    },
+    {
+      "para_index": 62,
+      "text": "LANGUAGES",
+      "style": "normal"
+    },
+    {
+      "para_index": 63,
+      "text": "LANGUAGES",
+      "style": "normal"
+    }
+  ],
+  "examples": {
+    "direct_paragraph_formatting": [
+      {
+        "para_index": 1,
+        "text": "Aleksandr Hubanov",
+        "style": "normal"
+      },
+      {
+        "para_index": 2,
+        "text": "",
+        "style": "normal"
+      },
+      {
+        "para_index": 3,
+        "text": "+380 63 771 51 16  -  eeri.dev@gmail.com  -  linkedin.com/in/aleksandr-hubanov  -  eeri.dev",
+        "style": "normal"
+      },
+      {
+        "para_index": 4,
+        "text": "",
+        "style": "normal"
+      },
+      {
+        "para_index": 7,
+        "text": "",
+        "style": "normal"
+      }
+    ],
+    "direct_run_formatting": [
+      {
+        "para_index": 1,
+        "run_text": "Aleksandr Hubanov",
+        "style": "normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "  -  ",
+        "style": "normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "  -  ",
+        "style": "normal"
+      },
+      {
+        "para_index": 3,
+        "run_text": "  -  ",
+        "style": "normal"
+      },
+      {
+        "para_index": 6,
+        "run_text": "PROFILE",
+        "style": "normal"
+      }
+    ]
+  },
+  "notes": [
+    "Direct formatting is not always wrong, but it often causes inconsistent output when templates change.",
+    "Heading-like paragraphs not using Heading styles can break TOC and accessibility."
+  ]
+}

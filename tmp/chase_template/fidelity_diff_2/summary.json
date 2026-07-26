@@ -1,0 +1,11 @@
+{
+  "a_docx": "/Users/eeri/Downloads/\u041a\u043e\u043f\u0438\u044f ChaseTalks Resume Template.docx",
+  "b_docx": "/Users/eeri/coding/monorepo/projects/cleargatecustoms/output/docx/Aleksandr_Hubanov_Resume_ChaseTalks_Style.docx",
+  "pages_a": 2,
+  "pages_b": 1,
+  "changed_pages": [
+    1,
+    2
+  ],
+  "num_changed_pages": 2
+}

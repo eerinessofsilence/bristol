@@ -1,0 +1,30 @@
+Aleksandr Hubanov
++380 63 771 51 16  -  eeri.dev@gmail.com  -  linkedin.com/in/aleksandr-hubanov  -  eeri.dev
+PROFILE
+Full-Stack Developer
+Romania
+Full-stack developer building maintainable web applications and REST APIs with Python, Django/FastAPI, PostgreSQL, React, and TypeScript. Experienced in backend architecture, authentication, API integrations, reusable frontend components, and Docker-based environments.
+EXPERIENCE
+IVE STUDIO
+February 2025 - April 2026
+Full-Stack Developer
+Remote
+Designed and delivered REST APIs with Python, Django, and PostgreSQL, supporting reliable data exchange across web platform workflows.
+Implemented authentication and role-based access control, centralizing permission enforcement for platform users.
+Built React and TypeScript interfaces connected to backend services, with reusable components and a scalable frontend structure.
+Standardized the development environment with Docker and Docker Compose, improving consistency across local and deployment workflows.
+AI-DEF
+April 2023 - December 2024
+Full-Stack Developer
+Remote
+Developed Django backend services and APIs for internal platforms supporting data management and operational workflows.
+Modeled, queried, and maintained application data in PostgreSQL through the Django ORM.
+Integrated frontend interfaces with backend APIs, enabling web-based access to internal tools and platform workflows.
+Containerized development and deployment environments with Docker to improve reproducibility across the delivery process.
+TECHNICAL SKILLS
+Programming Languages: Python, TypeScript, HTML, CSS
+Backend: Django, FastAPI, REST APIs, authentication, role-based access control
+Frontend: React, reusable component architecture, API integration
+Data & Infrastructure: PostgreSQL, Django ORM, Docker, Docker Compose
+LANGUAGES
+Languages: English (B2), Russian (Native), Ukrainian (Native)

@@ -1,0 +1,83 @@
+--- a
++++ b
+@@ -1,53 +1,30 @@
+-Hey, it's Chase!
+-This is the exact resume template I used when I got hired at Meta.
+-The template is on the next page. Swap in your own experience, projects, and skills - the structure and format are what matter most.
+-IMPORTANT: Do not request edit access to the template - that won’t work. 
+-To use the template, simply go to the top of the page and click File -> Make a copy, and then you’ll have full edit access to the resume template. (How To Make A Copy)
+-A few things to keep in mind before you use it:Keep it to one page. Recruiters average 7 seconds per resume. Page two doesn't exist to them.
+-Lead with impact, not duties. Don't write what you did, write what you achieved. Numbers beat descriptions every time. "Reduced load time by 40%" beats "Responsible for performance optimization."
+-Tailor it for every role. Pull keywords directly from the job posting. ATS filters will quietly eliminate your resume if they don't match. Most candidates skip this and never know why they're not hearing back.
+-Don't underestimate your projects section. Especially early in your career, strong projects can unlock interviews that your work history alone won't. Use it.
+-One caveat: This template is built for software engineering and technical roles. If you're applying to non-technical positions, you may need to adjust the layout.
+-Good luck - you’ve got this.Chase
+-John Doe
+-(555) 123-4567  -  johndoe@gmail.com  -  linkedin.com/in/johndoe  -  github.com/johndoe  
+-EDUCATION
+-Stanford University   
+-August 2019 - May 2023
+-Bachelor of Science in Computer Science (GPA: 3.9 / 4.0)
+-Relevant Coursework: Operating Systems, Database Management, Computer Networks, Data Structures and Algorithms (C++), Web Development (JavaScript).
++Aleksandr Hubanov
+++380 63 771 51 16  -  eeri.dev@gmail.com  -  linkedin.com/in/aleksandr-hubanov  -  eeri.dev
++PROFILE
++Full-Stack Developer
++Romania
++Full-stack developer building maintainable web applications and REST APIs with Python, Django/FastAPI, PostgreSQL, React, and TypeScript. Experienced in backend architecture, authentication, API integrations, reusable frontend components, and Docker-based environments.
+ EXPERIENCE
+-Meta       
+-July 2023 – Present
+-Software Engineer
+-Menlo Park, CA
+-Rebuilt legacy monolith into containerized microservices using Go and Kubernetes, cutting infrastructure costs by 31%.
+-Improved search performance by 44% by migrating from MySQL to Elasticsearch for high-frequency query workloads.
+-Shipped a mobile-first onboarding flow in React Native that increased user activation rates by 29%.
+-Automated nightly regression testing across 6 environments, reducing QA cycle time from 3 days to 4 hours.
+-Atlassian    
+-May 2022 – August 2022
+-Software Engineer Intern
++IVE STUDIO
++February 2025 - April 2026
++Full-Stack Developer
+ Remote
+-Prototyped a real-time notification service using Kafka and Redis, handling 50,000+ events per minute.
+-Refactored authentication middleware to support SSO, eliminating a recurring security vulnerability.
+-Shadowed senior engineers in weekly architecture reviews, contributing two approved proposals for API versioning.
+-Built an internal CLI tool in Python to automate deployment environment setup, saving the team roughly 3 hours per sprint.
+-PROJECTS
+-Personal Finance Tracker           
+-Technologies: Next.js, Node.js, Plaid API, SQLite
+-Built a full-stack budgeting app that aggregates transactions across accounts and auto-categorizes spending.
+-Integrated Plaid API for secure bank connections, supporting 12 major financial institutions at launch.
+-Deployed on Vercel with sub-200ms average load times across all routes.
+-Distributed Task Scheduler       
+-Technologies: Python, Redis, Docker
+-Designed a fault-tolerant job queue processing 1M+ daily background tasks with automatic retry logic.
+-Containerized the full stack with Docker Compose, reducing local setup time for new contributors to under 5 minutes.
+-Sports Score Prediction Model  
+-Technologies: Scikit-learn, FastAPI, Streamlit
+-Trained a gradient boosting classifier on 10 years of historical game data, achieving 71% prediction accuracy.
+-Wrapped the model in a FastAPI service and built an interactive Streamlit dashboard for live input and output.
++Built REST APIs with Python, Django, and PostgreSQL for reliable data exchange across web platform workflows.
++Implemented authentication and role-based access control, centralizing permissions for platform users.
++Built React/TypeScript interfaces with reusable components and scalable frontend architecture.
++Standardized development with Docker Compose, improving consistency across local and deployment workflows.
++AI-DEF
++April 2023 - December 2024
++Full-Stack Developer
++Remote
++Developed Django services and APIs for internal data management and operational workflows.
++Modeled and maintained PostgreSQL application data through the Django ORM.
++Connected frontend interfaces to backend APIs for web-based access to internal platform tools.
++Containerized development and deployment with Docker to improve delivery reproducibility.
+ TECHNICAL SKILLS
+-Programming Languages: Python, Go, JavaScript, TypeScript, Java, Bash
+-Frameworks and Tools: React Native, Next.js, Node.js, FastAPI, Kubernetes, Redis, Elasticsearch, Kafka, Docker
+-Concepts: Distributed Systems, Event-Driven Architecture, RESTful APIs, CI/CD, Machine Learning
++Programming Languages: Python, TypeScript, HTML, CSS
++Backend: Django, FastAPI, REST APIs, authentication, role-based access control
++Frontend: React, reusable component architecture, API integration
++Data & Infrastructure: PostgreSQL, Django ORM, Docker, Docker Compose
++LANGUAGES
++Languages: English (B2), Russian (Native), Ukrainian (Native)
