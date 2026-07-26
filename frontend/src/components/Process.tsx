@@ -1,16 +1,41 @@
 import { Anchor, ArrowDown, ClipboardCheck, Globe2, Truck, Warehouse } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { CountryFlag } from './ui/CountryFlag';
 
-const routeSteps = [
+type RouteStep = {
+  icon: typeof Globe2;
+  title: ReactNode;
+  titleKey: string;
+  description: string;
+  role: string;
+  tone: keyof typeof toneClasses;
+};
+
+const routeSteps: RouteStep[] = [
   {
     icon: Globe2,
-    title: 'Китай 🇨🇳 і Європа 🇪🇺',
+    title: (
+      <>
+        <span>Китай </span>
+        <CountryFlag code="cn" /> <span>і Європа </span>
+        <CountryFlag code="eu" />
+      </>
+    ),
+    titleKey: 'Китай і Європа',
     description: 'Відправлення вантажу',
     role: 'Етап маршруту',
     tone: 'neutral',
   },
   {
     icon: Anchor,
-    title: 'Порт Гданськ 🇵🇱 / Констанца 🇷🇴',
+    title: (
+      <>
+        <span>Порт Гданськ </span>
+        <CountryFlag code="pl" /> <span>/ Констанца </span>
+        <CountryFlag code="ro" />
+      </>
+    ),
+    titleKey: 'Порт Гданськ / Констанца',
     description: 'Координуємо прибуття',
     role: 'Координуємо',
     tone: 'coral',
@@ -18,13 +43,15 @@ const routeSteps = [
   {
     icon: ClipboardCheck,
     title: 'Митне оформлення',
+    titleKey: 'Митне оформлення',
     description: 'Виконують фахівці ClearGateCustoms',
-    role: 'Виконуємо самі',
+    role: 'Оформлюємо самі',
     tone: 'teal',
   },
   {
     icon: Truck,
     title: 'Доставка вантажу',
+    titleKey: 'Доставка вантажу',
     description: 'Організовуємо перевезення',
     role: 'Координуємо',
     tone: 'coral',
@@ -32,6 +59,7 @@ const routeSteps = [
   {
     icon: Warehouse,
     title: 'Склад клієнта',
+    titleKey: 'Склад клієнта',
     description: 'Вивантаження',
     role: 'Кінцева точка',
     tone: 'neutral',
@@ -94,7 +122,7 @@ export function Process() {
               const isPrimary = step.tone === 'teal';
 
               return (
-                <li key={step.title} className="relative">
+                <li key={step.titleKey} className="relative">
                   <article
                     className={`relative rounded-2xl border p-4 sm:p-5 ${
                       colors.card
@@ -124,7 +152,9 @@ export function Process() {
                           <h3 className="text-base font-bold tracking-tight sm:text-lg">
                             {step.title}
                           </h3>
-                          <p className={`mt-1 text-base leading-6 sm:text-lg sm:leading-7 ${colors.description}`}>
+                          <p
+                            className={`mt-1 text-base leading-6 sm:text-lg sm:leading-7 ${colors.description}`}
+                          >
                             {step.description}
                           </p>
                         </div>

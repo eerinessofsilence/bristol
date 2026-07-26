@@ -1,6 +1,7 @@
 import { Award, Calculator, Handshake, Phone, Zap } from 'lucide-react';
 import { services } from '../data/content';
 import { Button, ButtonLink } from './ui/Button';
+import { CountryFlag } from './ui/CountryFlag';
 
 const serviceMarkers = ['УКТ ЗЕД · ДЕКЛАРАЦІЯ', 'КООРДИНАЦІЯ', 'ПОРТИ ЄС', 'ДОСТАВКА'] as const;
 
@@ -21,11 +22,11 @@ export function Services({ onRequestConsultation }: Props) {
             <p className="text-ink-2 mt-4 text-base leading-6 text-balance sm:text-lg sm:leading-7">
               Спеціалізуємося на митному оформленні вантажів з{' '}
               <span className="whitespace-nowrap">
-                Китаю <span aria-hidden="true">🇨🇳</span>
+                Китаю <CountryFlag code="cn" />
               </span>{' '}
               та{' '}
               <span className="whitespace-nowrap">
-                Європи <span aria-hidden="true">🇪🇺</span>
+                Європи <CountryFlag code="eu" />
               </span>{' '}
               й супроводжуємо їх до складу клієнта.
             </p>
@@ -142,8 +143,8 @@ export function Services({ onRequestConsultation }: Props) {
               <div className="mt-auto pt-7">
                 <h3 className="text-xl font-bold">Оцініть митні платежі</h3>
                 <p className="mt-3 text-base leading-6 text-white/65 sm:text-lg sm:leading-7">
-                  Вкажіть код УКТ ЗЕД і вагу вантажу — калькулятор орієнтовно розрахує мито,
-                  ПДВ та загальну суму платежів.
+                  Вкажіть код УКТ ЗЕД і вагу вантажу — калькулятор орієнтовно розрахує мито, ПДВ та
+                  загальну суму платежів.
                 </p>
                 <ButtonLink
                   href="#calc"

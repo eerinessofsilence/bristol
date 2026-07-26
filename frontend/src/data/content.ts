@@ -1,5 +1,6 @@
 import {
   Anchor,
+  Banknote,
   ClipboardCheck,
   Cpu,
   Eye,
@@ -251,7 +252,7 @@ export const directContact = {
 export const trustIcon = ShieldCheck;
 
 export const mission =
-  'Ми відкриваємо бізнесу шлях до митного оформлення без зайвих передоплат, роблячи його простим, прозорим і передбачуваним.';
+  'Ми відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод, роблячи його простим, прозорим і передбачуваним.';
 
 export const values = [
   { icon: Scale, label: 'Законність' },
@@ -261,6 +262,7 @@ export const values = [
   { icon: ClipboardCheck, label: 'Відповідальність' },
   { icon: Zap, label: 'Швидкість' },
   { icon: HeartHandshake, label: 'Повага до кожного клієнта' },
+  { icon: Banknote, label: 'Без передоплат' },
 ];
 
 export const partners = [

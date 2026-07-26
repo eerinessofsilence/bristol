@@ -1,3 +1,5 @@
+import { CountryFlag } from './ui/CountryFlag';
+
 export function Intro() {
   return (
     <section className="bg-soft py-20 md:py-24">
@@ -23,12 +25,18 @@ export function Intro() {
           <div className="mt-6 flex flex-wrap gap-2">
             {[
               'Без передоплати',
-              'Китай 🇨🇳 і Європа 🇪🇺',
+              'Китай і Європа',
               'Координація доставки',
               'Доставка до складу',
             ].map((tag) => (
               <span key={tag} className="glass-tag">
-                {tag}
+                {tag === 'Китай і Європа' ? (
+                  <>
+                    Китай <CountryFlag code="cn" /> і Європа <CountryFlag code="eu" />
+                  </>
+                ) : (
+                  tag
+                )}
               </span>
             ))}
           </div>

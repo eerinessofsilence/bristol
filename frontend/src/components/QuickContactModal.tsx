@@ -77,9 +77,6 @@ export function QuickContactModal({ isOpen, onClose }: Props) {
               <span className="block font-semibold">Мобільний телефон</span>
               <span className="text-ink-3 block text-xs">{directContact.phone}</span>
             </span>
-            <span className="text-primary text-sm font-semibold transition-transform group-hover:translate-x-0.5">
-              Подзвонити
-            </span>
           </a>
           {directContact.channels.map((channel) => {
             return (
@@ -94,9 +91,6 @@ export function QuickContactModal({ isOpen, onClose }: Props) {
                 <span className="min-w-0 flex-1">
                   <span className="block font-semibold">{channel.name}</span>
                   <span className="text-ink-3 block truncate text-xs">{channel.label}</span>
-                </span>
-                <span className="text-primary text-sm font-semibold transition-transform group-hover:translate-x-0.5">
-                  Відкрити
                 </span>
               </a>
             );
