@@ -24,6 +24,7 @@ const acceptedImageTypes = new Set([
   'image/heic',
   'image/heif',
 ]);
+const acceptedImageSuffixes = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.heic', '.heif']);
 const maxImageSize = 10 * 1024 * 1024;
 const orbStates: OrbState[] = ['searching', 'solving', 'composing'];
 
@@ -91,6 +92,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
       if (activePreview) {
         setActivePreview(null);
       } else if (!isAnalyzing) {
+        setActivePreview(null);
         onClose();
       }
     };
@@ -101,10 +103,6 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
       document.removeEventListener('keydown', closeOnEscape);
     };
   }, [activePreview, isAnalyzing, isOpen, onClose]);
-
-  useEffect(() => {
-    if (!isOpen) setActivePreview(null);
-  }, [isOpen]);
 
   useEffect(() => {
     if (!isAnalyzing) return;
@@ -121,10 +119,19 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
   if (!isOpen) return null;
 
   const isUploadStep = !isAnalyzing && !result;
+  const closeModal = () => {
+    setActivePreview(null);
+    onClose();
+  };
 
   const addImages = (files: File[]) => {
     const validFiles = files.filter(
-      (file) => acceptedImageTypes.has(file.type) && file.size <= maxImageSize,
+      (file) =>
+        (acceptedImageTypes.has(file.type) ||
+          acceptedImageSuffixes.has(
+            file.name.slice(Math.max(0, file.name.lastIndexOf('.'))).toLowerCase(),
+          )) &&
+        file.size <= maxImageSize,
     );
 
     if (validFiles.length !== files.length) {
@@ -188,7 +195,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
       className="bg-primary/60 fixed inset-0 z-[1100] flex items-start justify-center overflow-y-auto p-3 backdrop-blur-sm sm:items-center sm:p-5"
       role="presentation"
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget && !isAnalyzing) onClose();
+        if (event.target === event.currentTarget && !isAnalyzing) closeModal();
       }}
     >
       <div
@@ -202,7 +209,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
           <span className="technical-label text-[#1d9e75]">AI / попередній підбір</span>
           <button
             type="button"
-            onClick={onClose}
+            onClick={closeModal}
             disabled={isAnalyzing}
             aria-label="Закрити"
             className="bg-soft hover:bg-line grid size-9 shrink-0 cursor-pointer place-items-center rounded-full transition disabled:cursor-not-allowed disabled:opacity-50"
@@ -459,7 +466,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                         className="shrink-0"
                         onClick={() => {
                           onSelect(candidate.code);
-                          onClose();
+                          closeModal();
                         }}
                       >
                         Використати код
@@ -469,6 +476,16 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                 ))}
               </div>
             ) : null}
+
+            {result.productIdentified && result.candidates.length === 0 && (
+              <div className="mt-4 rounded-2xl border border-[#d89a30]/25 bg-[#fff8e8] p-4">
+                <p className="text-sm font-semibold text-[#734d0b]">Код не підтверджено</p>
+                <p className="mt-1 text-xs leading-5 text-[#734d0b]/80">
+                  AI не знайшов варіант, який є у перевіреному довіднику калькулятора. Додайте
+                  точніший опис або інші фото товару.
+                </p>
+              </div>
+            )}
 
             {result.productIdentified &&
               result.needsMoreInfo &&

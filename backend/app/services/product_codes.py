@@ -1,6 +1,7 @@
 import base64
 
 from openai import AsyncOpenAI, OpenAIError
+from pydantic import ValidationError
 
 from app.core.config import settings
 from app.schemas.product_code import ProductCodeAIResult, ProductCodeSuggestionResponse
@@ -30,6 +31,10 @@ use the background only when it changes the classification.
 DISCLAIMER = (
     "Результат є попередньою AI-підказкою. Остаточний код залежить від складу, "
     "призначення та технічної документації товару і має бути перевірений фахівцем."
+)
+UNVERIFIED_CODE_DETAIL = (
+    "Не вдалося підтвердити запропонований код у довіднику калькулятора. "
+    "Додайте точніший опис матеріалу, складу та призначення товару."
 )
 
 
@@ -63,7 +68,7 @@ async def suggest_product_codes(
             {
                 "type": "input_image",
                 "image_url": f"data:{content_type};base64,{encoded}",
-                "detail": "original",
+                "detail": "high",
             }
         )
 
@@ -81,7 +86,7 @@ async def suggest_product_codes(
             reasoning={"effort": "medium"},
             store=False,
         )
-    except OpenAIError as error:
+    except (OpenAIError, ValidationError) as error:
         raise ProductCodeAnalysisError from error
 
     result = response.output_parsed
@@ -89,22 +94,35 @@ async def suggest_product_codes(
         raise ProductCodeAnalysisError
 
     risk_prices, _ = _load_risk_prices()
-    candidates = [
-        {
-            "code": candidate.code,
-            "titleUk": candidate.title_uk,
-            "reasonUk": candidate.reason_uk,
-            "confidence": candidate.confidence,
-            "calculatorSupported": candidate.code in risk_prices,
-        }
-        for candidate in result.candidates
-    ]
+    candidates = []
+    seen_codes: set[str] = set()
+    for candidate in result.candidates:
+        if candidate.code not in risk_prices or candidate.code in seen_codes:
+            continue
+        seen_codes.add(candidate.code)
+        candidates.append(
+            {
+                "code": candidate.code,
+                "titleUk": candidate.title_uk,
+                "reasonUk": candidate.reason_uk,
+                "confidence": candidate.confidence,
+                "calculatorSupported": True,
+            }
+        )
+
+    missing_details = list(result.missing_details)
+    if (
+        result.product_identified
+        and not candidates
+        and UNVERIFIED_CODE_DETAIL not in missing_details
+    ):
+        missing_details.append(UNVERIFIED_CODE_DETAIL)
 
     return ProductCodeSuggestionResponse(
         productIdentified=result.product_identified,
         identifiedProduct=result.identified_product,
         candidates=candidates,
-        needsMoreInfo=result.needs_more_info,
-        missingDetails=result.missing_details,
+        needsMoreInfo=result.needs_more_info or (result.product_identified and not candidates),
+        missingDetails=missing_details[:5],
         disclaimer=DISCLAIMER,
     )

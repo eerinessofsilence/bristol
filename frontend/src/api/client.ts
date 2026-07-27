@@ -30,14 +30,17 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 
   if (!response.ok) {
     const payload: unknown = await response.json().catch(() => null);
-    const detail = response.status === 413
-      ? 'Фото завеликі для завантаження. Додайте до трьох фото, не більше 10 МБ кожне.'
-      : typeof payload === 'object' &&
-          payload !== null &&
-          'detail' in payload &&
-          typeof payload.detail === 'string'
-        ? payload.detail
-        : 'Не вдалося виконати запит. Спробуйте ще раз.';
+    const detail =
+      response.status === 413
+        ? 'Фото завеликі для завантаження. Додайте до трьох фото, не більше 10 МБ кожне.'
+        : response.status === 429
+          ? 'Забагато запитів на AI-підбір. Спробуйте трохи пізніше.'
+          : typeof payload === 'object' &&
+              payload !== null &&
+              'detail' in payload &&
+              typeof payload.detail === 'string'
+            ? payload.detail
+            : 'Не вдалося виконати запит. Спробуйте ще раз.';
     throw new ApiError(detail, response.status);
   }
 
