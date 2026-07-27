@@ -14,7 +14,8 @@ const initialForm = { firstName: '', lastName: '', phone: '', email: '' };
 
 const formatMoney = (value: number) => `${Math.round(value).toLocaleString('uk-UA')} ₴`;
 
-const ukrainianMobilePattern = /^\+380(?:39|50|63|66|67|68|73|75|77|91|92|93|94|95|96|97|98|99)\d{7}$/;
+const ukrainianMobilePattern =
+  /^\+380(?:39|50|63|66|67|68|73|75|77|91|92|93|94|95|96|97|98|99)\d{7}$/;
 
 function formatPhone(value: string) {
   let digits = value.replace(/\D/g, '');
@@ -22,9 +23,12 @@ function formatPhone(value: string) {
   else if (digits.startsWith('0')) digits = digits.slice(1);
   digits = digits.slice(0, 9);
 
-  const parts = [digits.slice(0, 2), digits.slice(2, 5), digits.slice(5, 7), digits.slice(7, 9)].filter(
-    Boolean,
-  );
+  const parts = [
+    digits.slice(0, 2),
+    digits.slice(2, 5),
+    digits.slice(5, 7),
+    digits.slice(7, 9),
+  ].filter(Boolean);
   return parts.length ? `+380 ${parts.join(' ')}` : '';
 }
 

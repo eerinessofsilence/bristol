@@ -1,3 +1,6 @@
+import asyncio
+import struct
+import zlib
 from datetime import date, datetime, timedelta, timezone
 from io import BytesIO
 from types import SimpleNamespace
@@ -11,11 +14,17 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
+from app.api.routes import product_codes as product_code_routes
 from app.db.session import Base, get_db
 from app.main import app
 from app.schemas.product_code import ProductCodeAIResult
 from app.services import duty_rates, email_notifications, exchange_rates, product_codes
-from app.services.image_normalization import normalize_product_image
+from app.services.image_normalization import ImageNormalizationError, normalize_product_image
+from app.services.product_code_limits import (
+    ProductCodeCapacityError,
+    ProductCodeRateLimitError,
+    ProductCodeRequestGuard,
+)
 
 engine = create_engine(
     "sqlite://",
@@ -59,13 +68,26 @@ def test_normalize_product_image_applies_exif_rotation() -> None:
         assert result.size == (20, 40)
 
 
+def test_normalize_product_image_rejects_decompression_bomb() -> None:
+    uploaded = BytesIO()
+    Image.new("RGB", (1, 1), color="navy").save(uploaded, format="PNG")
+    image_bytes = bytearray(uploaded.getvalue())
+    image_bytes[16:24] = struct.pack(">II", 100_000, 100_000)
+    image_bytes[29:33] = struct.pack(">I", zlib.crc32(image_bytes[12:29]) & 0xFFFFFFFF)
+
+    with pytest.raises(ImageNormalizationError):
+        normalize_product_image(bytes(image_bytes))
+
+
 @pytest.fixture(autouse=True)
 def reset_service_caches():
     exchange_rates.clear_exchange_rate_cache()
     duty_rates.clear_duty_rate_cache()
+    product_code_routes.request_guard.reset()
     yield
     exchange_rates.clear_exchange_rate_cache()
     duty_rates.clear_duty_rate_cache()
+    product_code_routes.request_guard.reset()
 
 
 def test_health() -> None:
@@ -151,7 +173,7 @@ def test_product_code_suggestion_from_image(monkeypatch) -> None:
             assert kwargs["input"][0]["content"][1]["image_url"].startswith(
                 "data:image/jpeg;base64,"
             )
-            assert kwargs["input"][0]["content"][1]["detail"] == "original"
+            assert kwargs["input"][0]["content"][1]["detail"] == "high"
             return SimpleNamespace(
                 output_parsed=ProductCodeAIResult(
                     product_identified=True,
@@ -245,6 +267,98 @@ def test_product_code_suggestion_returns_no_codes_when_product_is_not_identified
     assert response.status_code == 200
     assert response.json()["productIdentified"] is False
     assert response.json()["candidates"] == []
+
+
+def test_product_code_suggestion_filters_unverified_codes(monkeypatch) -> None:
+    class FakeResponses:
+        async def parse(self, **kwargs):
+            return SimpleNamespace(
+                output_parsed=ProductCodeAIResult(
+                    product_identified=True,
+                    identified_product="Невідомий товар",
+                    candidates=[
+                        {
+                            "code": "9999999999",
+                            "title_uk": "Непідтверджений товар",
+                            "reason_uk": "Код запропоновано лише моделлю.",
+                            "confidence": "low",
+                        }
+                    ],
+                    needs_more_info=False,
+                    missing_details=[],
+                )
+            )
+
+    class FakeOpenAI:
+        def __init__(self, **kwargs):
+            self.responses = FakeResponses()
+
+    monkeypatch.setattr(product_codes.settings, "openai_api_key", "test-key")
+    monkeypatch.setattr(product_codes, "AsyncOpenAI", FakeOpenAI)
+
+    response = client.post(
+        "/api/v1/product-codes/suggest",
+        files={"images": ("unknown.jpg", jpeg_bytes(), "image/jpeg")},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["productIdentified"] is True
+    assert response.json()["candidates"] == []
+    assert response.json()["needsMoreInfo"] is True
+    assert "Не вдалося підтвердити" in response.json()["missingDetails"][0]
+
+
+def test_product_code_suggestion_handles_structured_output_validation_error(monkeypatch) -> None:
+    class FakeResponses:
+        async def parse(self, **kwargs):
+            ProductCodeAIResult(
+                product_identified=True,
+                identified_product="Сумка",
+                candidates=[],
+                needs_more_info=True,
+                missing_details=["Уточніть матеріал"],
+            )
+
+    class FakeOpenAI:
+        def __init__(self, **kwargs):
+            self.responses = FakeResponses()
+
+    monkeypatch.setattr(product_codes.settings, "openai_api_key", "test-key")
+    monkeypatch.setattr(product_codes, "AsyncOpenAI", FakeOpenAI)
+
+    response = client.post(
+        "/api/v1/product-codes/suggest",
+        files={"images": ("bag.jpg", jpeg_bytes(), "image/jpeg")},
+    )
+
+    assert response.status_code == 502
+    assert response.json() == {"detail": "Не вдалося проаналізувати фото. Спробуйте ще раз"}
+
+
+def test_product_code_request_guard_limits_rate_and_concurrency() -> None:
+    current_time = 100.0
+    guard = ProductCodeRequestGuard(
+        requests_per_window=2,
+        window_seconds=60,
+        max_concurrent=1,
+        clock=lambda: current_time,
+    )
+
+    async def exercise_guard() -> None:
+        async with guard.permit("client-a"):
+            with pytest.raises(ProductCodeCapacityError):
+                async with guard.permit("client-b"):
+                    pass
+
+        async with guard.permit("client-a"):
+            pass
+
+        with pytest.raises(ProductCodeRateLimitError) as error:
+            async with guard.permit("client-a"):
+                pass
+        assert error.value.retry_after_seconds == 60
+
+    asyncio.run(exercise_guard())
 
 
 def test_product_code_ai_result_rejects_candidates_for_unidentified_product() -> None:

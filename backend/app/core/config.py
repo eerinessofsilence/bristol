@@ -6,7 +6,9 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     app_name: str = "ClearGateCustoms API"
     app_env: str = "development"
-    database_url: str = "postgresql+psycopg://cleargatecustoms:cleargatecustoms@localhost:5432/cleargatecustoms"
+    database_url: str = (
+        "postgresql+psycopg://cleargatecustoms:cleargatecustoms@localhost:5432/cleargatecustoms"
+    )
     cors_origins: str = "http://localhost:5173"
     nbu_exchange_rate_url: str = (
         "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"
@@ -19,6 +21,8 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
     openai_model: str = "gpt-5.6"
     openai_timeout_seconds: float = 45.0
+    product_code_ai_requests_per_minute: int = 5
+    product_code_ai_max_concurrent: int = 2
     email_notifications_enabled: bool = False
     smtp_host: str = ""
     smtp_port: int = 587

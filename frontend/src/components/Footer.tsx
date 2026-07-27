@@ -8,6 +8,17 @@ export function Footer() {
               <h2 className="w-full text-3xl leading-[1.3] font-semibold tracking-tight text-balance text-white">
                 Розкажіть про вантаж — підготуємо план оформлення та маршрут до вашого складу.
               </h2>
+              <div>
+                <p className="text-xs font-semibold tracking-wider text-white/45 uppercase">
+                  Email
+                </p>
+                <a
+                  href="mailto:cleargatecustoms@gmail.com"
+                  className="mt-2 inline-block max-w-full text-lg font-semibold [overflow-wrap:anywhere] text-white/85 transition hover:text-white"
+                >
+                  cleargatecustoms@gmail.com
+                </a>
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-8 lg:pt-1">
               <div>
