@@ -20,7 +20,9 @@ export function Hero({ onRequestConsultation }: Props) {
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const desktopPointer = window.matchMedia('(min-width: 768px) and (hover: hover) and (pointer: fine)');
+    const desktopPointer = window.matchMedia(
+      '(min-width: 768px) and (hover: hover) and (pointer: fine)',
+    );
     let timer: number | undefined;
 
     const stopSlideshow = () => {
@@ -72,7 +74,9 @@ export function Hero({ onRequestConsultation }: Props) {
     if (!hero) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const desktopPointer = window.matchMedia('(min-width: 768px) and (hover: hover) and (pointer: fine)');
+    const desktopPointer = window.matchMedia(
+      '(min-width: 768px) and (hover: hover) and (pointer: fine)',
+    );
     let frame = 0;
 
     const resetMotion = () => {

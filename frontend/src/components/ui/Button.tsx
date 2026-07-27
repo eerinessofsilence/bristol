@@ -13,8 +13,7 @@ type LinkProps = PropsWithChildren<AnchorHTMLAttributes<HTMLAnchorElement> & Sha
 
 const variants = {
   primary: 'border-mint bg-mint text-[#08221a]',
-  outline:
-    'border-line bg-white text-ink hover:border-mint-muted',
+  outline: 'border-line bg-white text-ink hover:border-mint-muted',
 };
 
 const sizes = {
