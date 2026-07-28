@@ -1,34 +1,43 @@
 # ClearGateCustoms
 
-Полноценная версия лендинга ClearGateCustoms: React/Vite/TailwindCSS на фронтенде, FastAPI на бэкенде и PostgreSQL для хранения заявок.
+ClearGateCustoms is a full-featured landing page for a customs brokerage service. It includes an AI-assisted UKT ZED code selector, a lead submission flow, optional email notifications, and PostgreSQL storage for all submitted requests.
 
-## Структура
+## Tech Stack
+
+- Frontend: React, TypeScript, Vite, and Tailwind CSS
+- Backend: FastAPI, SQLAlchemy, and Alembic
+- Database: PostgreSQL
+- Infrastructure: Docker Compose
+
+## Project Structure
 
 ```text
-frontend/   React + TypeScript + Vite + TailwindCSS
+frontend/   React + TypeScript + Vite + Tailwind CSS
 backend/    FastAPI + SQLAlchemy + Alembic + PostgreSQL
 compose.yaml
 ```
 
-## Быстрый запуск через Docker
+## Quick Start with Docker
 
 ```bash
 docker compose up --build
 ```
 
-- сайт: http://localhost:5173
+After startup, the services are available at:
+
+- Website: http://localhost:5173
 - API: http://localhost:8000
-- Swagger: http://localhost:8000/docs
+- Swagger UI: http://localhost:8000/docs
 
-## Локальная разработка
+## Local Development
 
-PostgreSQL:
+### PostgreSQL
 
 ```bash
 docker compose up db -d
 ```
 
-Backend:
+### Backend
 
 ```bash
 cd backend
@@ -40,16 +49,22 @@ alembic upgrade head
 uvicorn app.main:app --reload
 ```
 
-Для AI-подбора кода УКТ ЗЕД добавьте новый серверный ключ в `backend/.env`:
+### AI-Assisted UKT ZED Code Selection
+
+Add a server-side key to `backend/.env`:
 
 ```dotenv
 OPENAI_API_KEY=your_new_key
 OPENAI_MODEL=gpt-5.6
 ```
 
-Не добавляйте ключ во frontend и не коммитьте файл `.env`.
+Never expose the API key in the frontend or commit the `.env` file. With Docker, pass the key through the environment:
 
-Frontend:
+```bash
+OPENAI_API_KEY=your_new_key docker compose up --build
+```
+
+### Frontend
 
 ```bash
 cd frontend
@@ -58,27 +73,17 @@ cp .env.example .env
 npm run dev
 ```
 
-При запуске через Docker передайте ключ через окружение:
+## Lead Email Notifications
 
-```bash
-OPENAI_API_KEY=your_new_key docker compose up --build
+Leads are always stored in PostgreSQL. To also receive them by email, configure the SMTP settings in `backend/.env` using `backend/.env.example` as a template, then set:
+
+```dotenv
+EMAIL_NOTIFICATIONS_ENABLED=true
 ```
 
-## Поштові сповіщення про заявки
+For Google Workspace, use `SMTP_HOST=smtp.gmail.com`, port `587`, TLS, and an app password. Set `LEAD_NOTIFICATION_EMAIL` to a dedicated inbox if needed. SMTP delivery failures are logged, but do not prevent the lead from being saved.
 
-Заявки завжди зберігаються в PostgreSQL. Щоб додатково отримувати їх на робочу пошту,
-створіть скриньку `info@cleargatecustoms.com.ua` у поштовому сервісі, скопіюйте SMTP-параметри
-до `backend/.env` (шаблон є у `backend/.env.example`) та встановіть
-`EMAIL_NOTIFICATIONS_ENABLED=true`.
-
-Для Google Workspace використовуйте `SMTP_HOST=smtp.gmail.com`, порт `587`, TLS та
-окремий пароль застосунку, а не основний пароль пошти. Значення `LEAD_NOTIFICATION_EMAIL`
-можна замінити на окрему скриньку, наприклад `leads@cleargatecustoms.com.ua`.
-
-Не коммітьте `backend/.env`: у ньому міститься пароль SMTP. Якщо SMTP тимчасово недоступний,
-сайт збереже заявку, а помилку запише до журналу бекенду.
-
-## Проверки
+## Checks
 
 ```bash
 cd frontend && npm run build && npm run lint && npm run format:check
