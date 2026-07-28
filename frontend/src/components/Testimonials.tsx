@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, Quote } from 'lucide-react';
-import { testimonials } from '../data/content';
+import { getContent } from '../data/content';
+import { useTranslation } from '../i18n';
 
 const cardStyles = [
   'bg-primary text-white lg:col-span-7',
@@ -10,6 +11,8 @@ const cardStyles = [
 ];
 
 export function Testimonials() {
+  const { language, t } = useTranslation();
+  const { testimonials } = getContent(language);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
@@ -48,12 +51,11 @@ export function Testimonials() {
       <div className="page-wrap">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">08 /</span>&nbsp; Відгуки
+            <span className="section-index">08 /</span>&nbsp; {t('Відгуки', 'Reviews')}
           </span>
-          <h2 className="section-title mt-4">Спокійніше, коли весь маршрут під контролем</h2>
+          <h2 className="section-title mt-4">{t('Спокійніше, коли весь маршрут під контролем', 'Peace of mind when the entire route is under control')}</h2>
           <p className="text-ink-2 mt-5 max-w-2xl text-base leading-6 text-balance sm:text-lg sm:leading-7">
-            Клієнти цінують передбачувані строки, зрозумілу комунікацію та одного координатора від
-            порту до складу.
+            {t('Клієнти цінують передбачувані строки, зрозумілу комунікацію та одного координатора від порту до складу.', 'Clients value predictable timelines, clear communication and one coordinator from port to warehouse.')}
           </p>
         </div>
 
@@ -93,7 +95,7 @@ export function Testimonials() {
                     >
                       <span>{testimonial.role}</span>
                       <span aria-hidden="true">·</span>
-                      <span aria-label={`Сфера: ${testimonial.sector}`}>{testimonial.sector}</span>
+                      <span aria-label={`${t('Сфера', 'Sector')}: ${testimonial.sector}`}>{testimonial.sector}</span>
                     </span>
                   </span>
                 </footer>
@@ -105,7 +107,7 @@ export function Testimonials() {
                 >
                   {testimonial.quote}
                 </p>
-                <ul className="mt-6 flex flex-wrap gap-2" aria-label="Ключові результати">
+                <ul className="mt-6 flex flex-wrap gap-2" aria-label={t('Ключові результати', 'Key outcomes')}>
                   {testimonial.outcomes.map((outcome) => (
                     <li
                       key={outcome}
@@ -133,7 +135,7 @@ export function Testimonials() {
                     >
                       <span>{testimonial.role}</span>
                       <span aria-hidden="true">·</span>
-                      <span aria-label={`Сфера: ${testimonial.sector}`}>{testimonial.sector}</span>
+                      <span aria-label={`${t('Сфера', 'Sector')}: ${testimonial.sector}`}>{testimonial.sector}</span>
                     </span>
                   </span>
                 </footer>
@@ -151,7 +153,7 @@ export function Testimonials() {
             <button
               type="button"
               className="border-line text-ink enabled:hover:bg-soft grid size-10 place-items-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-35"
-              aria-label="Попередній відгук"
+              aria-label={t('Попередній відгук', 'Previous review')}
               disabled={activeTestimonial === 0}
               onClick={() => scrollToTestimonial(activeTestimonial - 1)}
             >
@@ -160,7 +162,7 @@ export function Testimonials() {
             <button
               type="button"
               className="bg-primary grid size-10 place-items-center rounded-full text-white transition-opacity enabled:hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-35"
-              aria-label="Наступний відгук"
+              aria-label={t('Наступний відгук', 'Next review')}
               disabled={activeTestimonial === testimonials.length - 1}
               onClick={() => scrollToTestimonial(activeTestimonial + 1)}
             >

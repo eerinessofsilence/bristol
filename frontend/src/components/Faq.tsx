@@ -1,25 +1,27 @@
 import { Calculator, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
-import { faqs } from '../data/content';
+import { getContent } from '../data/content';
+import { useTranslation } from '../i18n';
 import { ButtonLink } from './ui/Button';
 
 export function Faq() {
   const [openIndex, setOpenIndex] = useState(0);
+  const { language, t } = useTranslation();
+  const { faqs } = getContent(language);
 
   return (
     <section id="faq" className="bg-soft scroll-mt-10 py-20 md:py-24">
       <div className="page-wrap grid items-start gap-10 lg:grid-cols-[1.28fr_0.72fr] lg:gap-20">
         <div className="lg:sticky lg:top-30 lg:order-2 lg:-mt-3" data-reveal>
           <span className="section-tag self-start">
-            <span className="section-index">11 /</span>&nbsp; Питання
+            <span className="section-index">11 /</span>&nbsp; {t('Питання', 'FAQ')}
           </span>
-          <h2 className="section-title mt-4">Часті запитання</h2>
+          <h2 className="section-title mt-4">{t('Часті запитання', 'Frequently asked questions')}</h2>
           <p className="text-ink-2 mt-5 max-w-sm leading-7">
-            Коротко про роль ClearGateCustoms, роботу з портами, митне оформлення та доставку до
-            складу клієнта.
+            {t('Коротко про роль ClearGateCustoms, роботу з портами, митне оформлення та доставку до складу клієнта.', 'A quick overview of ClearGateCustoms, port operations, customs clearance and delivery to the client’s warehouse.')}
           </p>
           <ButtonLink href="#calc" icon={Calculator} className="mt-7 lg:-translate-y-3">
-            Розрахувати митні платежі
+            {t('Розрахувати митні платежі', 'Calculate customs charges')}
           </ButtonLink>
         </div>
         <div className="lg:order-1" data-reveal>

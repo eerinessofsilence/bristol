@@ -1,6 +1,7 @@
 import { Anchor, ArrowDown, ClipboardCheck, Globe2, Truck, Warehouse } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { CountryFlag } from './ui/CountryFlag';
+import { useTranslation } from '../i18n';
 
 type RouteStep = {
   icon: typeof Globe2;
@@ -11,60 +12,62 @@ type RouteStep = {
   tone: keyof typeof toneClasses;
 };
 
-const routeSteps: RouteStep[] = [
+function getRouteSteps(t: (ukrainian: string, english: string) => string): RouteStep[] {
+  return [
   {
     icon: Globe2,
     title: (
       <>
-        <span>Китай </span>
-        <CountryFlag code="cn" /> <span>і Європа </span>
+        <span>{t('Китай', 'China')} </span>
+        <CountryFlag code="cn" /> <span>{t('і Європа', 'and Europe')} </span>
         <CountryFlag code="eu" />
       </>
     ),
-    titleKey: 'Китай і Європа',
-    description: 'Відправлення вантажу',
-    role: 'Етап маршруту',
+    titleKey: 'china-europe',
+    description: t('Відправлення вантажу', 'Cargo departure'),
+    role: t('Етап маршруту', 'Route stage'),
     tone: 'neutral',
   },
   {
     icon: Anchor,
     title: (
       <>
-        <span>Порт Гданськ </span>
-        <CountryFlag code="pl" /> <span>/ Констанца </span>
+        <span>{t('Порт Гданськ', 'Port of Gdańsk')} </span>
+        <CountryFlag code="pl" /> <span>{t('/ Констанца', '/ Constanța')} </span>
         <CountryFlag code="ro" />
       </>
     ),
-    titleKey: 'Порт Гданськ / Констанца',
-    description: 'Координуємо прибуття',
-    role: 'Координуємо',
+    titleKey: 'ports',
+    description: t('Координуємо прибуття', 'Arrival coordination'),
+    role: t('Координуємо', 'We coordinate'),
     tone: 'coral',
   },
   {
     icon: ClipboardCheck,
-    title: 'Митне оформлення',
-    titleKey: 'Митне оформлення',
-    description: 'Виконують фахівці ClearGateCustoms',
-    role: 'Оформлюємо самі',
+    title: t('Митне оформлення', 'Customs clearance'),
+    titleKey: 'clearance',
+    description: t('Виконують фахівці ClearGateCustoms', 'Handled by ClearGateCustoms specialists'),
+    role: t('Оформлюємо самі', 'Handled in-house'),
     tone: 'teal',
   },
   {
     icon: Truck,
-    title: 'Доставка вантажу',
-    titleKey: 'Доставка вантажу',
-    description: 'Організовуємо перевезення',
-    role: 'Координуємо',
+    title: t('Доставка вантажу', 'Cargo delivery'),
+    titleKey: 'delivery',
+    description: t('Організовуємо перевезення', 'We arrange transportation'),
+    role: t('Координуємо', 'We coordinate'),
     tone: 'coral',
   },
   {
     icon: Warehouse,
-    title: 'Склад клієнта',
-    titleKey: 'Склад клієнта',
-    description: 'Вивантаження',
-    role: 'Кінцева точка',
+    title: t('Склад клієнта', 'Client warehouse'),
+    titleKey: 'warehouse',
+    description: t('Вивантаження', 'Unloading'),
+    role: t('Кінцева точка', 'Final destination'),
     tone: 'neutral',
   },
-] as const;
+  ];
+}
 
 const toneClasses = {
   neutral: {
@@ -88,22 +91,23 @@ const toneClasses = {
 } as const;
 
 export function Process() {
+  const { t } = useTranslation();
+  const routeSteps = getRouteSteps(t);
   return (
     <section id="how" className="bg-primary scroll-mt-10 py-20 text-white md:py-24">
       <div className="page-wrap grid items-stretch gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
         <div className="flex min-h-0 flex-col" data-reveal>
           <span className="section-tag section-tag-dark self-start">
-            <span className="section-index">07 /</span>&nbsp; Маршрут
+            <span className="section-index">07 /</span>&nbsp; {t('Маршрут', 'Route')}
           </span>
-          <h2 className="section-title mt-4 text-white">Як це працює</h2>
+          <h2 className="section-title mt-4 text-white">{t('Як це працює', 'How it works')}</h2>
           <p className="mt-4 max-w-lg text-base leading-6 text-white/60 sm:text-lg sm:leading-7">
-            Від порту відправлення до складу клієнта: одразу видно, де ми виконуємо митне оформлення
-            самі, а де координуємо логістику.
+            {t('Від порту відправлення до складу клієнта: одразу видно, де ми виконуємо митне оформлення самі, а де координуємо логістику.', 'From the departure port to the client’s warehouse: clearly see where we handle customs clearance ourselves and where we coordinate logistics.')}
           </p>
           <div className="relative mt-10 h-[320px] overflow-hidden rounded-[18px] lg:h-auto lg:min-h-[560px] lg:flex-1">
             <img
               src="/images/port-terminal-process.jpg"
-              alt="Контейнерне судно під портовим краном"
+              alt={t('Контейнерне судно під портовим краном', 'Container vessel beneath a port crane')}
               className="absolute inset-0 h-full w-full object-cover"
               loading="lazy"
             />
@@ -115,7 +119,7 @@ export function Process() {
         </div>
 
         <div data-reveal>
-          <ol className="mx-auto max-w-xl" aria-label="Маршрут вантажу">
+          <ol className="mx-auto max-w-xl" aria-label={t('Маршрут вантажу', 'Cargo route')}>
             {routeSteps.map((step, index) => {
               const Icon = step.icon;
               const colors = toneClasses[step.tone];
@@ -177,7 +181,7 @@ export function Process() {
 
           <div
             className="mt-7 grid gap-3 border-t border-white/10 pt-6 sm:grid-cols-2"
-            aria-label="Легенда кольорів"
+            aria-label={t('Легенда кольорів', 'Colour legend')}
           >
             <div className="flex items-start gap-3 text-xs leading-5 text-white/65">
               <span
@@ -185,9 +189,9 @@ export function Process() {
                 aria-hidden="true"
               />
               <span>
-                <strong className="font-semibold text-white/90">Виконує ClearGateCustoms</strong>
+                <strong className="font-semibold text-white/90">{t('Виконує ClearGateCustoms', 'Handled by ClearGateCustoms')}</strong>
                 <br />
-                митне оформлення
+                {t('митне оформлення', 'customs clearance')}
               </span>
             </div>
             <div className="flex items-start gap-3 text-xs leading-5 text-white/65">
@@ -196,9 +200,9 @@ export function Process() {
                 aria-hidden="true"
               />
               <span>
-                <strong className="font-semibold text-white/90">Координує ClearGateCustoms</strong>
+                <strong className="font-semibold text-white/90">{t('Координує ClearGateCustoms', 'Coordinated by ClearGateCustoms')}</strong>
                 <br />
-                логістика
+                {t('логістика', 'logistics')}
               </span>
             </div>
           </div>

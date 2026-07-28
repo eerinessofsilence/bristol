@@ -16,9 +16,10 @@ const containers = [
 ];
 
 export function PortScene({ compact = false }: Props) {
+  const { t } = useTranslation();
   return (
     <div
-      aria-label="Ілюстрація контейнерного судна в порту"
+      aria-label={t('Ілюстрація контейнерного судна в порту', 'Illustration of a container vessel in port')}
       role="img"
       className={`relative isolate h-full min-h-72 overflow-hidden bg-gradient-to-b from-[#dceee6] via-[#b8d9cb] to-[#74a696] ${compact ? '' : 'rounded-[18px]'}`}
     >
@@ -45,3 +46,4 @@ export function PortScene({ compact = false }: Props) {
     </div>
   );
 }
+import { useTranslation } from '../i18n';

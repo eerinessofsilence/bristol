@@ -1,4 +1,5 @@
 import { Minus, Plus } from 'lucide-react';
+import { useTranslation } from '../../i18n';
 
 type Props = {
   id: string;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export function PricePicker({ id, value, min = 0, step = 10, onChange }: Props) {
+  const { t } = useTranslation();
   const updateValue = (nextValue: number) => onChange(Math.max(min, nextValue));
 
   return (
@@ -18,7 +20,7 @@ export function PricePicker({ id, value, min = 0, step = 10, onChange }: Props) 
         type="text"
         inputMode="decimal"
         value={value}
-        aria-label="Митна вартість"
+        aria-label={t('Митна вартість', 'Customs value')}
         className="text-ink min-w-0 flex-1 bg-transparent text-sm outline-none"
         onChange={(event) => {
           const normalized = event.target.value.replace(',', '.');
@@ -28,7 +30,7 @@ export function PricePicker({ id, value, min = 0, step = 10, onChange }: Props) 
       <div className="bg-soft flex items-center rounded-lg p-0.5">
         <button
           type="button"
-          aria-label="Зменшити митну вартість"
+          aria-label={t('Зменшити митну вартість', 'Decrease customs value')}
           className="text-ink-2 hover:bg-primary grid size-8 cursor-pointer place-items-center rounded-md transition duration-200 hover:text-white active:scale-90"
           onClick={() => updateValue(value - step)}
         >
@@ -36,7 +38,7 @@ export function PricePicker({ id, value, min = 0, step = 10, onChange }: Props) 
         </button>
         <button
           type="button"
-          aria-label="Збільшити митну вартість"
+          aria-label={t('Збільшити митну вартість', 'Increase customs value')}
           className="text-ink-2 hover:bg-mint hover:text-primary grid size-8 cursor-pointer place-items-center rounded-md transition duration-200 active:scale-90"
           onClick={() => updateValue(value + step)}
         >

@@ -1,6 +1,9 @@
-import { mission, values } from '../data/content';
+import { getContent } from '../data/content';
+import { useTranslation } from '../i18n';
 
 export function MissionValues() {
+  const { language, t } = useTranslation();
+  const { mission, values } = getContent(language);
   return (
     <section className="py-16 md:py-20">
       <div className="page-wrap">
@@ -12,7 +15,7 @@ export function MissionValues() {
           >
             <div>
               <span className="section-tag section-tag-dark">
-                <span className="section-index">01 /</span>&nbsp; Місія
+                <span className="section-index">01 /</span>&nbsp; {t('Місія', 'Mission')}
               </span>
               <p className="mt-6 text-2xl leading-[1.3] font-bold tracking-tight text-balance sm:text-3xl">
                 {mission}
@@ -20,7 +23,7 @@ export function MissionValues() {
             </div>
 
             <div>
-              <p className="technical-label text-[#9fe1cb]/65">Наші цінності</p>
+              <p className="technical-label text-[#9fe1cb]/65">{t('Наші цінності', 'Our values')}</p>
               <ul className="mt-5 grid gap-x-6 gap-y-3.5 sm:grid-cols-2">
                 {values.map(({ icon: Icon, label }) => (
                   <li key={label} className="flex items-center gap-3">

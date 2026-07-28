@@ -1,17 +1,18 @@
 import { partners } from '../data/content';
+import { useTranslation } from '../i18n';
 
 export function Partners() {
+  const { t } = useTranslation();
   return (
     <section id="partners" className="bg-soft scroll-mt-10 py-20 md:py-24">
       <div className="page-wrap">
         <div className="mx-auto max-w-2xl text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">09 /</span>&nbsp; Партнери
+            <span className="section-index">09 /</span>&nbsp; {t('Партнери', 'Partners')}
           </span>
-          <h2 className="section-title mt-4">Наші партнери</h2>
+          <h2 className="section-title mt-4">{t('Наші партнери', 'Our partners')}</h2>
           <p className="text-ink-2 mt-4 text-balance">
-            Координуємо доставку через провідні контейнерні лінії, з якими у нас діють договірні
-            відносини.
+            {t('Координуємо доставку через провідні контейнерні лінії, з якими у нас діють договірні відносини.', 'We coordinate delivery through leading container lines with which we have contractual relationships.')}
           </p>
         </div>
         <div className="mt-12 flex flex-wrap justify-center gap-4" data-reveal>

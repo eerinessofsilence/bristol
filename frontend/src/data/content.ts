@@ -11,6 +11,7 @@ import {
   Warehouse,
   Zap,
 } from 'lucide-react';
+import type { Language } from '../i18n';
 
 export const services = [
   {
@@ -274,3 +275,55 @@ export const partners = [
   { name: 'MSC', logo: '/images/partners/msc-logo.svg' },
   { name: 'ZIM', logo: '/images/partners/zim-logo.svg' },
 ];
+
+const englishContent = {
+  services: [
+    { icon: ClipboardCheck, title: 'Customs clearance', description: 'Our specialists prepare and submit customs declarations, determine the UKT ZED code and support the cargo through release.', primary: true },
+    { icon: Route, title: 'Transport coordination', description: 'As an intermediary, we coordinate freight forwarders and shipping-line agents throughout the journey.' },
+    { icon: Anchor, title: 'Gdańsk and Constanța', description: 'We coordinate arrival, handling and release of cargo directly with ports in Poland and Romania.' },
+    { icon: Warehouse, title: 'From port to warehouse', description: 'We arrange cargo delivery to inland customs and to the client’s warehouse.' },
+  ],
+  steps: [
+    { title: 'Consultation and preliminary assessment', description: 'We clarify the route and cargo details, explain the clearance process and prepare a tailored commercial offer.' },
+    { title: 'Cargo movement coordination', description: 'As an intermediary, we align the work of the forwarder, line agent and port services from departure to customs arrival.' },
+    { title: 'Customs clearance', description: 'Our specialists submit the declaration and complete customs clearance themselves. We update you on the status and next steps at every stage.' },
+    { title: 'Payment after customs release', description: 'Services are paid for after clearance is completed. No advance payment.' },
+    { title: 'Delivery to the client’s warehouse', description: 'After customs clearance, we contact the client to agree the unloading location in Ukraine.' },
+  ],
+  faqs: [
+    { question: 'What is ClearGateCustoms’ role in transportation?', answer: 'ClearGateCustoms handles customs clearance independently: our specialists prepare the declaration, determine the UKT ZED code and support the release. We also coordinate related logistics, aligning freight forwarders, line agents, port services and the carrier so your cargo reaches the warehouse without delays.' },
+    { question: 'Which ports do you work with?', answer: 'We work directly with the ports of Gdańsk in Poland and Constanța in Romania. The exact port and route are agreed for each shipment.' },
+    { question: 'Which routes do you specialize in?', answer: 'ClearGateCustoms specializes in customs clearance performed by our own specialists. We focus on shipments from China and European countries, then coordinate delivery to the client’s warehouse in Ukraine.' },
+    { question: 'How long does clearance take?', answer: 'Customs clearance is completed within one business day after cargo arrives at the customs terminal.' },
+    { question: 'Is an advance payment required?', answer: 'No advance payment is required for our services. Payment is made after customs release, and the client receives the customs declaration for reporting. Customs duties are paid separately as required.' },
+    { question: 'Do you deliver across Ukraine?', answer: 'Yes. After customs release, we arrange transportation to a warehouse or client in the required region. The route and vehicle type are selected for the specific cargo.' },
+    { question: 'Which documents are needed to start?', answer: 'Typically, an invoice, packing list, transport documents, contract and product description are needed. The broker will confirm the exact list after reviewing the shipment.' },
+  ],
+  testimonials: [
+    { avatar: '/images/testimonials/olena.webp', quote: 'Before the container arrived, we knew the action plan, timing and the entire clearance sequence. ClearGateCustoms coordinated every party while we received updates without having to ask.', author: 'Olena K.', role: 'Importer', sector: 'Home appliances', outcomes: ['Plan before arrival', 'Proactive updates'] },
+    { avatar: '/images/testimonials/andrii.webp', quote: 'The team quickly rerouted the shipment through a European port and handled communication with agents. The cargo reached our warehouse without downtime between stages.', author: 'Andrii M.', role: 'Head of procurement', sector: 'Import procurement', outcomes: ['EU route', 'No downtime'] },
+    { avatar: '/images/testimonials/iryna.webp', quote: 'For recurring shipments, they set up a clear process: one manager, one document format and a precise plan for every subsequent batch.', author: 'Iryna S.', role: 'Operations director', sector: 'FMCG', outcomes: ['Recurring shipments', 'One manager'] },
+    { avatar: '/images/testimonials/dmytro.webp', quote: 'What matters most is that ClearGateCustoms immediately point out risks and what needs fixing. We make decisions before cargo arrives, not when the container is already at the port.', author: 'Dmytro L.', role: 'Business owner', sector: 'Distribution', outcomes: ['Risks identified early', 'Decisions before arrival'] },
+  ],
+  productCategories: [
+    ['Home appliances', 'home-appliances'], ['Mobile accessories', 'mobile-phones'], ['Bed linen, towels and blankets', 'bedding-home-textiles'], ['Fishing equipment', 'fishing'], ['Speakers', 'household-electronics'], ['Radio goods and electronics', 'radio-electronics'], ['Electrical equipment', 'electrical-equipment'], ['Stationery', 'stationery'], ['Toys', 'toys-children'], ['Bags, backpacks and luggage', 'bags-luggage'], ['Home goods', 'home-goods'], ['Kitchen utensils', 'kitchen-utensils'], ['Tableware', 'tableware'], ['Lighting equipment and flashlights', 'lighting-flashlights'], ['Furniture', 'furniture-home'], ['Plumbing', 'plumbing'], ['Other goods', 'other-goods'],
+  ].map(([label, image]) => ({ label, image: `/images/categories/${image}.webp` })),
+  directContact: {
+    personName: 'ClearGateCustoms manager', position: 'Customs clearance consultations', initials: 'CG', phone: '+380 93 830 7006', phoneHref: 'tel:+380938307006',
+    channels: [
+      { name: 'Viber', label: 'Message on Viber', href: 'viber://chat?number=%2B380938307006', icon: '/images/messengers/viber.svg' },
+      { name: 'Telegram', label: 'Message on Telegram', href: 'tg://resolve?phone=380938307006', icon: '/images/messengers/telegram.svg' },
+      { name: 'WhatsApp', label: 'Message on WhatsApp', href: 'https://wa.me/380938307006', icon: '/images/messengers/whatsapp.svg' },
+    ],
+  },
+  mission: 'We clear the way for businesses to customs clearance without unnecessary barriers—simple, transparent and predictable.',
+  values: [
+    { icon: Scale, label: 'Compliance' }, { icon: ShieldCheck, label: 'Reliability' }, { icon: Eye, label: 'Transparency' }, { icon: Cpu, label: 'Technology' }, { icon: ClipboardCheck, label: 'Responsibility' }, { icon: Zap, label: 'Speed' }, { icon: HeartHandshake, label: 'Respect for every client' }, { icon: DollarSign, label: 'No advance payment' },
+  ],
+};
+
+export function getContent(language: Language) {
+  return language === 'en'
+    ? englishContent
+    : { services, steps, faqs, testimonials, productCategories, directContact, mission, values };
+}

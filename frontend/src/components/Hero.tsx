@@ -1,7 +1,7 @@
 import { Calculator, Phone } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Header } from './Header';
 import { Button, ButtonLink } from './ui/Button';
+import { useTranslation } from '../i18n';
 
 const heroSlides = [
   '/images/hero/shenzhen-china.jpg',
@@ -15,6 +15,7 @@ type Props = {
 };
 
 export function Hero({ onRequestConsultation }: Props) {
+  const { t } = useTranslation();
   const heroRef = useRef<HTMLElement>(null);
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -155,25 +156,23 @@ export function Hero({ onRequestConsultation }: Props) {
       <div className="hero-photo-scrim absolute inset-0" aria-hidden="true" />
       <div className="hero-parallax-glow" aria-hidden="true" />
       <div className="hero-customs-pattern" aria-hidden="true" />
-      <Header onRequestConsultation={onRequestConsultation} />
       <div className="page-wrap relative z-10 flex min-h-[max(43rem,100svh)] items-center py-28 md:h-full md:min-h-0 md:py-0">
         <div className="max-w-[940px]">
           <h1 className="max-w-[17ch] text-4xl leading-[0.98] font-extrabold tracking-tighter text-balance sm:max-w-[18ch] sm:text-5xl lg:max-w-none">
-            Митне оформлення вантажів, експертний супровід та сучасні AI-рішення
+            {t('Митне оформлення вантажів, експертний супровід та сучасні AI-рішення', 'Customs clearance, expert support and modern AI solutions')}
           </h1>
           <p className="text-ink mt-6 max-w-[620px] text-base leading-6 text-pretty sm:mt-7 sm:text-lg sm:leading-7">
-            Відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод. ClearGateCustoms —
-            просто, прозоро і передбачувано.
+            {t('Відкриваємо бізнесу шлях до митного оформлення без зайвих перешкод. ClearGateCustoms — просто, прозоро і передбачувано.', 'We clear the way for businesses to customs clearance without unnecessary barriers. ClearGateCustoms is simple, transparent and predictable.')}
           </p>
           <p className="text-ink mt-8 text-lg font-semibold sm:text-xl">
-            Готові оформити вантаж без зайвих турбот?
+            {t('Готові оформити вантаж без зайвих турбот?', 'Ready to clear your cargo without the hassle?')}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3 sm:mt-5">
             <ButtonLink href="#calc" icon={Calculator}>
-              Розрахувати вартість
+              {t('Розрахувати вартість', 'Calculate costs')}
             </ButtonLink>
             <Button type="button" icon={Phone} variant="outline" onClick={onRequestConsultation}>
-              Зв'язатися з нами
+              {t("Зв'язатися з нами", 'Contact us')}
             </Button>
           </div>
         </div>

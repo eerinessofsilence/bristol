@@ -1,6 +1,7 @@
 import { Phone, X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import { directContact } from '../data/content';
+import { getContent } from '../data/content';
+import { useTranslation } from '../i18n';
 
 type Props = {
   isOpen: boolean;
@@ -9,6 +10,8 @@ type Props = {
 
 export function QuickContactModal({ isOpen, onClose }: Props) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const { language, t } = useTranslation();
+  const { directContact } = getContent(language);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -46,7 +49,7 @@ export function QuickContactModal({ isOpen, onClose }: Props) {
           ref={closeButtonRef}
           type="button"
           onClick={onClose}
-          aria-label="Закрити"
+          aria-label={t('Закрити', 'Close')}
           className="bg-soft hover:bg-line absolute top-5 right-5 grid size-9 cursor-pointer place-items-center rounded-full transition sm:top-7 sm:right-7"
         >
           <X size={18} strokeWidth={2.4} />
@@ -62,7 +65,7 @@ export function QuickContactModal({ isOpen, onClose }: Props) {
         </div>
 
         <p className="text-ink-3 mt-6 text-sm leading-5">
-          Оберіть зручний спосіб зв'язку — відповімо якнайшвидше.
+          {t("Оберіть зручний спосіб зв'язку — відповімо якнайшвидше.", 'Choose a convenient way to contact us—we will reply as soon as possible.')}
         </p>
 
         <div className="mt-4 grid gap-2.5">
@@ -74,7 +77,7 @@ export function QuickContactModal({ isOpen, onClose }: Props) {
               <Phone size={20} strokeWidth={2.2} aria-hidden="true" />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block font-semibold">Мобільний телефон</span>
+              <span className="block font-semibold">{t('Мобільний телефон', 'Mobile phone')}</span>
               <span className="text-ink-3 block text-xs">{directContact.phone}</span>
             </span>
           </a>

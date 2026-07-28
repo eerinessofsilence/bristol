@@ -1,7 +1,8 @@
 import { Camera, ChevronLeft, ChevronRight, Phone, RefreshCw } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { ApiError, calculateQuote, getUsdExchangeRate } from '../api/client';
-import { productCategories } from '../data/content';
+import { getContent } from '../data/content';
+import { useTranslation } from '../i18n';
 import type { CalculatorQuote, ExchangeRateResult, QuoteResult } from '../types';
 import { Button } from './ui/Button';
 import { PricePicker } from './ui/PricePicker';
@@ -15,21 +16,23 @@ type RateStatus = 'loading' | 'success' | 'error';
 
 const productCodePattern = /^\d{10}$/;
 
-const formatMoney = (value?: number) =>
-  value === undefined ? '—' : `${Math.round(value).toLocaleString('uk-UA')} ₴`;
+const formatMoney = (value: number | undefined, language: string) =>
+  value === undefined ? '—' : `${Math.round(value).toLocaleString(language === 'en' ? 'en-US' : 'uk-UA')} ₴`;
 
 const formatRateDate = (value: string) => {
   const [year, month, day] = value.split('-');
   return `${day}.${month}.${year}`;
 };
 
-const formatRate = (value: number) =>
-  value.toLocaleString('uk-UA', {
+const formatRate = (value: number, language: string) =>
+  value.toLocaleString(language === 'en' ? 'en-US' : 'uk-UA', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
 function ProductCategories() {
+  const { language, t } = useTranslation();
+  const { productCategories } = getContent(language);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canMoveBack, setCanMoveBack] = useState(false);
   const [canMoveForward, setCanMoveForward] = useState(true);
@@ -68,20 +71,20 @@ function ProductCategories() {
       <div className="page-wrap">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">06 /</span>&nbsp; Категорії товарів
+            <span className="section-index">06 /</span>&nbsp; {t('Категорії товарів', 'Product categories')}
           </span>
           <h2 className="mt-4 text-2xl leading-tight font-bold tracking-tight sm:text-3xl">
-            Основні товарні групи, з якими ми працюємо
+            {t('Основні товарні групи, з якими ми працюємо', 'Core product groups we work with')}
           </h2>
           <p className="text-ink-3 mt-3 text-base leading-6 text-balance sm:text-lg sm:leading-7">
-            Оформлюємо регулярні та разові поставки цих категорій з Китаю та Європи.
+            {t('Оформлюємо регулярні та разові поставки цих категорій з Китаю та Європи.', 'We clear recurring and one-off shipments in these categories from China and Europe.')}
           </p>
         </div>
         <div className="mt-10 flex items-center justify-end gap-2 sm:mt-12" data-reveal>
           <button
             type="button"
             className="flex size-11 cursor-pointer items-center justify-center rounded-full border border-[#085041]/20 bg-white text-[#085041] transition hover:border-[#085041] hover:bg-[#085041] hover:text-white disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-[#085041]/20 disabled:hover:bg-white disabled:hover:text-[#085041]"
-            aria-label="Попередні категорії"
+            aria-label={t('Попередні категорії', 'Previous categories')}
             disabled={!canMoveBack}
             onClick={() => moveCarousel(-1)}
           >
@@ -90,7 +93,7 @@ function ProductCategories() {
           <button
             type="button"
             className="flex size-11 cursor-pointer items-center justify-center rounded-full border border-[#085041]/20 bg-white text-[#085041] transition hover:border-[#085041] hover:bg-[#085041] hover:text-white disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-[#085041]/20 disabled:hover:bg-white disabled:hover:text-[#085041]"
-            aria-label="Наступні категорії"
+            aria-label={t('Наступні категорії', 'Next categories')}
             disabled={!canMoveForward}
             onClick={() => moveCarousel(1)}
           >
@@ -129,6 +132,7 @@ function ProductCategories() {
 }
 
 export function Calculator({ onContact }: Props) {
+  const { language, t } = useTranslation();
   const [productCode, setProductCode] = useState('');
   const [weightKg, setWeightKg] = useState(100);
   const [exchangeRate, setExchangeRate] = useState<ExchangeRateResult | null>(null);
@@ -185,7 +189,7 @@ export function Calculator({ onContact }: Props) {
             message:
               error instanceof ApiError
                 ? error.message
-                : 'Не вдалося виконати розрахунок. Перевірте з’єднання і спробуйте ще раз.',
+                : t('Не вдалося виконати розрахунок. Перевірте з’єднання і спробуйте ще раз.', 'Could not calculate the estimate. Check your connection and try again.'),
           });
         });
     }, 300);
@@ -194,7 +198,7 @@ export function Calculator({ onContact }: Props) {
       isActive = false;
       window.clearTimeout(timer);
     };
-  }, [exchangeRate, hasValidCode, productCode, weightKg]);
+  }, [exchangeRate, hasValidCode, productCode, t, weightKg]);
 
   return (
     <>
@@ -210,24 +214,24 @@ export function Calculator({ onContact }: Props) {
             <div className="customs-document-page min-w-0 p-5 sm:p-7 md:p-11">
               <div className="mb-6 box-content flex min-h-8 flex-wrap items-center justify-between gap-3 pb-4 sm:mb-7">
                 <span className="section-tag">
-                  <span className="section-index">05 /</span>&nbsp; Розрахунок
+                  <span className="section-index">05 /</span>&nbsp; {t('Розрахунок', 'Estimate')}
                 </span>
                 <span className="technical-label hidden text-[#085041]/50 sm:inline">
                   CGC-CALC / UA-2026
                 </span>
               </div>
               <h2 className="mt-4 text-3xl leading-[1.05] font-bold tracking-tight">
-                Калькулятор митних платежів
+                {t('Калькулятор митних платежів', 'Customs charges calculator')}
               </h2>
               <p className="text-ink-3 mt-2 text-base leading-6 text-balance sm:text-lg sm:leading-7">
-                Вкажіть код УКТ ЗЕД і вагу вантажу.
+                {t('Вкажіть код УКТ ЗЕД і вагу вантажу.', 'Enter the UKT ZED code and cargo weight.')}
               </p>
               <div className="mt-6 sm:mt-7">
                 <label className="field-label" htmlFor="productCode">
                   <span className="field-index" aria-hidden="true">
                     01
                   </span>
-                  Код УКТ ЗЕД
+                  {t('Код УКТ ЗЕД', 'UKT ZED code')}
                 </label>
                 <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-stretch">
                   <input
@@ -237,7 +241,7 @@ export function Calculator({ onContact }: Props) {
                     autoComplete="off"
                     maxLength={10}
                     className="field-control min-w-0 flex-1"
-                    placeholder="Наприклад, 0201203000"
+                    placeholder={t('Наприклад, 0201203000', 'For example, 0201203000')}
                     onChange={(event) =>
                       setProductCode(event.target.value.replace(/\D/g, '').slice(0, 10))
                     }
@@ -250,8 +254,8 @@ export function Calculator({ onContact }: Props) {
                     className="action-pill-flat w-full shrink-0 self-stretch sm:w-auto"
                     onClick={() => setIsCodeFinderOpen(true)}
                   >
-                    <span className="sm:hidden">За фото</span>
-                    <span className="hidden sm:inline">Визначити за фото</span>
+                    <span className="sm:hidden">{t('За фото', 'By photo')}</span>
+                    <span className="hidden sm:inline">{t('Визначити за фото', 'Identify by photo')}</span>
                   </Button>
                 </div>
                 <p
@@ -260,8 +264,8 @@ export function Calculator({ onContact }: Props) {
                   }`}
                 >
                   {productCode.length > 0 && !hasValidCode
-                    ? 'Введіть 10 цифр коду УКТ ЗЕД.'
-                    : 'Розрахунок доступний для кодів із одиницею виміру «кг».'}
+                    ? t('Введіть 10 цифр коду УКТ ЗЕД.', 'Enter all 10 digits of the UKT ZED code.')
+                    : t('Розрахунок доступний для кодів із одиницею виміру «кг».', 'The calculator is available for codes measured in kg.')}
                 </p>
               </div>
               <div className="mt-5">
@@ -269,7 +273,7 @@ export function Calculator({ onContact }: Props) {
                   <span className="field-index" aria-hidden="true">
                     02
                   </span>
-                  Вага вантажу, кг
+                  {t('Вага вантажу, кг', 'Cargo weight, kg')}
                 </label>
                 <PricePicker
                   id="weightKg"
@@ -284,12 +288,12 @@ export function Calculator({ onContact }: Props) {
                   {rateStatus === 'loading' && (
                     <p className="text-ink-3 flex items-center gap-2" role="status">
                       <RefreshCw className="animate-spin" size={13} aria-hidden="true" />
-                      Отримуємо актуальний курс НБУ…
+                      {t('Отримуємо актуальний курс НБУ…', 'Fetching the current NBU exchange rate…')}
                     </p>
                   )}
                   {rateStatus === 'error' && (
                     <p className="text-[#9a3412]" role="alert">
-                      Курс НБУ тимчасово недоступний.{' '}
+                      {t('Курс НБУ тимчасово недоступний. ', 'The NBU exchange rate is temporarily unavailable. ')}
                       <button
                         type="button"
                         className="cursor-pointer font-semibold underline underline-offset-2"
@@ -298,21 +302,20 @@ export function Calculator({ onContact }: Props) {
                           setRateRequestId((current) => current + 1);
                         }}
                       >
-                        Спробувати ще раз
+                        {t('Спробувати ще раз', 'Try again')}
                       </button>
                     </p>
                   )}
                   {rateStatus === 'success' && exchangeRate && (
                     <p className="technical-label text-[#085041]/60" role="status">
-                      USD: {formatRate(exchangeRate.rate)} ₴ · курс USD НБУ на{' '}
+                      USD: {formatRate(exchangeRate.rate, language)} ₴ · {t('курс USD НБУ на', 'NBU USD rate for')}{' '}
                       {formatRateDate(exchangeRate.exchangeDate)}
                     </p>
                   )}
                 </div>
               </div>
               <p className="text-ink-3/80 mt-5 text-xs leading-5">
-                Для кодів із кількісною одиницею виміру потрібен окремий розрахунок. Ставка ввізного
-                мита визначається за кодом УКТ ЗЕД; ПДВ — 20%.
+                {t('Для кодів із кількісною одиницею виміру потрібен окремий розрахунок. Ставка ввізного мита визначається за кодом УКТ ЗЕД; ПДВ — 20%.', 'Codes with another quantity unit require a separate calculation. The import duty rate is determined by the UKT ZED code; VAT is 20%.')}
               </p>
               {quoteError && (
                 <p className="mt-3 rounded-lg border border-[#d85a30]/30 bg-[#faece7] px-3 py-2 text-xs leading-5 text-[#712b13]">
@@ -326,19 +329,19 @@ export function Calculator({ onContact }: Props) {
             >
               <div className="relative z-10 mb-4 box-content flex min-h-8 flex-col items-start gap-1 border-b border-white/10 pb-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-x-3">
                 <span className="technical-label whitespace-nowrap text-white/45">
-                  Попередній розрахунок
+                  {t('Попередній розрахунок', 'Preliminary estimate')}
                 </span>
                 <span className="technical-label whitespace-nowrap text-[#9fe1cb]/70">
-                  Статус / орієнтовний
+                  {t('Статус / орієнтовний', 'Status / estimated')}
                 </span>
               </div>
               <div className="relative z-10 flex flex-1 flex-col justify-center py-8 sm:py-12">
-                <span className="technical-label text-[#9fe1cb]/70">Митні платежі</span>
+                <span className="technical-label text-[#9fe1cb]/70">{t('Митні платежі', 'Customs charges')}</span>
                 <h3 className="mt-3 max-w-[20ch] text-2xl leading-tight font-semibold tracking-tight sm:text-3xl">
-                  Орієнтовна сума платежів
+                  {t('Орієнтовна сума платежів', 'Estimated total charges')}
                 </h3>
                 <strong className="text-mint font-accent mt-5 text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
-                  {formatMoney(result?.total)}
+                  {formatMoney(result?.total, language)}
                 </strong>
               </div>
               <Button
@@ -359,14 +362,12 @@ export function Calculator({ onContact }: Props) {
                   );
                 }}
               >
-                Запросити точний розрахунок
+                {t('Запросити точний розрахунок', 'Request an exact estimate')}
               </Button>
             </div>
           </div>
           <p className="text-ink-3 mx-auto mt-6 max-w-2xl text-center text-xs leading-5 text-balance">
-            У розрахунку використовується пільгова ставка з Митного тарифу України. Странова
-            преференція, зокрема 0%, не застосовується без підтвердженої країни походження та
-            належного документа. Розрахунок має інформативний характер.
+            {t('У розрахунку використовується пільгова ставка з Митного тарифу України. Странова преференція, зокрема 0%, не застосовується без підтвердженої країни походження та належного документа. Розрахунок має інформативний характер.', 'The estimate uses the preferential rate from Ukraine’s Customs Tariff. A country preference, including 0%, is not applied without confirmed origin and the relevant document. This calculation is for information only.')}
           </p>
         </div>
       </section>

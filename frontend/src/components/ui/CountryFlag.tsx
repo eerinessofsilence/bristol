@@ -13,13 +13,18 @@ type Props = {
 };
 
 export function CountryFlag({ code, className = '' }: Props) {
+  const { language } = useTranslation();
   const flag = flags[code];
+  const labels: Record<CountryFlagCode, string> = {
+    cn: 'Flag of China', eu: 'Flag of the European Union', pl: 'Flag of Poland', ro: 'Flag of Romania',
+  };
 
   return (
     <img
       src={flag.src}
-      alt={flag.label}
-      className={`mx-1 inline-block h-[1.125em] w-[1.6875em] shrink-0 rounded-[2px] object-cover align-[-0.14em] shadow-[0_0_0_1px_rgba(0,0,0,0.15)] ${className}`}
+      alt={language === 'en' ? labels[code] : flag.label}
+      className={`mx-1 inline-block h-[1.125em] w-[1.6875em] shrink-0 rounded-[1px] object-cover align-[-0.14em] shadow-[0_0_0_0.5px_rgba(0,0,0,0.1)] ${className}`}
     />
   );
 }
+import { useTranslation } from '../../i18n';

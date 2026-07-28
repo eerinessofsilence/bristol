@@ -3,6 +3,7 @@ import { type FormEvent, useEffect, useRef, useState } from 'react';
 import { ApiError, createLead } from '../api/client';
 import type { CalculatorQuote } from '../types';
 import { Button } from './ui/Button';
+import { useTranslation } from '../i18n';
 
 type Props = {
   isOpen: boolean;
@@ -38,6 +39,7 @@ function normalizedPhone(value: string) {
 }
 
 export function ContactModal({ isOpen, quote, onClose }: Props) {
+  const { language, t } = useTranslation();
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('');
   const [phoneError, setPhoneError] = useState('');
@@ -64,7 +66,7 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
     event.preventDefault();
     const phone = normalizedPhone(form.phone);
     if (!ukrainianMobilePattern.test(phone)) {
-      setPhoneError('Вкажіть номер у форматі +380 XX XXX XX XX');
+      setPhoneError(t('Вкажіть номер у форматі +380 XX XXX XX XX', 'Enter a number in the format +380 XX XXX XX XX'));
       return;
     }
 
@@ -79,14 +81,14 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
       });
       setSubmissionSucceeded(true);
       setStatus(
-        `Заявку прийнято до опрацювання. Дякуємо, ${form.firstName}! Зателефонуємо найближчим часом.`,
+        t(`Заявку прийнято до опрацювання. Дякуємо, ${form.firstName}! Зателефонуємо найближчим часом.`, `Your request has been received. Thank you, ${form.firstName}! We will call you shortly.`),
       );
       setForm(initialForm);
     } catch (error) {
       setStatus(
         error instanceof ApiError
           ? error.message
-          : 'Не вдалося надіслати заявку. Перевірте з’єднання і спробуйте ще раз.',
+          : t('Не вдалося надіслати заявку. Перевірте з’єднання і спробуйте ще раз.', 'Could not send the request. Check your connection and try again.'),
       );
     } finally {
       setSubmitting(false);
@@ -110,12 +112,12 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
             id="contact-title"
             className="px-10 text-center text-xl font-bold tracking-tight sm:px-12 sm:text-2xl"
           >
-            {quote ? 'Уточнимо розрахунок' : 'Отримати консультацію'}
+            {quote ? t('Уточнимо розрахунок', 'Let’s confirm your estimate') : t('Отримати консультацію', 'Get a consultation')}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            aria-label="Закрити"
+            aria-label={t('Закрити', 'Close')}
             className="bg-soft hover:bg-line absolute top-1/2 right-0 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full transition"
           >
             <X size={18} strokeWidth={2.4} />
@@ -123,18 +125,18 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
         </div>
         <p className="text-ink-3 mt-3 text-center text-sm leading-5 text-balance">
           {quote
-            ? 'Залиште контакти — менеджер перевірить документи та код УКТЗЕД і уточнить суму платежів.'
-            : "Залиште контакти — менеджер зв'яжеться з вами і підбере оптимальне рішення для вашого вантажу."}
+            ? t('Залиште контакти — менеджер перевірить документи та код УКТЗЕД і уточнить суму платежів.', 'Leave your contact details—the manager will check the documents and UKT ZED code, then confirm the charges.')
+            : t("Залиште контакти — менеджер зв'яжеться з вами і підбере оптимальне рішення для вашого вантажу.", 'Leave your contact details—the manager will get in touch and find the best solution for your cargo.')}
         </p>
         {quote && (
           <div className="bg-soft mt-5 rounded-2xl p-4">
             <p className="text-ink-3 text-xs font-semibold tracking-wide uppercase">
-              Ваш розрахунок
+              {t('Ваш розрахунок', 'Your estimate')}
             </p>
             <p className="mt-1 text-2xl font-bold tracking-tight">{formatMoney(quote.total)}</p>
             <div className="text-ink-3 mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm">
-              <span>Код УКТ ЗЕД: {quote.productCode}</span>
-              <span>Вага: {quote.weightKg.toLocaleString('uk-UA')} кг</span>
+              <span>{t('Код УКТ ЗЕД', 'UKT ZED code')}: {quote.productCode}</span>
+              <span>{t('Вага', 'Weight')}: {quote.weightKg.toLocaleString(language === 'en' ? 'en-US' : 'uk-UA')} {t('кг', 'kg')}</span>
             </div>
           </div>
         )}
@@ -142,7 +144,7 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
             <div>
               <label htmlFor="firstName" className="field-label">
-                Ім'я
+                {t("Ім'я", 'First name')}
               </label>
               <input
                 ref={firstInputRef}
@@ -151,12 +153,12 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
                 required
                 value={form.firstName}
                 onChange={(event) => setForm({ ...form, firstName: event.target.value })}
-                placeholder="Ваше ім'я"
+                placeholder={t("Ваше ім'я", 'Your first name')}
               />
             </div>
             <div>
               <label htmlFor="lastName" className="field-label">
-                Прізвище
+                {t('Прізвище', 'Last name')}
               </label>
               <input
                 id="lastName"
@@ -164,13 +166,13 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
                 required
                 value={form.lastName}
                 onChange={(event) => setForm({ ...form, lastName: event.target.value })}
-                placeholder="Ваше прізвище"
+                placeholder={t('Ваше прізвище', 'Your last name')}
               />
             </div>
           </div>
           <div className="mt-4 sm:mt-5">
             <label htmlFor="phone" className="field-label">
-              Телефон
+              {t('Телефон', 'Phone')}
             </label>
             <input
               id="phone"
@@ -189,7 +191,7 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
               }}
               onBlur={() => {
                 if (form.phone && !ukrainianMobilePattern.test(normalizedPhone(form.phone))) {
-                  setPhoneError('Вкажіть номер у форматі +380 XX XXX XX XX');
+                  setPhoneError(t('Вкажіть номер у форматі +380 XX XXX XX XX', 'Enter a number in the format +380 XX XXX XX XX'));
                 }
               }}
               placeholder="+380 50 123 45 67"
@@ -202,7 +204,7 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
           </div>
           <div className="mt-4 sm:mt-5">
             <label htmlFor="email" className="field-label">
-              Email <span className="text-ink-3 font-normal">(необов'язково)</span>
+              Email <span className="text-ink-3 font-normal">{t('(необов\'язково)', '(optional)')}</span>
             </label>
             <input
               id="email"
@@ -214,10 +216,10 @@ export function ContactModal({ isOpen, quote, onClose }: Props) {
             />
           </div>
           <Button type="submit" icon={Send} disabled={submitting} className="mt-6 w-full">
-            {submitting ? 'Надсилаємо…' : quote ? 'Уточнити розрахунок' : 'Замовити консультацію'}
+            {submitting ? t('Надсилаємо…', 'Sending…') : quote ? t('Уточнити розрахунок', 'Confirm estimate') : t('Замовити консультацію', 'Request a consultation')}
           </Button>
           <p className="text-ink-3 mt-4 text-center text-xs leading-5 text-balance">
-            Натискаючи кнопку, ви погоджуєтесь на обробку персональних даних.
+            {t('Натискаючи кнопку, ви погоджуєтесь на обробку персональних даних.', 'By clicking the button, you agree to the processing of personal data.')}
           </p>
           <p
             aria-live="polite"

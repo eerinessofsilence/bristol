@@ -4,6 +4,7 @@ import { ThinkingOrb, type OrbState } from 'thinking-orbs';
 import { ApiError, suggestProductCodes } from '../api/client';
 import type { ProductCodeSuggestion } from '../types';
 import { Button } from './ui/Button';
+import { useTranslation } from '../i18n';
 
 type Props = {
   isOpen: boolean;
@@ -28,39 +29,23 @@ const acceptedImageSuffixes = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif',
 const maxImageSize = 10 * 1024 * 1024;
 const orbStates: OrbState[] = ['searching', 'solving', 'composing'];
 
-const confidenceLabels = {
-  high: 'Висока відповідність',
-  medium: 'Ймовірний варіант',
-  low: 'Потребує уточнення',
-};
-
-const fallbackMissingDetails = [
-  'Надайте фото самого товару крупним планом, поза упаковкою чи контейнером.',
-  'Вкажіть назву, призначення та матеріал або склад товару.',
-];
-
-const orbLabels: Record<OrbState, string> = {
-  working: 'Готуємо аналіз…',
-  searching: 'Розпізнаємо товар на фото…',
-  solving: 'Зіставляємо характеристики…',
-  listening: 'Читаємо опис…',
-  composing: 'Формуємо варіанти коду…',
-  shaping: 'Уточнюємо результат…',
-};
-
-function getAnalysisErrorMessage(error: unknown) {
+function getAnalysisErrorMessage(error: unknown, t: (ukrainian: string, english: string) => string) {
   if (!(error instanceof ApiError)) {
-    return 'Не вдалося проаналізувати фото. Перевірте з’єднання і спробуйте ще раз.';
+    return t('Не вдалося проаналізувати фото. Перевірте з’єднання і спробуйте ще раз.', 'Could not analyze the photos. Check your connection and try again.');
   }
 
   if (error.status === 503) {
-    return 'Сервіс AI-підбору тимчасово недоступний. Спробуйте ще раз трохи пізніше.';
+    return t('Сервіс AI-підбору тимчасово недоступний. Спробуйте ще раз трохи пізніше.', 'The AI matching service is temporarily unavailable. Please try again later.');
   }
 
   return error.message;
 }
 
 export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
+  const { t } = useTranslation();
+  const confidenceLabels = { high: t('Висока відповідність', 'High confidence'), medium: t('Ймовірний варіант', 'Likely option'), low: t('Потребує уточнення', 'Needs clarification') };
+  const fallbackMissingDetails = [t('Надайте фото самого товару крупним планом, поза упаковкою чи контейнером.', 'Provide a close-up photo of the product itself, outside its packaging or container.'), t('Вкажіть назву, призначення та матеріал або склад товару.', 'Specify the product name, intended use and material or composition.')];
+  const orbLabels: Record<OrbState, string> = { working: t('Готуємо аналіз…', 'Preparing analysis…'), searching: t('Розпізнаємо товар на фото…', 'Identifying the product in the photo…'), solving: t('Зіставляємо характеристики…', 'Matching characteristics…'), listening: t('Читаємо опис…', 'Reading the description…'), composing: t('Формуємо варіанти коду…', 'Preparing code options…'), shaping: t('Уточнюємо результат…', 'Refining the result…') };
   const [images, setImages] = useState<SelectedImage[]>([]);
   const [description, setDescription] = useState('');
   const [result, setResult] = useState<ProductCodeSuggestion | null>(null);
@@ -135,7 +120,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
     );
 
     if (validFiles.length !== files.length) {
-      setError('Додайте JPG, PNG, WEBP, GIF, HEIC або HEIF до 10 МБ.');
+      setError(t('Додайте JPG, PNG, WEBP, GIF, HEIC або HEIF до 10 МБ.', 'Add JPG, PNG, WEBP, GIF, HEIC or HEIF images up to 10 MB.'));
     } else {
       setError('');
     }
@@ -184,7 +169,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
       );
       setResult(suggestion);
     } catch (analysisError) {
-      setError(getAnalysisErrorMessage(analysisError));
+      setError(getAnalysisErrorMessage(analysisError, t));
     } finally {
       setIsAnalyzing(false);
     }
@@ -202,16 +187,16 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
         role="dialog"
         aria-modal="true"
         aria-labelledby={isUploadStep ? 'product-code-finder-title' : undefined}
-        aria-label={isUploadStep ? undefined : 'Підбір коду УКТ ЗЕД за фото'}
+        aria-label={isUploadStep ? undefined : t('Підбір коду УКТ ЗЕД за фото', 'UKT ZED code selection by photo')}
         className="relative my-auto max-h-[calc(100dvh-1.5rem)] w-full max-w-[720px] overflow-y-auto rounded-[24px] bg-white p-5 shadow-2xl sm:max-h-[calc(100dvh-2.5rem)] sm:p-8"
       >
         <div className="flex items-center justify-between gap-3">
-          <span className="technical-label text-[#1d9e75]">AI / попередній підбір</span>
+          <span className="technical-label text-[#1d9e75]">AI / {t('попередній підбір', 'preliminary matching')}</span>
           <button
             type="button"
             onClick={closeModal}
             disabled={isAnalyzing}
-            aria-label="Закрити"
+            aria-label={t('Закрити', 'Close')}
             className="bg-soft hover:bg-line grid size-9 shrink-0 cursor-pointer place-items-center rounded-full transition disabled:cursor-not-allowed disabled:opacity-50"
           >
             <X size={18} strokeWidth={2.4} />
@@ -223,11 +208,10 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
               id="product-code-finder-title"
               className="text-xl font-bold tracking-tight sm:text-2xl"
             >
-              Визначити код УКТ ЗЕД за фото
+              {t('Визначити код УКТ ЗЕД за фото', 'Identify a UKT ZED code by photo')}
             </h2>
             <p className="text-ink-3 mt-2 max-w-[580px] text-sm leading-6">
-              Додайте до трьох фото товару. Фото етикетки, складу або технічних характеристик
-              допоможе отримати точніший результат.
+              {t('Додайте до трьох фото товару. Фото етикетки, складу або технічних характеристик допоможе отримати точніший результат.', 'Add up to three product photos. A photo of the label, composition or technical specifications helps produce a more accurate result.')}
             </p>
           </div>
         )}
@@ -268,10 +252,10 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                   <ImagePlus size={21} />
                 </span>
                 <span className="mt-4 block text-sm font-semibold">
-                  Перетягніть фото сюди або виберіть з пристрою
+                  {t('Перетягніть фото сюди або виберіть з пристрою', 'Drag photos here or choose them from your device')}
                 </span>
                 <span className="text-ink-3 mt-1 block text-xs">
-                  JPG, PNG, WEBP, GIF, HEIC або HEIF · до 10 МБ · максимум 3 фото
+                  {t('JPG, PNG, WEBP, GIF, HEIC або HEIF · до 10 МБ · максимум 3 фото', 'JPG, PNG, WEBP, GIF, HEIC or HEIF · up to 10 MB · maximum 3 photos')}
                 </span>
               </span>
             </label>
@@ -286,19 +270,19 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                     <button
                       type="button"
                       className="absolute inset-0 cursor-zoom-in"
-                      aria-label={`Відкрити фото товару ${index + 1} на весь екран`}
+                      aria-label={`${t('Відкрити фото товару', 'Open product photo')} ${index + 1} ${t('на весь екран', 'full screen')}`}
                       onClick={() => setActivePreview(image)}
                     >
                       <img
                         src={image.preview}
-                        alt={`Фото товару ${index + 1}`}
+                        alt={`${t('Фото товару', 'Product photo')} ${index + 1}`}
                         className="size-full object-cover"
                       />
                     </button>
                     <button
                       type="button"
                       onClick={() => removeImage(image.preview)}
-                      aria-label={`Видалити фото ${index + 1}`}
+                      aria-label={`${t('Видалити фото', 'Delete photo')} ${index + 1}`}
                       className="absolute top-2 right-2 z-10 grid size-8 cursor-pointer place-items-center rounded-full bg-white/90 text-[#712b13] shadow-sm backdrop-blur"
                     >
                       <Trash2 size={14} />
@@ -310,14 +294,14 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
 
             <div className="mt-5">
               <label className="field-label" htmlFor="product-description">
-                Короткий опис <span className="text-ink-3 font-normal">(необов’язково)</span>
+                {t('Короткий опис', 'Brief description')} <span className="text-ink-3 font-normal">{t('(необов’язково)', '(optional)')}</span>
               </label>
               <textarea
                 id="product-description"
                 className="field-control min-h-24 resize-y py-3 leading-6"
                 value={description}
                 maxLength={1000}
-                placeholder="Наприклад: жіноча куртка, 100% поліестер, для повсякденного носіння"
+                placeholder={t('Наприклад: жіноча куртка, 100% поліестер, для повсякденного носіння', 'For example: women’s jacket, 100% polyester, for everyday wear')}
                 onChange={(event) => setDescription(event.target.value)}
               />
             </div>
@@ -334,7 +318,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
             <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-ink-3 flex items-center gap-2 text-xs leading-4">
                 <Info className="text-ink-2 shrink-0" size={16} />
-                Фото надсилаються в OpenAI лише для аналізу.
+                {t('Фото надсилаються в OpenAI лише для аналізу.', 'Photos are sent to OpenAI only for analysis.')}
               </p>
               <Button
                 type="button"
@@ -343,7 +327,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                 disabled={images.length === 0}
                 onClick={analyze}
               >
-                Проаналізувати фото
+                {t('Проаналізувати фото', 'Analyze photos')}
               </Button>
             </div>
           </>
@@ -379,7 +363,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                 ))}
               </div>
               <p className="mt-2 text-center text-sm text-white/55">
-                Зазвичай це займає до хвилини.
+                {t('Зазвичай це займає до хвилини.', 'This usually takes up to a minute.')}
               </p>
             </div>
           </div>
@@ -389,7 +373,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
           <div className="mt-7">
             {result.productIdentified ? (
               <div className="rounded-2xl border border-[#1d9e75]/20 bg-[#e8f6f1] p-4">
-                <span className="technical-label text-[#085041]/55">Розпізнаний товар</span>
+                <span className="technical-label text-[#085041]/55">{t('Розпізнаний товар', 'Identified product')}</span>
                 <p className="mt-1 font-semibold text-[#085041]">{result.identifiedProduct}</p>
               </div>
             ) : (
@@ -399,12 +383,12 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                     <ImageOff size={21} />
                   </span>
                   <div className="min-w-0">
-                    <h3 className="text-ink text-lg leading-7 font-semibold">Товар не визначено</h3>
+                    <h3 className="text-ink text-lg leading-7 font-semibold">{t('Товар не визначено', 'Product not identified')}</h3>
                     <p className="text-ink-3 mt-1 text-sm leading-6">{result.identifiedProduct}</p>
                   </div>
                 </div>
                 <div className="border-line mt-5 border-t pt-5">
-                  <h3 className="text-ink font-semibold">Що додати для точного підбору</h3>
+                  <h3 className="text-ink font-semibold">{t('Що додати для точного підбору', 'What to add for an accurate match')}</h3>
                   <ul className="mt-3 space-y-2">
                     {(result.missingDetails.length > 0
                       ? result.missingDetails
@@ -454,8 +438,8 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                           }`}
                         >
                           {candidate.calculatorSupported
-                            ? 'Код доступний у довіднику калькулятора'
-                            : 'Для цього коду може знадобитися ручний розрахунок'}
+                            ? t('Код доступний у довіднику калькулятора', 'Code is available in the calculator directory')
+                            : t('Для цього коду може знадобитися ручний розрахунок', 'This code may require a manual calculation')}
                         </p>
                       </div>
                       <Button
@@ -469,7 +453,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
                           closeModal();
                         }}
                       >
-                        Використати код
+                        {t('Використати код', 'Use code')}
                       </Button>
                     </div>
                   </article>
@@ -479,10 +463,9 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
 
             {result.productIdentified && result.candidates.length === 0 && (
               <div className="mt-4 rounded-2xl border border-[#d89a30]/25 bg-[#fff8e8] p-4">
-                <p className="text-sm font-semibold text-[#734d0b]">Код не підтверджено</p>
+                <p className="text-sm font-semibold text-[#734d0b]">{t('Код не підтверджено', 'Code not confirmed')}</p>
                 <p className="mt-1 text-xs leading-5 text-[#734d0b]/80">
-                  AI не знайшов варіант, який є у перевіреному довіднику калькулятора. Додайте
-                  точніший опис або інші фото товару.
+                  {t('AI не знайшов варіант, який є у перевіреному довіднику калькулятора. Додайте точніший опис або інші фото товару.', 'AI did not find an option in the verified calculator directory. Add a more precise description or other product photos.')}
                 </p>
               </div>
             )}
@@ -491,7 +474,7 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
               result.needsMoreInfo &&
               result.missingDetails.length > 0 && (
                 <div className="mt-4 rounded-2xl border border-[#d89a30]/25 bg-[#fff8e8] p-4">
-                  <p className="text-sm font-semibold text-[#734d0b]">Що варто уточнити</p>
+                  <p className="text-sm font-semibold text-[#734d0b]">{t('Що варто уточнити', 'What to clarify')}</p>
                   <ul className="mt-2 space-y-1 text-xs leading-5 text-[#734d0b]/80">
                     {result.missingDetails.map((detail) => (
                       <li key={detail}>• {detail}</li>
@@ -506,11 +489,11 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
             >
               {result.productIdentified ? (
                 <Button type="button" variant="outline" size="compact" onClick={resetAnalysis}>
-                  Перевірити інший товар
+                  {t('Перевірити інший товар', 'Check another product')}
                 </Button>
               ) : (
                 <Button type="button" icon={ImagePlus} variant="primary" onClick={resetAnalysis}>
-                  Додати інші фото
+                  {t('Додати інші фото', 'Add other photos')}
                 </Button>
               )}
             </div>
@@ -522,20 +505,20 @@ export function ProductCodeFinderModal({ isOpen, onClose, onSelect }: Props) {
           className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/90 p-5 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
-          aria-label="Перегляд фото товару"
+          aria-label={t('Перегляд фото товару', 'Product photo preview')}
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) setActivePreview(null);
           }}
         >
           <img
             src={activePreview.preview}
-            alt="Збільшене фото товару"
+            alt={t('Збільшене фото товару', 'Enlarged product photo')}
             className="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
           />
           <button
             type="button"
             onClick={() => setActivePreview(null)}
-            aria-label="Закрити перегляд фото"
+            aria-label={t('Закрити перегляд фото', 'Close photo preview')}
             className="absolute top-5 right-5 grid size-11 cursor-pointer place-items-center rounded-full bg-white/90 text-[#141c1a] shadow-lg transition hover:bg-white"
           >
             <X size={22} strokeWidth={2.4} />

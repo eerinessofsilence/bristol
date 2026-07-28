@@ -12,6 +12,7 @@ import { AlertCircle, Anchor, RefreshCw, Warehouse } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { feature } from 'topojson-client';
 import type { GeometryCollection, Topology } from 'topojson-specification';
+import { useTranslation } from '../i18n';
 
 const TOPOLOGY_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json';
 const MAP_WIDTH = 920;
@@ -116,6 +117,7 @@ function getCountryStroke(piece: CountryPiece) {
 }
 
 function MapSkeleton() {
+  const { t } = useTranslation();
   return (
     <div
       className="grid aspect-[23/14] min-h-[320px] place-items-center rounded-[22px] bg-[#f4f4f1]"
@@ -124,13 +126,18 @@ function MapSkeleton() {
     >
       <div className="flex items-center gap-3 text-sm font-medium text-[#6a7873]">
         <RefreshCw className="animate-spin" size={18} aria-hidden="true" />
-        Завантажуємо мапу маршрутів…
+        {t('Завантажуємо мапу маршрутів…', 'Loading route map…')}
       </div>
     </div>
   );
 }
 
 export function CoverageMap() {
+  const { language, t } = useTranslation();
+  const ports = language === 'en'
+    ? PORTS.map((port, index) => ({ ...port, name: index === 0 ? 'Gdańsk' : 'Constanța' }))
+    : PORTS;
+  const warehouse = language === 'en' ? { ...WAREHOUSE, name: 'Client warehouse' } : WAREHOUSE;
   const [countries, setCountries] = useState<CountryFeature[] | null>(null);
   const [loadAttempt, setLoadAttempt] = useState(0);
   const [loadError, setLoadError] = useState(false);
@@ -191,7 +198,7 @@ export function CoverageMap() {
     );
     const path = geoPath(projection);
     const pieces = countries.flatMap(splitCountryPolygons);
-    const routes: Array<Feature<LineString>> = PORTS.map((port) => ({
+    const routes: Array<Feature<LineString>> = ports.map((port) => ({
       type: 'Feature',
       properties: {},
       geometry: {
@@ -201,19 +208,18 @@ export function CoverageMap() {
     }));
 
     return { projection, path, pieces, routes };
-  }, [countries]);
+  }, [countries, ports]);
 
   return (
     <section id="operate" className="scroll-mt-10 bg-white py-20 md:py-24">
       <div className="page-wrap">
         <div className="mx-auto max-w-3xl text-center" data-reveal>
           <span className="section-tag">
-            <span className="section-index">10 /</span>&nbsp; Географія
+            <span className="section-index">10 /</span>&nbsp; {t('Географія', 'Geography')}
           </span>
-          <h2 className="section-title mt-5">Маршрут вантажу до України</h2>
+          <h2 className="section-title mt-5">{t('Маршрут вантажу до України', 'Cargo route to Ukraine')}</h2>
           <p className="text-ink-2 mt-5 text-base leading-6 sm:text-lg sm:leading-7">
-            Координуємо прибуття вантажу через порти Польщі та Румунії, виконуємо митне оформлення в
-            оформлення в Україні й організовуємо доставку до складу клієнта.
+            {t('Координуємо прибуття вантажу через порти Польщі та Румунії, виконуємо митне оформлення в Україні й організовуємо доставку до складу клієнта.', 'We coordinate cargo arrival through Polish and Romanian ports, handle customs clearance in Ukraine and arrange delivery to the client’s warehouse.')}
           </p>
         </div>
 
@@ -223,14 +229,14 @@ export function CoverageMap() {
           aria-labelledby="routes-map-title"
         >
           <figcaption id="routes-map-title" className="sr-only">
-            Мапа маршрутів від портів Гданська та Констанци до складу клієнта в Україні
+            {t('Мапа маршрутів від портів Гданська та Констанци до складу клієнта в Україні', 'Map of routes from Gdańsk and Constanța ports to the client’s warehouse in Ukraine')}
           </figcaption>
 
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-[#085041]/10 px-2 pb-4">
             <span className="technical-label text-[#085041]/50">Route control / CGC-UA-09</span>
             <span className="badge badge-sm border-[#1d9e75]/20 bg-[#e1f5ee] text-[#085041]">
               <span className="size-1.5 rounded-full bg-[#1d9e75]" aria-hidden="true" />
-              Митний контроль в Україні
+              {t('Митний контроль в Україні', 'Customs clearance in Ukraine')}
             </span>
           </div>
 
@@ -243,7 +249,7 @@ export function CoverageMap() {
             >
               <div>
                 <AlertCircle className="mx-auto text-[#d85a30]" size={28} aria-hidden="true" />
-                <p className="mt-3 font-semibold text-[#712b13]">Не вдалося завантажити мапу</p>
+                <p className="mt-3 font-semibold text-[#712b13]">{t('Не вдалося завантажити мапу', 'Could not load the map')}</p>
                 <button
                   type="button"
                   className="mt-4 cursor-pointer rounded-full bg-[#712b13] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#5f220f]"
@@ -252,7 +258,7 @@ export function CoverageMap() {
                     setLoadAttempt((attempt) => attempt + 1);
                   }}
                 >
-                  Спробувати ще раз
+                  {t('Спробувати ще раз', 'Try again')}
                 </button>
               </div>
             </div>
@@ -266,11 +272,9 @@ export function CoverageMap() {
                 role="img"
                 aria-labelledby="map-svg-title map-svg-description"
               >
-                <title id="map-svg-title">Маршрути через Гданськ і Констанцу</title>
+                <title id="map-svg-title">{t('Маршрути через Гданськ і Констанцу', 'Routes through Gdańsk and Constanța')}</title>
                 <desc id="map-svg-description">
-                  Польща та Румунія позначені як країни координації. Україна, включно з Кримом,
-                  Кримом, позначена як країна митного оформлення. Пунктирні лінії ведуть від портів
-                  до складу клієнта в Україні.
+                  {t('Польща та Румунія позначені як країни координації. Україна, включно з Кримом, позначена як країна митного оформлення. Пунктирні лінії ведуть від портів до складу клієнта в Україні.', 'Poland and Romania are marked as coordination countries. Ukraine, including Crimea, is marked as the customs-clearance country. Dashed lines lead from the ports to the client’s warehouse in Ukraine.')}
                 </desc>
                 <defs>
                   <filter id="map-point-shadow" x="-100%" y="-100%" width="300%" height="300%">
@@ -309,7 +313,7 @@ export function CoverageMap() {
                   ))}
                 </g>
 
-                {PORTS.map((port) => {
+                  {ports.map((port) => {
                   const point = map.projection(port.coordinates);
                   if (!point) return null;
                   const [x, y] = point;
@@ -341,7 +345,7 @@ export function CoverageMap() {
                 })}
 
                 {(() => {
-                  const point = map.projection(WAREHOUSE.coordinates);
+                  const point = map.projection(warehouse.coordinates);
                   if (!point) return null;
                   const [x, y] = point;
 
@@ -372,8 +376,8 @@ export function CoverageMap() {
                         filter="url(#map-point-shadow)"
                       />
                       <text
-                        x={WAREHOUSE.labelOffset[0]}
-                        y={WAREHOUSE.labelOffset[1]}
+                        x={warehouse.labelOffset[0]}
+                        y={warehouse.labelOffset[1]}
                         fill="#141C1A"
                         fontSize="18"
                         fontWeight="700"
@@ -382,11 +386,11 @@ export function CoverageMap() {
                         strokeWidth="5"
                         strokeLinejoin="round"
                       >
-                        {WAREHOUSE.name}
+                        {warehouse.name}
                       </text>
                       <text
-                        x={WAREHOUSE.labelOffset[0]}
-                        y={WAREHOUSE.labelOffset[1] + 18}
+                        x={warehouse.labelOffset[0]}
+                        y={warehouse.labelOffset[1] + 18}
                         fill="#085041"
                         fontFamily="'Unbounded', 'Sora', sans-serif"
                         fontSize="10"
@@ -397,7 +401,7 @@ export function CoverageMap() {
                         strokeWidth="4"
                         strokeLinejoin="round"
                       >
-                        МИТНЕ ОФОРМЛЕННЯ
+                        {t('МИТНЕ ОФОРМЛЕННЯ', 'CUSTOMS CLEARANCE')}
                       </text>
                     </g>
                   );
@@ -408,33 +412,33 @@ export function CoverageMap() {
 
           <div
             className="mt-4 grid gap-3 border-t border-[#d3d1c7]/70 px-2 pt-5 text-xs leading-5 text-[#3a4744] sm:grid-cols-2 lg:grid-cols-4"
-            aria-label="Легенда мапи"
+            aria-label={t('Легенда мапи', 'Map legend')}
           >
             <div className="flex items-center gap-2.5">
               <span className="grid size-7 place-items-center rounded-full bg-[#faece7] text-[#d85a30]">
                 <Anchor size={14} strokeWidth={2.5} aria-hidden="true" />
               </span>
-              Порт координації
+              {t('Порт координації', 'Coordination port')}
             </div>
             <div className="flex items-center gap-2.5">
               <span className="grid size-7 place-items-center rounded-full bg-[#e1f5ee] text-[#085041]">
                 <Warehouse size={14} strokeWidth={2.5} aria-hidden="true" />
               </span>
-              Склад клієнта / митне оформлення
+              {t('Склад клієнта / митне оформлення', 'Client warehouse / customs clearance')}
             </div>
             <div className="flex items-center gap-2.5">
               <span
                 className="size-4 shrink-0 rounded-[4px] border-2 border-[#d85a30] bg-[#faece7]"
                 aria-hidden="true"
               />
-              Країна координації
+              {t('Країна координації', 'Coordination country')}
             </div>
             <div className="flex items-center gap-2.5">
               <span
                 className="size-4 shrink-0 rounded-[4px] border-2 border-[#1d9e75] bg-[#e1f5ee]"
                 aria-hidden="true"
               />
-              Україна — митне оформлення
+              {t('Україна — митне оформлення', 'Ukraine — customs clearance')}
             </div>
           </div>
         </figure>
