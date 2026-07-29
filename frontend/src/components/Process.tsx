@@ -47,7 +47,7 @@ function getRouteSteps(t: (ukrainian: string, english: string) => string): Route
     title: t('Митне оформлення', 'Customs clearance'),
     titleKey: 'clearance',
     description: t('Виконують фахівці ClearGateCustoms', 'Handled by ClearGateCustoms specialists'),
-    role: t('Оформлюємо самі', 'Handled in-house'),
+    role: t('Оформлюємо', 'Handled in-house'),
     tone: 'teal',
   },
   {
