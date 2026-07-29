@@ -21,9 +21,6 @@ export function Hero({ onRequestConsultation }: Props) {
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const desktopPointer = window.matchMedia(
-      '(min-width: 768px) and (hover: hover) and (pointer: fine)',
-    );
     let timer: number | undefined;
 
     const stopSlideshow = () => {
@@ -37,9 +34,7 @@ export function Hero({ onRequestConsultation }: Props) {
       stopSlideshow();
 
       if (
-        reducedMotion.matches ||
-        !desktopPointer.matches ||
-        document.visibilityState !== 'visible'
+        reducedMotion.matches || document.visibilityState !== 'visible'
       ) {
         return;
       }
@@ -60,13 +55,11 @@ export function Hero({ onRequestConsultation }: Props) {
     startSlideshow();
     document.addEventListener('visibilitychange', handleVisibilityChange);
     reducedMotion.addEventListener('change', startSlideshow);
-    desktopPointer.addEventListener('change', startSlideshow);
 
     return () => {
       stopSlideshow();
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       reducedMotion.removeEventListener('change', startSlideshow);
-      desktopPointer.removeEventListener('change', startSlideshow);
     };
   }, []);
 

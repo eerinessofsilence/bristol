@@ -42,8 +42,8 @@ export function Intro() {
           data-reveal
         >
           <img
-            src="/images/logistics-cgc-ship.png"
-            alt={t('Контейнеровоз ClearGateCustoms у морі', 'A ClearGateCustoms container ship at sea')}
+            src="/images/logistics-cgc-ship-aerial.webp"
+            alt={t('Контейнеровоз ClearGateCustoms у відкритому морі', 'A ClearGateCustoms container ship on the open sea')}
             className="h-full w-full object-cover"
             loading="lazy"
           />

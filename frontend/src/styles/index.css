@@ -528,9 +528,6 @@
     will-change: auto;
   }
 
-  .hero-parallax-image {
-    transition: none;
-  }
 }
 
 @media (max-width: 640px) {
