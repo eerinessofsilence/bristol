@@ -38,7 +38,7 @@ export function Intro() {
         </div>
 
         <div
-          className="h-[420px] overflow-hidden rounded-[18px] sm:h-[560px] lg:h-auto"
+          className="h-[420px] overflow-hidden rounded-[18px] sm:h-[560px] lg:h-auto lg:aspect-[0.9]"
           data-reveal
         >
           <img

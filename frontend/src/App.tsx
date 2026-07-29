@@ -75,7 +75,7 @@ export function App() {
         <CoverageMap />
         <Faq />
       </main>
-      <Footer />
+      <Footer onRequestConsultation={() => setIsConsultationOpen(true)} />
       {!isConsultationOpen && contactQuote === null && !isQuickContactOpen && (
         <button
           type="button"
