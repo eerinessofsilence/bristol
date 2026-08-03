@@ -1,91 +1,57 @@
-# ClearGateCustoms
+# ClearGate Customs
 
-ClearGateCustoms is a full-featured landing page for a customs brokerage service. It includes an AI-assisted UKT ZED code selector, a lead submission flow, optional email notifications, and PostgreSQL storage for all submitted requests.
+**A conversion-focused customs brokerage website that helps Ukrainian importers identify a likely UKT ZED code and send a structured clearance request.**
 
-## Tech Stack
+[Live Demo](https://portway-phi.vercel.app) · [API Docs](http://localhost:8000/docs) · [Source](https://github.com/eerinessofsilence/cleargatecustoms)
 
-- Frontend: React, TypeScript, Vite, and Tailwind CSS
-- Backend: FastAPI, SQLAlchemy, and Alembic
-- Database: PostgreSQL
-- Infrastructure: Docker Compose
+![ClearGate Customs landing page](docs/images/overview.jpg)
 
-## Project Structure
+> **Status:** portfolio-ready MVP. The lead flow and database persistence are implemented; production use still requires legal review, monitoring, backups, and hardened deployment settings.
 
-```text
-frontend/   React + TypeScript + Vite + Tailwind CSS
-backend/    FastAPI + SQLAlchemy + Alembic + PostgreSQL
-compose.yaml
+## What it delivers
+
+- Turns an unstructured product description into suggested UKT ZED classifications.
+- Captures qualified brokerage requests instead of losing them in generic contact forms.
+- Stores every lead in PostgreSQL, with optional SMTP notifications for the team.
+- Gives operators a typed FastAPI API and interactive Swagger documentation.
+- Ships the frontend, API, migrations, and database as one Docker Compose stack.
+
+## How it works
+
+```mermaid
+flowchart LR
+    U[Importer] --> W[React website]
+    W --> A[FastAPI]
+    A --> C[AI-assisted code selector]
+    A --> D[(PostgreSQL)]
+    A --> M[Optional email notification]
 ```
 
-## Quick Start with Docker
+The AI result is guidance, not a binding customs ruling. A broker should verify the final classification.
+
+## Quick start
 
 ```bash
+git clone https://github.com/eerinessofsilence/cleargatecustoms.git
+cd cleargatecustoms
 docker compose up --build
 ```
 
-After startup, the services are available at:
+Open `http://localhost:5173`. The website should load, while the API health and Swagger UI are available at `http://localhost:8000` and `http://localhost:8000/docs`.
 
-- Website: http://localhost:5173
-- API: http://localhost:8000
-- Swagger UI: http://localhost:8000/docs
+For AI classification and email notifications, copy the backend environment template and add server-side credentials. Detailed local setup and configuration live in [`backend/.env.example`](backend/.env.example) and [`frontend/.env.example`](frontend/.env.example).
 
-## Local Development
-
-### PostgreSQL
+## Quality and security
 
 ```bash
-docker compose up db -d
+cd frontend && npm run lint && npm run format:check && npm run build
+cd ../backend && pytest
 ```
 
-### Backend
+- Keep `OPENAI_API_KEY`, SMTP credentials, and database passwords out of Git.
+- Restrict CORS, rotate secrets, enable TLS, and configure backups before deployment.
+- Rate limiting, abuse protection, observability, and a formal security audit are not included yet.
 
-```bash
-cd backend
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-dev.txt
-cp .env.example .env
-alembic upgrade head
-uvicorn app.main:app --reload
-```
+## Project status and license
 
-### AI-Assisted UKT ZED Code Selection
-
-Add a server-side key to `backend/.env`:
-
-```dotenv
-OPENAI_API_KEY=your_new_key
-OPENAI_MODEL=gpt-5.6
-```
-
-Never expose the API key in the frontend or commit the `.env` file. With Docker, pass the key through the environment:
-
-```bash
-OPENAI_API_KEY=your_new_key docker compose up --build
-```
-
-### Frontend
-
-```bash
-cd frontend
-npm install
-cp .env.example .env
-npm run dev
-```
-
-## Lead Email Notifications
-
-Leads are always stored in PostgreSQL. To also receive them by email, configure the SMTP settings in `backend/.env` using `backend/.env.example` as a template, then set:
-
-```dotenv
-EMAIL_NOTIFICATIONS_ENABLED=true
-```
-
-For Google Workspace, use `SMTP_HOST=smtp.gmail.com`, port `587`, TLS, and an app password. Set `LEAD_NOTIFICATION_EMAIL` to a dedicated inbox if needed. SMTP delivery failures are logged, but do not prevent the lead from being saved.
-
-## Checks
-
-```bash
-cd frontend && npm run build && npm run lint && npm run format:check
-cd backend && pytest
-```
+The repository is public for portfolio and evaluation purposes. No open-source license is currently included, so no permission for reuse is granted by default.
