@@ -33,15 +33,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     const pageTitle = isEnglish
       ? 'ClearGateCustoms — customs clearance for cargo from China and Europe'
       : 'ClearGateCustoms — митне оформлення вантажів з Китаю та Європи';
-    const socialTitle = isEnglish
-      ? 'ClearGateCustoms — customs clearance and logistics'
-      : 'ClearGateCustoms — митне оформлення та логістика';
+    const socialTitle = 'ClearGateCustoms';
     const description = isEnglish
       ? 'Customs clearance for cargo from China and Europe, with delivery coordinated through Gdańsk and Constanța to warehouses in Ukraine.'
       : 'Митне оформлення вантажів з Китаю та Європи. Координуємо доставку через порти Гданська й Констанци до складу в Україні.';
-    const imageAlt = isEnglish
-      ? 'ClearGateCustoms — customs clearance and logistics for cargo from China and Europe'
-      : 'ClearGateCustoms — митне оформлення та логістика вантажів з Китаю та Європи';
+    const imageAlt = isEnglish ? 'ClearGateCustoms logo' : 'Логотип ClearGateCustoms';
 
     document.title = pageTitle;
     setMetaContent('meta[name="description"]', description);
