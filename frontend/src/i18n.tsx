@@ -12,6 +12,11 @@ const I18nContext = createContext<I18nContextValue | null>(null);
 
 const storageKey = 'cleargatecustoms-language';
 
+function setMetaContent(selector: string, content: string) {
+  const meta = document.querySelector<HTMLMetaElement>(selector);
+  if (meta) meta.content = content;
+}
+
 function getInitialLanguage(): Language {
   const savedLanguage = window.localStorage.getItem(storageKey);
   if (savedLanguage === 'uk' || savedLanguage === 'en') return savedLanguage;
@@ -24,17 +29,30 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = language;
     window.localStorage.setItem(storageKey, language);
-    const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-    if (description) {
-      description.content =
-        language === 'en'
-          ? 'ClearGateCustoms specialists handle customs clearance and coordinate logistics through Gdańsk and Constanța ports to the client’s warehouse in Ukraine.'
-          : 'Митне оформлення вантажів виконують власні фахівці ClearGateCustoms. Організовуємо супутню логістику — доставку через порти Гданська й Констанци до складу клієнта в Україні.';
-    }
-    document.title =
-      language === 'en'
-        ? 'ClearGateCustoms — customs clearance for cargo from China and Europe'
-        : 'ClearGateCustoms — митне оформлення вантажів з Китаю та Європи';
+    const isEnglish = language === 'en';
+    const pageTitle = isEnglish
+      ? 'ClearGateCustoms — customs clearance for cargo from China and Europe'
+      : 'ClearGateCustoms — митне оформлення вантажів з Китаю та Європи';
+    const socialTitle = isEnglish
+      ? 'ClearGateCustoms — customs clearance and logistics'
+      : 'ClearGateCustoms — митне оформлення та логістика';
+    const description = isEnglish
+      ? 'Customs clearance for cargo from China and Europe, with delivery coordinated through Gdańsk and Constanța to warehouses in Ukraine.'
+      : 'Митне оформлення вантажів з Китаю та Європи. Координуємо доставку через порти Гданська й Констанци до складу в Україні.';
+    const imageAlt = isEnglish
+      ? 'ClearGateCustoms — customs clearance and logistics for cargo from China and Europe'
+      : 'ClearGateCustoms — митне оформлення та логістика вантажів з Китаю та Європи';
+
+    document.title = pageTitle;
+    setMetaContent('meta[name="description"]', description);
+    setMetaContent('meta[property="og:title"]', socialTitle);
+    setMetaContent('meta[property="og:description"]', description);
+    setMetaContent('meta[property="og:locale"]', isEnglish ? 'en_US' : 'uk_UA');
+    setMetaContent('meta[property="og:locale:alternate"]', isEnglish ? 'uk_UA' : 'en_US');
+    setMetaContent('meta[property="og:image:alt"]', imageAlt);
+    setMetaContent('meta[name="twitter:title"]', socialTitle);
+    setMetaContent('meta[name="twitter:description"]', description);
+    setMetaContent('meta[name="twitter:image:alt"]', imageAlt);
   }, [language]);
 
   const value = useMemo(
