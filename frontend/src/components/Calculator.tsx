@@ -241,7 +241,7 @@ export function Calculator({ onContact }: Props) {
                     autoComplete="off"
                     maxLength={10}
                     className="field-control min-w-0 flex-1"
-                    placeholder={t('Наприклад, 0201203000', 'For example, 0201203000')}
+                    placeholder={t('Наприклад, 0202309000', 'For example, 0202309000')}
                     onChange={(event) =>
                       setProductCode(event.target.value.replace(/\D/g, '').slice(0, 10))
                     }
