@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import smtplib
+import time
 from email.message import EmailMessage
 from html import escape
 
@@ -9,6 +10,8 @@ from app.core.config import settings
 from app.models.lead import Lead
 
 logger = logging.getLogger(__name__)
+
+SMTP_SEND_ATTEMPTS = 3
 
 
 def send_lead_notification(lead: Lead) -> None:
@@ -59,11 +62,31 @@ def send_lead_notification(lead: Lead) -> None:
         subtype="html",
     )
 
-    try:
-        with smtplib.SMTP(settings.smtp_host, settings.smtp_port, timeout=10) as smtp:
-            if settings.smtp_use_tls:
-                smtp.starttls()
-            smtp.login(settings.smtp_username, settings.smtp_password)
-            smtp.send_message(message)
-    except (OSError, smtplib.SMTPException):
-        logger.exception("Could not send lead notification for lead %s", lead.id)
+    for attempt in range(1, SMTP_SEND_ATTEMPTS + 1):
+        try:
+            with smtplib.SMTP(settings.smtp_host, settings.smtp_port, timeout=10) as smtp:
+                if settings.smtp_use_tls:
+                    smtp.starttls()
+                smtp.login(settings.smtp_username, settings.smtp_password)
+                smtp.send_message(message)
+            return
+        except (OSError, smtplib.SMTPException) as error:
+            if attempt == SMTP_SEND_ATTEMPTS:
+                logger.exception(
+                    "Could not send lead notification for lead %s after %s attempts",
+                    lead.id,
+                    SMTP_SEND_ATTEMPTS,
+                )
+                return
+
+            retry_delay_seconds = attempt
+            logger.warning(
+                "Could not send lead notification for lead %s on attempt %s/%s: %s; "
+                "retrying in %s seconds",
+                lead.id,
+                attempt,
+                SMTP_SEND_ATTEMPTS,
+                error,
+                retry_delay_seconds,
+            )
+            time.sleep(retry_delay_seconds)

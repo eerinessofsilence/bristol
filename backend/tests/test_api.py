@@ -1,4 +1,5 @@
 import asyncio
+import smtplib
 import struct
 import zlib
 from datetime import date, datetime, timedelta, timezone
@@ -467,6 +468,61 @@ def test_lead_notification_is_sent_when_configured(monkeypatch) -> None:
     assert len(sent_messages) == 1
     assert sent_messages[0]["To"] == "leads@example.com"
     assert "Олена Коваль" in sent_messages[0].get_body(preferencelist=("plain",)).get_content()
+
+
+def test_lead_notification_retries_transient_smtp_failures(monkeypatch) -> None:
+    attempts = 0
+    retry_delays = []
+    sent_messages = []
+
+    class FlakySMTP:
+        def __init__(self, host: str, port: int, timeout: int) -> None:
+            nonlocal attempts
+            assert (host, port, timeout) == ("smtp.example.com", 587, 10)
+            attempts += 1
+            if attempts < 3:
+                raise smtplib.SMTPServerDisconnected("timed out")
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args) -> None:
+            return None
+
+        def starttls(self) -> None:
+            return None
+
+        def login(self, username: str, password: str) -> None:
+            assert (username, password) == ("info@example.com", "app-password")
+
+        def send_message(self, message) -> None:
+            sent_messages.append(message)
+
+    monkeypatch.setattr(email_notifications.settings, "email_notifications_enabled", True)
+    monkeypatch.setattr(email_notifications.settings, "smtp_host", "smtp.example.com")
+    monkeypatch.setattr(email_notifications.settings, "smtp_username", "info@example.com")
+    monkeypatch.setattr(email_notifications.settings, "smtp_password", "app-password")
+    monkeypatch.setattr(email_notifications.settings, "smtp_from_email", "info@example.com")
+    monkeypatch.setattr(
+        email_notifications.settings, "lead_notification_email", "leads@example.com"
+    )
+    monkeypatch.setattr(email_notifications.smtplib, "SMTP", FlakySMTP)
+    monkeypatch.setattr(email_notifications.time, "sleep", retry_delays.append)
+
+    response = client.post(
+        "/api/v1/leads",
+        json={
+            "first_name": "Олена",
+            "last_name": "Коваль",
+            "phone": "+380501234567",
+            "email": "olena@example.com",
+        },
+    )
+
+    assert response.status_code == 201
+    assert attempts == 3
+    assert retry_delays == [1, 2]
+    assert len(sent_messages) == 1
 
 
 def test_usd_exchange_rate_is_cached_for_twelve_hours(monkeypatch) -> None:
